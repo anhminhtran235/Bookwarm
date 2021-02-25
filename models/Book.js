@@ -1,10 +1,9 @@
 const { model, Schema } = require('mongoose');
-const { ObjectID } = require('mongodb');
 
 const bookSchema = new Schema({
-    book: {
-        type: ObjectID,
-        ref: Book,
+    seller: {
+        type: Schema.Types.ObjectId,
+        ref: 'Seller',
     },
     name: String,
     author: String,

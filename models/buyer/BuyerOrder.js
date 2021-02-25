@@ -1,14 +1,16 @@
 const { model, Schema } = require('mongoose');
-const { ObjectID } = require('mongodb');
 
 const buyerOrderSchema = new Schema({
     orderItems: [
         {
-            type: ObjectID,
+            type: Schema.Types.ObjectId,
             ref: 'OrderItem',
         },
     ],
-    createdAt: Date,
+    createdAt: {
+        type: Date,
+        default: () => new Date(),
+    },
 });
 
 module.exports = model('BuyerOrder', buyerOrderSchema);

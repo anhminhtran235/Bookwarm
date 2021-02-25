@@ -1,21 +1,23 @@
 const { model, Schema } = require('mongoose');
-const { ObjectID } = require('mongodb');
 
 const sellerSchema = new Schema({
     username: String,
     email: String,
     password: String,
     avatar: String,
-    createdAt: Date,
+    createdAt: {
+        type: Date,
+        default: () => new Date(),
+    },
     orders: [
         {
-            type: ObjectID,
+            type: Schema.Types.ObjectId,
             ref: 'SellerOrder',
         },
     ],
     books: [
         {
-            type: ObjectID,
+            type: Schema.Types.ObjectId,
             ref: 'Book',
         },
     ],

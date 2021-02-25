@@ -1,20 +1,28 @@
 const { model, Schema } = require('mongoose');
-const { ObjectID } = require('mongodb');
-
-const CartItem = require('./CartItem');
 
 const buyerSchema = new Schema({
     username: String,
     email: String,
     password: String,
-    createdAt: Date,
+    createdAt: {
+        type: Date,
+        default: () => new Date(),
+    },
     orders: [
         {
-            type: ObjectID,
+            type: Schema.Types.ObjectId,
             ref: 'BuyerOrder',
         },
     ],
-    cart: [CartItem],
+    cart: [
+        {
+            book: {
+                type: Schema.Types.ObjectId,
+                ref: 'Book',
+            },
+            quantity: Number,
+        },
+    ],
 });
 
 module.exports = model('Buyer', buyerSchema);

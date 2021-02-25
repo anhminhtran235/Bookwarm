@@ -1,9 +1,8 @@
 const { model, Schema } = require('mongoose');
-const { ObjectID } = require('mongodb');
 
 const orderItemSchema = new Schema({
     book: {
-        type: ObjectID,
+        type: Schema.Types.ObjectId,
         ref: Book,
     },
     quantity: Number,
