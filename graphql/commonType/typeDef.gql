@@ -7,3 +7,5 @@ input LoginInput {
     email: String!
     password: String!
 }
+
+scalar Date

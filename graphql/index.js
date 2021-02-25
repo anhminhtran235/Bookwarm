@@ -5,7 +5,6 @@ const path = require('path');
 let resolvers = {};
 let typeDefs = [
     `
-    scalar Date
     type Query
     type Mutation
 `,
