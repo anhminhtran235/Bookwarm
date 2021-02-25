@@ -1,11 +1,10 @@
-const Book = require('../../models/Book');
+const book = require('../../models/book/Book');
 
 module.exports = {
     Query: {
         async getBooks() {
             try {
-                const books = await Book.find();
-                return books;
+                return book.findBooks({}, { createdAt: -1 }, 0);
             } catch (error) {
                 throw new Error(error);
             }
