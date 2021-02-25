@@ -1,10 +1,5 @@
-const {
-    UserInputError,
-    AuthenticationError,
-    ApolloError,
-} = require('apollo-server');
+const { UserInputError, AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
-const config = require('config');
 
 const Buyer = require('../../models/buyer/Buyer');
 const { generateToken } = require('../../util/util');

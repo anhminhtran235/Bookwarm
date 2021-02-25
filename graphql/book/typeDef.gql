@@ -1,0 +1,20 @@
+type Book {
+    id: ID!
+    book: ID!
+    name: String!
+    author: String!
+    description: String!
+    image: String
+    price: Float!
+}
+type FindBookCriteria {
+    id: ID
+    nameStartsWith: String
+    authorStartsWith: String
+    minPrice: Float
+    maxPrice: Float
+}
+
+extend type Query {
+    getBooks: [Book]!
+}
