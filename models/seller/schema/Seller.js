@@ -2,9 +2,15 @@ const { model, Schema } = require('mongoose');
 
 const sellerSchema = new Schema({
     username: String,
-    email: String,
+    email: {
+        type: String,
+        unique: true,
+    },
     password: String,
-    avatar: String,
+    avatar: {
+        type: String,
+        default: '',
+    },
     createdAt: {
         type: Date,
         default: () => new Date(),

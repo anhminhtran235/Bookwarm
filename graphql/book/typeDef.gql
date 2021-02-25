@@ -17,3 +17,13 @@ type FindBookCriteria {
 extend type Query {
     getBooks: [Book]!
 }
+
+extend type Mutation {
+    addBook(
+        name: String!
+        author: String!
+        description: String!
+        image: String
+        price: Float!
+    ): Book!
+}

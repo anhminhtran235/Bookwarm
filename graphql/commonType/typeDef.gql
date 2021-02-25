@@ -7,5 +7,10 @@ input LoginInput {
     email: String!
     password: String!
 }
+input UpdateUserInput {
+    username: String
+    oldPassword: String
+    newPassword: String
+}
 
 scalar Date
