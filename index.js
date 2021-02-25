@@ -7,6 +7,7 @@ const { resolvers, typeDefs } = require('./graphql/index');
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: ({ req }) => ({ req }),
     debug: true,
 });
 
