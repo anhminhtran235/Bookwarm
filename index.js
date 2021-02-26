@@ -1,6 +1,5 @@
 const { ApolloServer } = require('apollo-server');
 const mongoose = require('mongoose');
-const config = require('config');
 
 const { resolvers, typeDefs } = require('./graphql/index');
 
@@ -12,7 +11,7 @@ const server = new ApolloServer({
 });
 
 mongoose
-    .connect(config.get('MONGO_CONNECTION_STRING'), {
+    .connect(process.env.MONGO_CONNECTION_STRING, {
         useUnifiedTopology: true,
         useNewUrlParser: true,
     })
@@ -20,6 +19,6 @@ mongoose
         console.log('Connected to MongoDb');
     });
 
-server.listen({ port: 5000 }).then((res) => {
+server.listen({ port: process.env.PORT }).then((res) => {
     console.log(`Sever is running at ${res.url}`);
 });

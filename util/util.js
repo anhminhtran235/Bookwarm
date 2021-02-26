@@ -1,5 +1,4 @@
 const jwt = require('jsonwebtoken');
-const config = require('config');
 
 const generateToken = (user) => {
     const token = jwt.sign(
@@ -8,7 +7,7 @@ const generateToken = (user) => {
             username: user.username,
             email: user.email,
         },
-        config.get('JSON_SECRET')
+        process.env.JSON_SECRET
     );
     return token;
 };
