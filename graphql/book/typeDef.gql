@@ -6,16 +6,16 @@ type Book {
     image: String
     price: Float!
 }
-type FindBookCriteria {
-    id: ID
-    nameStartsWith: String
-    authorStartsWith: String
+input FindBookCriteria {
+    titleContains: String
+    authorContains: String
     minPrice: Float
     maxPrice: Float
 }
 
 extend type Query {
-    getBooks: [Book]!
+    findBooks(criteria: FindBookCriteria!, skip: Int, limit: Int): [Book]!
+    findBookById(id: ID!): Book!
 }
 
 extend type Mutation {
@@ -26,4 +26,13 @@ extend type Mutation {
         image: String
         price: Float!
     ): Book!
+    updateBook(
+        id: ID!
+        name: String
+        author: String
+        description: String
+        image: String
+        price: Float
+    ): Book!
+    deleteBook(id: ID!): String
 }

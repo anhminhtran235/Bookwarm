@@ -16,10 +16,33 @@ const findAll = async (condition) => {
     }
 };
 
+const findOneById = async (id) => {
+    try {
+        return await Book.findById(id);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const insert = async (data) => {
     try {
-        const newBook = new Book(data);
-        return await newBook.save();
+        return await new Book(data).save();
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+const updateById = async (id, data) => {
+    try {
+        return await Book.findByIdAndUpdate(id, data);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
+const deleteById = async (id) => {
+    try {
+        return await Book.findByIdAndDelete(id);
     } catch (error) {
         throw new Error(error);
     }
@@ -27,6 +50,9 @@ const insert = async (data) => {
 
 module.exports = {
     findPaginate,
-    insert,
     findAll,
+    findOneById,
+    insert,
+    updateById,
+    deleteById,
 };

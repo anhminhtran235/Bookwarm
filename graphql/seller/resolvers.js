@@ -7,18 +7,27 @@ const bcrypt = require('bcryptjs');
 
 const sellerModule = require('../../models/seller/Seller');
 const bookModule = require('../../models/book/Book');
+const sellerOrderModule = require('../../models/sellerOrder/SellerOrder');
 const { generateToken } = require('../../util/util');
 const authCheck = require('../../util/authCheck');
 
 module.exports = {
     Seller: {
-        async books(parent, args, context, info) {
+        async books(parent) {
             const condition = {
                 _id: {
                     $in: parent.books,
                 },
             };
             return await bookModule.findAll(condition);
+        },
+        async orders(parent) {
+            const condition = {
+                _id: {
+                    $in: parent.orders,
+                },
+            };
+            return await sellerOrderModule.findAll(condition);
         },
     },
     Query: {

@@ -13,6 +13,13 @@ const generateToken = (user) => {
     return token;
 };
 
+const removeNullFields = (obj) => {
+    return Object.entries(obj)
+        .filter(([name, value]) => value !== null)
+        .map(([name, value]) => ({ name, value }));
+};
+
 module.exports = {
     generateToken,
+    removeNullFields,
 };
