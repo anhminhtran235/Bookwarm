@@ -1,11 +1,12 @@
+import { BrowserRouter } from 'react-router-dom';
 import Header from './Header';
 
 const Page = ({ children }) => {
     return (
-        <div>
+        <>
             <Header></Header>
-            {children}
-        </div>
+            <BrowserRouter>{children}</BrowserRouter>
+        </>
     );
 };
 

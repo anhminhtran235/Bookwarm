@@ -1,5 +1,11 @@
+import Books from '../components/Books/Books';
+
 const Shopping = () => {
-    return <h1>Shopping page</h1>;
+    return (
+        <div>
+            <Books></Books>
+        </div>
+    );
 };
 
 export default Shopping;
