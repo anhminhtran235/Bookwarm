@@ -34,7 +34,7 @@ const insert = async (data) => {
 
 const updateById = async (id, data) => {
     try {
-        return await Book.findByIdAndUpdate(id, data);
+        return await Book.findByIdAndUpdate(id, data, { new: true });
     } catch (error) {
         throw new Error(error);
     }

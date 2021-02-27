@@ -1,6 +1,6 @@
 type Book {
     id: ID!
-    name: String!
+    title: String!
     author: String!
     description: String!
     image: String
@@ -8,7 +8,6 @@ type Book {
 }
 input FindBookCriteria {
     titleContains: String
-    authorContains: String
     minPrice: Float
     maxPrice: Float
 }
@@ -20,7 +19,7 @@ extend type Query {
 
 extend type Mutation {
     addBook(
-        name: String!
+        title: String!
         author: String!
         description: String!
         image: String
@@ -28,7 +27,7 @@ extend type Mutation {
     ): Book!
     updateBook(
         id: ID!
-        name: String
+        title: String
         author: String
         description: String
         image: String

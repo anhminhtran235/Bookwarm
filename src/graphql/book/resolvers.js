@@ -1,4 +1,4 @@
-const { ApolloError } = require('apollo-server');
+const { ApolloError, AuthenticationError } = require('apollo-server');
 
 const bookModule = require('../../models/book/Book');
 const sellerModule = require('../../models/seller/Seller');
@@ -8,23 +8,12 @@ const { removeNullFields } = require('../../util/util');
 module.exports = {
     Query: {
         async findBooks(parent, args, context, info) {
-            const {
-                titleContains,
-                authorContains,
-                minPrice,
-                maxPrice,
-            } = args.criteria;
+            const { titleContains, minPrice, maxPrice } = args.criteria;
             const { skip, limit } = args;
 
-            if (titleContains && authorContains) {
-                throw new ApolloError('Cannot use 2 search criteria');
-            }
             const criteria = [];
             if (titleContains) {
-                criteria.push({ $text: { $search: `"${titleContains}"` } });
-            }
-            if (authorContains) {
-                criteria.push({ $text: { $search: `"${authorContains}"` } });
+                criteria.push({ $text: { $search: `${titleContains}` } });
             }
             if (minPrice && maxPrice) {
                 criteria.push({
@@ -35,11 +24,14 @@ module.exports = {
                 });
             } else if (minPrice) {
                 criteria.push({ price: { $gte: minPrice } });
-            } else {
+            } else if (maxPrice) {
                 criteria.push({ price: { $lte: maxPrice } });
             }
 
-            const condition = { $and: criteria };
+            let condition = {};
+            if (criteria.length > 0) {
+                condition = { $and: criteria };
+            }
 
             try {
                 return bookModule.findPaginate(
@@ -81,9 +73,8 @@ module.exports = {
         },
         async updateBook(parent, args, context, info) {
             try {
-                const updateInfo = removeNullFields(args);
-                const { id } = updateInfo;
-                delete updateInfo.id;
+                const { id } = args;
+                delete args.id;
 
                 const parsedToken = authCheck(context);
                 const seller = await sellerModule.findById(parsedToken.id);
@@ -91,7 +82,10 @@ module.exports = {
                     throw new ApolloError('Cannot find seller profile');
                 }
                 if (seller._doc.books.includes(id)) {
-                    const newBook = await bookModule.updateById(id, updateInfo);
+                    const newBook = await bookModule.updateById(id, args);
+                    if (!newBook) {
+                        throw new ApolloError('Book does not exists');
+                    }
                     return newBook;
                 } else {
                     throw new AuthenticationError(

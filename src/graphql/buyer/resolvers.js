@@ -1,17 +1,16 @@
 const { UserInputError, AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 
-const Buyer = require('../../models/buyer/Buyer');
+const buyerModule = require('../../models/buyer/Buyer');
 const { generateToken } = require('../../util/util');
 
 module.exports = {
     Query: {
         async getBuyers() {
             try {
-                const buyers = await Buyer.find();
+                const buyers = await buyerModule.findAll();
                 return buyers;
             } catch (error) {
-                console.error(error);
                 throw new Error(error);
             }
         },
@@ -20,18 +19,17 @@ module.exports = {
         async registerBuyer(parent, args, context, info) {
             try {
                 let { username, email, password } = args.registerInput;
-                const isEmailExisted = !!(await Buyer.findOne({ email }));
+                const isEmailExisted = !!(await buyerModule.findOne({ email }));
                 if (isEmailExisted) {
-                    throw new UserInputError('Email already exists', {
-                        errors: {
-                            email: 'Email already exists',
-                        },
-                    });
+                    throw new UserInputError('Email already exists');
                 }
 
                 password = await bcrypt.hash(password, 12);
-                const buyer = new Buyer({ username, email, password });
-                await buyer.save();
+                const buyer = await buyerModule.insert({
+                    username,
+                    email,
+                    password,
+                });
 
                 const token = generateToken(buyer);
 
@@ -48,13 +46,9 @@ module.exports = {
         async loginBuyer(parent, args, context, info) {
             try {
                 let { email, password } = args.loginInput;
-                let buyer = await Buyer.findOne({ email });
+                let buyer = await buyerModule.findOne({ email });
                 if (!buyer) {
-                    throw new AuthenticationError('Wrong credentials', {
-                        errors: {
-                            authenticationError: 'Wrong credentials',
-                        },
-                    });
+                    throw new AuthenticationError('Wrong credentials');
                 }
 
                 const isPasswordMatch = await bcrypt.compare(
@@ -70,11 +64,7 @@ module.exports = {
                         token,
                     };
                 } else {
-                    throw new AuthenticationError('Wrong credentials', {
-                        errors: {
-                            authenticationError: 'Wrong credentials',
-                        },
-                    });
+                    throw new AuthenticationError('Wrong credentials');
                 }
             } catch (error) {
                 console.error(error);

@@ -3,7 +3,9 @@ type Buyer {
     username: String!
     email: String!
     createdAt: Date!
-    token: String!
+    token: String
+    orders: [ID]
+    carts: [ID]
 }
 
 extend type Mutation {

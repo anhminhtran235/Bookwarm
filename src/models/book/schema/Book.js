@@ -10,6 +10,10 @@ const bookSchema = new Schema({
     description: String,
     image: String,
     price: Number,
+    createdAt: {
+        type: Number,
+        default: () => Date.now(),
+    },
 });
 
 module.exports = model('Book', bookSchema);

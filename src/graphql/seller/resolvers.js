@@ -55,11 +55,7 @@ module.exports = {
                 const isEmailExisted =
                     (await sellerModule.findOne({ email }))?.length > 0;
                 if (isEmailExisted) {
-                    throw new UserInputError('Email already exists', {
-                        errors: {
-                            email: 'Email already exists',
-                        },
-                    });
+                    throw new UserInputError('Email already exists');
                 }
 
                 password = await bcrypt.hash(password, 12);
@@ -87,11 +83,7 @@ module.exports = {
                 const seller = await sellerModule.findOne({ email });
 
                 if (!seller) {
-                    throw new AuthenticationError('Invalid credentials', {
-                        errors: {
-                            email: 'Invalid credentials',
-                        },
-                    });
+                    throw new AuthenticationError('Invalid credentials');
                 }
 
                 const isPasswordMatch = await bcrypt.compare(
@@ -99,11 +91,7 @@ module.exports = {
                     seller.password
                 );
                 if (!isPasswordMatch) {
-                    throw new AuthenticationError('Invalid credentials', {
-                        errors: {
-                            email: 'Invalid credentials',
-                        },
-                    });
+                    throw new AuthenticationError('Invalid credentials');
                 }
 
                 const token = generateToken(seller);
