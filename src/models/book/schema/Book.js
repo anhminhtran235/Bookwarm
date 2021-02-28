@@ -3,7 +3,7 @@ const { model, Schema } = require('mongoose');
 const bookSchema = new Schema({
     seller: {
         type: Schema.Types.ObjectId,
-        ref: 'Seller',
+        ref: 'User',
     },
     title: String,
     author: String,

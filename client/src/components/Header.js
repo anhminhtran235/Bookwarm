@@ -7,6 +7,8 @@ import {
     Container,
 } from 'react-bootstrap';
 
+import { Link } from 'react-router-dom';
+
 const Header = () => {
     return (
         <>
@@ -14,14 +16,19 @@ const Header = () => {
                 <Container>
                     <Navbar.Brand href='/'>Bookworm</Navbar.Brand>
                     <Nav className='mr-auto'>
-                        <Nav.Link href='/shopping'>Shopping</Nav.Link>
-                        <Nav.Link href='/orders'>Orders</Nav.Link>
-                        <Nav.Link href='/account'>Account</Nav.Link>
-                        <Nav.Link href='/cart'>My Cart</Nav.Link>
-                        <Nav.Link>Sign out</Nav.Link>
-                        <Nav.Link href='/seller-register'>
-                            Become a seller
+                        <Nav.Link as={Link} to='/shopping'>
+                            Shopping
                         </Nav.Link>
+                        <Nav.Link as={Link} to='/orders'>
+                            Orders
+                        </Nav.Link>
+                        <Nav.Link as={Link} to='/account'>
+                            Account
+                        </Nav.Link>
+                        <Nav.Link as={Link} to='/cart'>
+                            My Cart
+                        </Nav.Link>
+                        <Nav.Link>Sign out</Nav.Link>
                     </Nav>
                     <Form inline>
                         <FormControl

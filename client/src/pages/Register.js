@@ -8,25 +8,22 @@ import { StyledForm, StyledButton } from '../lib/Form';
 
 const SellerRegister = () => {
     const { form, handleChange } = useForm({
-        shopName: 'Test shop',
-        email: 'shop@gmail.com',
+        username: 'Test user',
+        email: 'minh@gmail.com',
         password: '123456',
         avatar: '',
     });
 
-    const [registerSeller, { loading }] = useMutation(
-        REGISTER_SELLER_MUTATION,
-        {
-            update(proxy, result) {
-                console.log(result);
-            },
-        }
-    );
+    const [register, { loading }] = useMutation(REGISTER_SELLER_MUTATION, {
+        update(proxy, result) {
+            console.log(result);
+        },
+    });
 
     const onSubmit = async (e) => {
         e.preventDefault();
         const formToSubmit = {};
-        formToSubmit.shopName = form.shopName;
+        formToSubmit.username = form.username;
         formToSubmit.email = form.email;
         formToSubmit.password = form.password;
 
@@ -34,28 +31,28 @@ const SellerRegister = () => {
             try {
                 toDataURL(form.avatar).then((base64Image) => {
                     formToSubmit.avatar = base64Image;
-                    registerSeller({ variables: formToSubmit });
+                    register({ variables: formToSubmit });
                 });
             } catch (error) {
                 throw new Error(error);
             }
         } else {
-            registerSeller({ variables: formToSubmit });
+            register({ variables: formToSubmit });
         }
     };
 
     return (
         <div className='mt-4'>
             <StyledForm onSubmit={onSubmit}>
-                <h2>Become a Seller now!</h2>
+                <h2>Join Bookworm now!</h2>
 
                 <Form.Group as={Col} controlId='formGridEmail'>
-                    <Form.Label>Shop name</Form.Label>
+                    <Form.Label>User name</Form.Label>
                     <Form.Control
                         type='text'
-                        placeholder='Shop name'
-                        name='shopName'
-                        value={form.shopName}
+                        placeholder='User name'
+                        name='username'
+                        value={form.username}
                         onChange={handleChange}
                     />
                 </Form.Group>
@@ -101,22 +98,22 @@ const SellerRegister = () => {
 };
 
 const REGISTER_SELLER_MUTATION = gql`
-    mutation registerSeller(
-        $shopName: String!
+    mutation register(
+        $username: String!
         $email: String!
         $password: String!
         $avatar: String
     ) {
-        registerSeller(
+        register(
             registerInput: {
-                shopName: $shopName
+                username: $username
                 email: $email
                 password: $password
                 avatar: $avatar
             }
         ) {
             id
-            shopName
+            username
             email
             avatar
             token

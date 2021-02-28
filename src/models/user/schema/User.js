@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const sellerSchema = new Schema({
-    shopName: String,
+    username: String,
     email: {
         type: String,
         unique: true,
@@ -18,7 +18,7 @@ const sellerSchema = new Schema({
     orders: [
         {
             type: Schema.Types.ObjectId,
-            ref: 'SellerOrder',
+            ref: 'Order',
         },
     ],
     books: [
@@ -29,4 +29,4 @@ const sellerSchema = new Schema({
     ],
 });
 
-module.exports = model('Seller', sellerSchema);
+module.exports = model('User', sellerSchema);

@@ -1,15 +1,15 @@
-const Seller = require('./schema/Seller');
+const User = require('./schema/User');
 
-const insert = async (shopName, email, password, avatar) => {
+const insert = async (username, email, password, avatar) => {
     try {
-        const seller = new Seller({
-            shopName,
+        const user = new User({
+            username,
             email,
             password,
             avatar,
         });
-        await seller.save();
-        return seller;
+        await user.save();
+        return user;
     } catch (error) {
         throw new Error(error);
     }
@@ -17,7 +17,7 @@ const insert = async (shopName, email, password, avatar) => {
 
 const findById = async (id) => {
     try {
-        return await Seller.findById(id);
+        return await User.findById(id);
     } catch (error) {
         throw new Error(error);
     }
@@ -25,7 +25,7 @@ const findById = async (id) => {
 
 const findOne = async (condition) => {
     try {
-        return await Seller.findOne(condition);
+        return await User.findOne(condition);
     } catch (error) {
         throw new Error(error);
     }
@@ -33,7 +33,7 @@ const findOne = async (condition) => {
 
 const findAll = async () => {
     try {
-        return await Seller.find();
+        return await User.find();
     } catch (error) {
         throw new Error(error);
     }
@@ -41,7 +41,7 @@ const findAll = async () => {
 
 const updateById = async (id, updateInfo) => {
     try {
-        return await Seller.findByIdAndUpdate(id, updateInfo);
+        return await User.findByIdAndUpdate(id, updateInfo, { new: true });
     } catch (error) {
         throw new Error(error);
     }
@@ -49,7 +49,7 @@ const updateById = async (id, updateInfo) => {
 
 const addNewBook = async (id, bookId) => {
     try {
-        return await Seller.findByIdAndUpdate(id, {
+        return await User.findByIdAndUpdate(id, {
             $push: { books: bookId },
         });
     } catch (error) {

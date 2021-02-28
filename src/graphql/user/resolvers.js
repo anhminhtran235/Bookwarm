@@ -6,14 +6,14 @@ const {
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const sellerModule = require('../../models/seller/Seller');
+const userModule = require('../../models/user/User');
 const bookModule = require('../../models/book/Book');
-const sellerOrderModule = require('../../models/sellerOrder/SellerOrder');
+const orderModule = require('../../models/order/Order');
 const authCheck = require('../../util/authCheck');
 const cloudinary = require('../../util/cloudinary');
 
 module.exports = {
-    Seller: {
+    User: {
         async books(parent) {
             const condition = {
                 _id: {
@@ -28,32 +28,32 @@ module.exports = {
                     $in: parent.orders,
                 },
             };
-            return await sellerOrderModule.findAll(condition);
+            return await orderModule.findAll(condition);
         },
     },
     Query: {
-        async findSellerById(parent, args, context, info) {
+        async findUserById(parent, args, context, info) {
             try {
                 const { id } = args;
-                return await sellerModule.findById(id);
+                return await userModule.findById(id);
             } catch (error) {
                 throw new Error(error);
             }
         },
-        async findAllSellers(parent, args, context, info) {
+        async findAllUsers(parent, args, context, info) {
             try {
-                return await sellerModule.findAll();
+                return await userModule.findAll();
             } catch (error) {
                 throw new Error(error);
             }
         },
     },
     Mutation: {
-        async registerSeller(parent, args, context, info) {
+        async register(parent, args, context, info) {
             try {
-                let { shopName, email, password, avatar } = args.registerInput;
+                let { username, email, password, avatar } = args.registerInput;
 
-                const isEmailExisted = !!(await sellerModule.findOne({
+                const isEmailExisted = !!(await userModule.findOne({
                     email,
                 }));
                 if (isEmailExisted) {
@@ -67,68 +67,68 @@ module.exports = {
                     avatarUrl = (await cloudinary.uploader.upload(avatar)).url;
                 }
 
-                const newSeller = await sellerModule.insert(
-                    shopName,
+                const newUser = await userModule.insert(
+                    username,
                     email,
                     password,
                     avatarUrl
                 );
 
-                const token = generateToken(newSeller);
+                const token = generateToken(newUser);
 
                 return {
-                    ...newSeller._doc,
-                    id: newSeller._id,
+                    ...newUser._doc,
+                    id: newUser._id,
                     token,
                 };
             } catch (error) {
                 throw new Error(error);
             }
         },
-        async loginSeller(parent, args, context, info) {
+        async login(parent, args, context, info) {
             try {
                 const { email, password } = args.loginInput;
 
-                const seller = await sellerModule.findOne({ email });
+                const user = await userModule.findOne({ email });
 
-                if (!seller) {
+                if (!user) {
                     throw new AuthenticationError('Invalid credentials');
                 }
 
                 const isPasswordMatch = await bcrypt.compare(
                     password,
-                    seller.password
+                    user.password
                 );
                 if (!isPasswordMatch) {
                     throw new AuthenticationError('Invalid credentials');
                 }
 
-                const token = generateToken(seller);
+                const token = generateToken(user);
 
                 return {
-                    ...seller._doc,
-                    id: seller._id,
+                    ...user._doc,
+                    id: user._id,
                     token,
                 };
             } catch (error) {
                 throw new Error(error);
             }
         },
-        async updateSeller(parent, args, context, info) {
+        async updateUser(parent, args, context, info) {
             try {
                 const parsedToken = authCheck(context);
-                const seller = await sellerModule.findById(parsedToken.id);
-                if (!seller) {
-                    throw new ApolloError('Cannot find seller profile');
+                const user = await userModule.findById(parsedToken.id);
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
                 }
-                const { shopName, oldPassword, newPassword } = args.updateInput;
+                const { username, oldPassword, newPassword } = args.updateInput;
                 if (newPassword) {
                     if (!oldPassword) {
                         throw new UserInputError('Empty old password');
                     }
                     const isPasswordMatch = await bcrypt.compare(
                         oldPassword,
-                        seller.password
+                        user.password
                     );
                     if (!isPasswordMatch) {
                         throw new UserInputError('Invalid old password');
@@ -136,21 +136,21 @@ module.exports = {
                 }
 
                 const updateInfo = {};
-                if (shopName) {
-                    updateInfo.shopName = shopName;
+                if (username) {
+                    updateInfo.username = username;
                 }
                 if (newPassword) {
                     updateInfo.password = await bcrypt.hash(newPassword, 12);
                 }
 
-                const updatedSeller = await sellerModule.updateById(
-                    seller.id,
+                const updatedUser = await userModule.updateById(
+                    user.id,
                     updateInfo
                 );
 
                 return {
-                    ...updatedSeller._doc,
-                    id: updatedSeller._id,
+                    ...updatedUser._doc,
+                    id: updatedUser._id,
                 };
             } catch (error) {
                 throw new Error(error);

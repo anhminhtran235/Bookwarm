@@ -1,10 +1,6 @@
 const { model, Schema } = require('mongoose');
 
-const sellerOrderSchema = new Schema({
-    buyer: {
-        type: Schema.Types.ObjectId,
-        ref: 'Buyer',
-    },
+const orderSchema = new Schema({
     orderItems: [
         {
             type: Schema.Types.ObjectId,
@@ -17,4 +13,4 @@ const sellerOrderSchema = new Schema({
     },
 });
 
-module.exports = model('SellerOrder', sellerOrderSchema);
+module.exports = model('Order', orderSchema);

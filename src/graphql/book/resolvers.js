@@ -1,7 +1,7 @@
 const { ApolloError, AuthenticationError } = require('apollo-server');
 
 const bookModule = require('../../models/book/Book');
-const sellerModule = require('../../models/seller/Seller');
+const userModule = require('../../models/user/User');
 const authCheck = require('../../util/authCheck');
 
 module.exports = {
@@ -56,15 +56,15 @@ module.exports = {
         async addBook(parent, args, context, info) {
             try {
                 const parsedToken = authCheck(context);
-                const seller = await sellerModule.findById(parsedToken.id);
-                if (!seller) {
-                    throw new ApolloError('Cannot find seller profile');
+                const user = await userModule.findById(parsedToken.id);
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
                 }
                 const newBook = await bookModule.insert({
                     ...args,
-                    seller: seller._id,
+                    seller: user._id,
                 });
-                await sellerModule.addNewBook(seller._id, newBook._id);
+                await userModule.addNewBook(user._id, newBook._id);
                 return newBook;
             } catch (error) {
                 throw new Error(error);
@@ -76,11 +76,11 @@ module.exports = {
                 delete args.id;
 
                 const parsedToken = authCheck(context);
-                const seller = await sellerModule.findById(parsedToken.id);
-                if (!seller) {
-                    throw new ApolloError('Cannot find seller profile');
+                const user = await userModule.findById(parsedToken.id);
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
                 }
-                if (seller._doc.books.includes(id)) {
+                if (user._doc.books.includes(id)) {
                     const newBook = await bookModule.updateById(id, args);
                     if (!newBook) {
                         throw new ApolloError('Book does not exists');
@@ -100,11 +100,11 @@ module.exports = {
                 const { id } = args;
 
                 const parsedToken = authCheck(context);
-                const seller = await sellerModule.findById(parsedToken.id);
-                if (!seller) {
-                    throw new ApolloError('Cannot find seller profile');
+                const user = await userModule.findById(parsedToken.id);
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
                 }
-                if (seller._doc.books.includes(id)) {
+                if (user._doc.books.includes(id)) {
                     await bookModule.deleteById(id);
                     return 'Success';
                 } else {

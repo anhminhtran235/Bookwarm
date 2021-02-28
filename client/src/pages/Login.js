@@ -5,13 +5,13 @@ import { useMutation } from '@apollo/client';
 import useForm from '../lib/useForm';
 import { StyledForm, StyledButton } from '../lib/Form';
 
-const SellerLogin = () => {
+const Login = () => {
     const { form, handleChange } = useForm({
         email: 'shop@gmail.com',
         password: '123456',
     });
 
-    const [registerSeller, { loading }] = useMutation(LOGIN_SELLER_MUTATION, {
+    const [login, { loading }] = useMutation(LOGIN_MUTATION, {
         update(proxy, result) {
             console.log(result);
         },
@@ -19,13 +19,13 @@ const SellerLogin = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        registerSeller({ variables: form });
+        login({ variables: form });
     };
 
     return (
         <div className='mt-4'>
             <StyledForm onSubmit={onSubmit}>
-                <h2>Login to your seller account</h2>
+                <h2>Login to your account</h2>
 
                 <Form.Group as={Col} controlId='formGridEmail'>
                     <Form.Label>Email</Form.Label>
@@ -57,11 +57,11 @@ const SellerLogin = () => {
     );
 };
 
-const LOGIN_SELLER_MUTATION = gql`
-    mutation loginSeller($email: String!, $password: String!) {
-        loginSeller(loginInput: { email: $email, password: $password }) {
+const LOGIN_MUTATION = gql`
+    mutation login($email: String!, $password: String!) {
+        login(loginInput: { email: $email, password: $password }) {
             id
-            shopName
+            username
             email
             avatar
             token
@@ -69,4 +69,4 @@ const LOGIN_SELLER_MUTATION = gql`
     }
 `;
 
-export default SellerLogin;
+export default Login;

@@ -4,8 +4,10 @@ import Header from './Header';
 const Page = ({ children }) => {
     return (
         <>
-            <Header></Header>
-            <BrowserRouter>{children}</BrowserRouter>
+            <BrowserRouter>
+                <Header></Header>
+                {children}
+            </BrowserRouter>
         </>
     );
 };
