@@ -1,8 +1,8 @@
 const { UserInputError, AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const buyerModule = require('../../models/buyer/Buyer');
-const { generateToken } = require('../../util/util');
 
 module.exports = {
     Query: {
@@ -72,4 +72,16 @@ module.exports = {
             }
         },
     },
+};
+
+const generateToken = (user) => {
+    const token = jwt.sign(
+        {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+        },
+        process.env.JSON_SECRET
+    );
+    return token;
 };

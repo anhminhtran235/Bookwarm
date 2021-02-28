@@ -8,8 +8,14 @@ type Buyer {
     carts: [ID]
 }
 
+input BuyerRegisterInput {
+    username: String!
+    email: String!
+    password: String!
+}
+
 extend type Mutation {
-    registerBuyer(registerInput: RegisterInput): Buyer!
+    registerBuyer(registerInput: BuyerRegisterInput): Buyer!
     loginBuyer(loginInput: LoginInput): Buyer!
 }
 

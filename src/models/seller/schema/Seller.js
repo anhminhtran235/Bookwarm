@@ -1,7 +1,7 @@
 const { model, Schema } = require('mongoose');
 
 const sellerSchema = new Schema({
-    username: String,
+    shopName: String,
     email: {
         type: String,
         unique: true,

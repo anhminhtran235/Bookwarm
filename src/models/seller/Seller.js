@@ -1,9 +1,9 @@
 const Seller = require('./schema/Seller');
 
-const insert = async (username, email, password, avatar) => {
+const insert = async (shopName, email, password, avatar) => {
     try {
         const seller = new Seller({
-            username,
+            shopName,
             email,
             password,
             avatar,

@@ -3,7 +3,6 @@ const { ApolloError, AuthenticationError } = require('apollo-server');
 const bookModule = require('../../models/book/Book');
 const sellerModule = require('../../models/seller/Seller');
 const authCheck = require('../../util/authCheck');
-const { removeNullFields } = require('../../util/util');
 
 module.exports = {
     Query: {

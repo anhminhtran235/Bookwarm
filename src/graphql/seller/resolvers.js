@@ -4,12 +4,13 @@ const {
     ApolloError,
 } = require('apollo-server');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 
 const sellerModule = require('../../models/seller/Seller');
 const bookModule = require('../../models/book/Book');
 const sellerOrderModule = require('../../models/sellerOrder/SellerOrder');
-const { generateToken } = require('../../util/util');
 const authCheck = require('../../util/authCheck');
+const cloudinary = require('../../util/cloudinary');
 
 module.exports = {
     Seller: {
@@ -50,19 +51,27 @@ module.exports = {
     Mutation: {
         async registerSeller(parent, args, context, info) {
             try {
-                let { username, email, password } = args.registerInput;
+                let { shopName, email, password, avatar } = args.registerInput;
 
-                const isEmailExisted =
-                    (await sellerModule.findOne({ email }))?.length > 0;
+                const isEmailExisted = !!(await sellerModule.findOne({
+                    email,
+                }));
                 if (isEmailExisted) {
                     throw new UserInputError('Email already exists');
                 }
 
                 password = await bcrypt.hash(password, 12);
+
+                let avatarUrl = '';
+                if (avatar && avatar !== '') {
+                    avatarUrl = (await cloudinary.uploader.upload(avatar)).url;
+                }
+
                 const newSeller = await sellerModule.insert(
-                    username,
+                    shopName,
                     email,
-                    password
+                    password,
+                    avatarUrl
                 );
 
                 const token = generateToken(newSeller);
@@ -112,7 +121,7 @@ module.exports = {
                 if (!seller) {
                     throw new ApolloError('Cannot find seller profile');
                 }
-                const { username, oldPassword, newPassword } = args.updateInput;
+                const { shopName, oldPassword, newPassword } = args.updateInput;
                 if (newPassword) {
                     if (!oldPassword) {
                         throw new UserInputError('Empty old password');
@@ -127,8 +136,8 @@ module.exports = {
                 }
 
                 const updateInfo = {};
-                if (username) {
-                    updateInfo.username = username;
+                if (shopName) {
+                    updateInfo.shopName = shopName;
                 }
                 if (newPassword) {
                     updateInfo.password = await bcrypt.hash(newPassword, 12);
@@ -148,4 +157,16 @@ module.exports = {
             }
         },
     },
+};
+
+const generateToken = (user) => {
+    const token = jwt.sign(
+        {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+        },
+        process.env.JSON_SECRET
+    );
+    return token;
 };

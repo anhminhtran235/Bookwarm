@@ -1,5 +1,6 @@
 type Seller {
-    username: String!
+    id: ID!
+    shopName: String!
     email: String!
     avatar: String!
     createdAt: Date!
@@ -8,14 +9,27 @@ type Seller {
     books: [Book]
 }
 
+input SellerRegisterInput {
+    shopName: String!
+    email: String!
+    password: String!
+    avatar: String
+}
+
+input SellerUpdateUserInput {
+    shopName: String
+    oldPassword: String
+    newPassword: String
+    avatar: String
+}
+
 extend type Query {
     findSellerById(id: ID): Seller!
     findAllSellers: [Seller]!
 }
 
 extend type Mutation {
-    registerSeller(registerInput: RegisterInput): Seller!
+    registerSeller(registerInput: SellerRegisterInput): Seller!
     loginSeller(loginInput: LoginInput): Seller!
-    uploadAvatar: String!
-    updateSeller(updateInput: UpdateUserInput): Seller!
+    updateSeller(updateInput: SellerUpdateUserInput): Seller!
 }
