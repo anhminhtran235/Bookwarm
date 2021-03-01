@@ -4,11 +4,15 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import ApolloProvider from './Apollo/ApolloProvider';
+import { Provider } from 'react-redux';
+import store from './redux/reduxStore';
 
 ReactDOM.render(
     <React.StrictMode>
         <ApolloProvider>
-            <App />
+            <Provider store={store}>
+                <App />
+            </Provider>
         </ApolloProvider>
     </React.StrictMode>,
     document.getElementById('root')

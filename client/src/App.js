@@ -3,6 +3,7 @@ import { Route } from 'react-router-dom';
 
 import './App.css';
 import Page from './components/Page';
+import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Shopping from './pages/Shopping';
 import Account from './pages/Account';
@@ -16,11 +17,23 @@ function App() {
         <Page>
             <Container>
                 <Route path='/' exact component={Home}></Route>
-                <Route path='/shopping' exact component={Shopping}></Route>
-                <Route path='/account' exact component={Account}></Route>
+                <PrivateRoute
+                    path='/shopping'
+                    exact
+                    component={Shopping}
+                ></PrivateRoute>
+                <PrivateRoute
+                    path='/account'
+                    exact
+                    component={Account}
+                ></PrivateRoute>
                 <Route path='/login' exact component={Login}></Route>
                 <Route path='/register' exact component={Register}></Route>
-                <Route path='/orders' exact component={Orders}></Route>
+                <PrivateRoute
+                    path='/orders'
+                    exact
+                    component={Orders}
+                ></PrivateRoute>
             </Container>
         </Page>
     );
