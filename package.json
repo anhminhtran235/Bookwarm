@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "env-cmd -f ./config/dev.env nodemon --ext js,gql src/index.js",
+    "dev": "env-cmd -f ./config/dev.env nodemon --ignore client --ext js,gql src/index.js",
     "server": "env-cmd -f ./config/dev.env node src/index.js",
     "test": "env-cmd -f ./config/test.env jest"
   },
@@ -18,9 +18,12 @@
   "license": "ISC",
   "dependencies": {
     "apollo-server": "^2.21.0",
+    "apollo-server-express": "^2.21.0",
     "bcryptjs": "^2.4.3",
     "bootstrap": "^4.6.0",
     "cloudinary": "^1.25.0",
+    "cookie-parser": "^1.4.5",
+    "cors": "^2.8.5",
     "graphql": "^15.5.0",
     "graphql-tag": "^2.11.0",
     "jsonwebtoken": "^8.5.1",

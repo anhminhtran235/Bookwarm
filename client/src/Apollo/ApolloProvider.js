@@ -7,6 +7,7 @@ import {
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:5000',
+    credentials: 'include',
 });
 
 const client = new ApolloClient({

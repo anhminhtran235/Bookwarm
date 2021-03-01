@@ -4,7 +4,6 @@ type User {
     email: String!
     avatar: String!
     createdAt: Date!
-    token: String
     orders: [ID]
     books: [Book]
 }
@@ -31,6 +30,7 @@ input UpdateUserInput {
 extend type Query {
     findUserById(id: ID): User!
     findAllUsers: [User]!
+    getMe: User!
 }
 
 extend type Mutation {

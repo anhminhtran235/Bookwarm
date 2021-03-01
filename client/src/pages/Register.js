@@ -116,7 +116,6 @@ const REGISTER_SELLER_MUTATION = gql`
             username
             email
             avatar
-            token
         }
     }
 `;

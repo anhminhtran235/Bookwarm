@@ -2,7 +2,6 @@ const { ApolloError, AuthenticationError } = require('apollo-server');
 
 const bookModule = require('../../models/book/Book');
 const userModule = require('../../models/user/User');
-const authCheck = require('../../util/authCheck');
 
 module.exports = {
     Query: {
@@ -55,7 +54,10 @@ module.exports = {
     Mutation: {
         async addBook(parent, args, context, info) {
             try {
-                const parsedToken = authCheck(context);
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
                 const user = await userModule.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
@@ -75,7 +77,10 @@ module.exports = {
                 const { id } = args;
                 delete args.id;
 
-                const parsedToken = authCheck(context);
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
                 const user = await userModule.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
@@ -99,7 +104,10 @@ module.exports = {
             try {
                 const { id } = args;
 
-                const parsedToken = authCheck(context);
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
                 const user = await userModule.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');

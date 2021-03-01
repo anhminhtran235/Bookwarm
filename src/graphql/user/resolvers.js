@@ -9,7 +9,6 @@ const jwt = require('jsonwebtoken');
 const userModule = require('../../models/user/User');
 const bookModule = require('../../models/book/Book');
 const orderModule = require('../../models/order/Order');
-const authCheck = require('../../util/authCheck');
 const cloudinary = require('../../util/cloudinary');
 
 module.exports = {
@@ -47,6 +46,18 @@ module.exports = {
                 throw new Error(error);
             }
         },
+        async getMe(parent, args, context, info) {
+            try {
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    return null;
+                }
+                const { id } = parsedToken;
+                return userModule.findById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
     },
     Mutation: {
         async register(parent, args, context, info) {
@@ -75,11 +86,14 @@ module.exports = {
                 );
 
                 const token = generateToken(newUser);
+                context.res.cookie('token', token, {
+                    httpOnly: false,
+                    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
+                });
 
                 return {
                     ...newUser._doc,
                     id: newUser._id,
-                    token,
                 };
             } catch (error) {
                 throw new Error(error);
@@ -104,11 +118,14 @@ module.exports = {
                 }
 
                 const token = generateToken(user);
+                context.response.cookie('token', token, {
+                    httpOnly: true,
+                    maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
+                });
 
                 return {
                     ...user._doc,
                     id: user._id,
-                    token,
                 };
             } catch (error) {
                 throw new Error(error);
@@ -116,7 +133,10 @@ module.exports = {
         },
         async updateUser(parent, args, context, info) {
             try {
-                const parsedToken = authCheck(context);
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
                 const user = await userModule.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');

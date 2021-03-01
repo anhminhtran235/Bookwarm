@@ -64,7 +64,6 @@ const LOGIN_MUTATION = gql`
             username
             email
             avatar
-            token
         }
     }
 `;
