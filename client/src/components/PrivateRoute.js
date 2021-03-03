@@ -13,6 +13,8 @@ const PrivateRoute = ({ component: Component, isLoggedIn, ...rest }) => {
     );
 };
 
-const mapStateToProps = (state) => ({ isLoggedIn: state.isLoggedIn });
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.authReducer.isLoggedIn,
+});
 
 export default connect(mapStateToProps)(PrivateRoute);

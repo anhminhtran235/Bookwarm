@@ -1,7 +1,2 @@
-const LOGIN = 'LOGIN';
-const LOGOUT = 'LOGOUT';
-
-module.exports = {
-    LOGIN,
-    LOGOUT,
-};
+export const AUTHENTICATE = 'AUTHENTICATE';
+export const DEAUTHENTICATE = 'DEAUTHENTICATE';

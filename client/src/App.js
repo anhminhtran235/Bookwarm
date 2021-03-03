@@ -1,5 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { useQuery } from '@apollo/client';
 
 import './App.css';
 import Page from './components/Page';
@@ -11,9 +13,31 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
 import { Container } from 'react-bootstrap';
+import { GET_ME_QUERY } from './lib/graphql';
+import { authenticate, deauthenticate } from './redux/actions/auth';
+import { useEffect } from 'react';
 
-function App() {
-    return (
+function App({ isLoggedIn, authenticate, deauthenticate }) {
+    const hasNotAuthenticatedWithServer = isLoggedIn == null;
+    const { loading, error, data } = useQuery(GET_ME_QUERY, {
+        fetchPolicy: hasNotAuthenticatedWithServer
+            ? 'network-only'
+            : 'cache-only',
+    });
+    console.log(error);
+    useEffect(() => {
+        console.log(data);
+        if (data && isLoggedIn == null) {
+            if (data.getMe) {
+                authenticate(data.getMe);
+            } else {
+                deauthenticate();
+            }
+        }
+    }, [authenticate, deauthenticate, data, isLoggedIn]);
+    return loading ? (
+        <p>Loading...</p>
+    ) : (
         <Page>
             <Container>
                 <Route path='/' exact component={Home}></Route>
@@ -39,4 +63,13 @@ function App() {
     );
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.authReducer.isLoggedIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    authenticate: (user) => dispatch(authenticate(user)),
+    deauthenticate: () => dispatch(deauthenticate()),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);

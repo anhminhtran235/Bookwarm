@@ -30,11 +30,12 @@ input UpdateUserInput {
 extend type Query {
     findUserById(id: ID): User!
     findAllUsers: [User]!
-    getMe: User!
+    getMe: User
 }
 
 extend type Mutation {
     register(registerInput: RegisterInput): User!
     login(loginInput: LoginInput): User!
     updateUser(updateInput: UpdateUserInput): User!
+    logout: String
 }

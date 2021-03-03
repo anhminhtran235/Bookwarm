@@ -1,18 +1,9 @@
-import { LOGIN, LOGOUT } from './types';
+import { AUTHENTICATE, DEAUTHENTICATE } from './types';
 
-const login = () => (dispatch) => {
-    dispatch({
-        type: LOGIN,
-    });
+export const authenticate = (user) => {
+    return { type: AUTHENTICATE, payload: user };
 };
 
-const logout = () => (dispatch) => {
-    dispatch({
-        type: LOGOUT,
-    });
-};
-
-module.exports = {
-    login,
-    logout,
+export const deauthenticate = () => {
+    return { type: DEAUTHENTICATE };
 };

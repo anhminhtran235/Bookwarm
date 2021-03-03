@@ -25,7 +25,11 @@ const setupApolloServer = async () => {
                 req.parsedToken = parsedToken;
             }
         } catch (error) {
-            // TODO: Remove cookie
+            // Cookie exists but invalid => Remove it
+            res.cookie('token', '', {
+                httpOnly: true,
+                expires: new Date(0), // Thu, 01 Jan 1970
+            });
         }
         next();
     });

@@ -1,28 +1,43 @@
 import { Form, Col } from 'react-bootstrap';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
+import { connect } from 'react-redux';
+import { Redirect, withRouter } from 'react-router';
 
 import useForm from '../lib/useForm';
 import { StyledForm, StyledButton } from '../lib/Form';
+import { authenticate } from '../redux/actions/auth';
+import * as alertify from '../lib/alertify';
 
-const Login = () => {
+const Login = ({ history, authenticate, isLoggedIn }) => {
     const { form, handleChange } = useForm({
-        email: 'shop@gmail.com',
+        email: 'minh235200@gmail.com',
         password: '123456',
     });
 
-    const [login, { loading }] = useMutation(LOGIN_MUTATION, {
+    const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
         update(proxy, result) {
+            alertify.success('Logged in sucessfully');
             console.log(result);
+            authenticate(result.data.login);
+            history.push('/shopping');
         },
     });
+
+    if (error) {
+        console.log(error.graphQLErrors[0].message);
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault();
         login({ variables: form });
     };
 
-    return (
+    return isLoggedIn == null ? (
+        'loading'
+    ) : isLoggedIn ? (
+        <Redirect to='/shopping' />
+    ) : (
         <div className='mt-4'>
             <StyledForm onSubmit={onSubmit}>
                 <h2>Login to your account</h2>
@@ -68,4 +83,12 @@ const LOGIN_MUTATION = gql`
     }
 `;
 
-export default Login;
+const mapStateToProps = (state) => ({
+    isLoggedIn: state.authReducer.isLoggedIn,
+});
+
+const mapDispatchToProps = (dispatch) => ({
+    authenticate: (user) => dispatch(authenticate(user)),
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

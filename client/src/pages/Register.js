@@ -1,12 +1,14 @@
 import { Form, Col } from 'react-bootstrap';
 import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
+import { connect } from 'react-redux';
 
 import useForm from '../lib/useForm';
 import { toDataURL } from '../lib/util';
 import { StyledForm, StyledButton } from '../lib/Form';
+import { authenticate } from '../redux/actions/auth';
 
-const SellerRegister = () => {
+const SellerRegister = ({ authenticate, history }) => {
     const { form, handleChange } = useForm({
         username: 'Test user',
         email: 'minh@gmail.com',
@@ -16,7 +18,9 @@ const SellerRegister = () => {
 
     const [register, { loading }] = useMutation(REGISTER_SELLER_MUTATION, {
         update(proxy, result) {
-            console.log(result);
+            const user = result.data.register;
+            authenticate(user);
+            history.push('/shopping');
         },
     });
 
@@ -120,4 +124,8 @@ const REGISTER_SELLER_MUTATION = gql`
     }
 `;
 
-export default SellerRegister;
+const mapDispatchToProps = (dispatch) => ({
+    authenticate: (user) => dispatch(authenticate(user)),
+});
+
+export default connect(null, mapDispatchToProps)(SellerRegister);

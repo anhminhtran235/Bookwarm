@@ -87,7 +87,7 @@ module.exports = {
 
                 const token = generateToken(newUser);
                 context.res.cookie('token', token, {
-                    httpOnly: false,
+                    httpOnly: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
                 });
 
@@ -118,7 +118,7 @@ module.exports = {
                 }
 
                 const token = generateToken(user);
-                context.response.cookie('token', token, {
+                context.res.cookie('token', token, {
                     httpOnly: true,
                     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
                 });
@@ -130,6 +130,13 @@ module.exports = {
             } catch (error) {
                 throw new Error(error);
             }
+        },
+        async logout(parent, args, context, info) {
+            // Remove Cookie
+            context.res.cookie('token', '', {
+                httpOnly: true,
+                expires: new Date(0), // Thu, 01 Jan 1970
+            });
         },
         async updateUser(parent, args, context, info) {
             try {
