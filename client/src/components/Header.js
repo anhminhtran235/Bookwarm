@@ -5,15 +5,20 @@ import { withRouter } from 'react-router';
 import { useMutation } from '@apollo/client';
 
 import { deauthenticate } from '../redux/actions/auth';
+import { openCart } from '../redux/actions/cart';
 import gql from 'graphql-tag';
+import * as alertify from '../lib/alertify';
 
-const Header = ({ isLoggedIn, deauthenticate, history }) => {
+const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
     const [removeCookie] = useMutation(LOGOUT_MUTATION);
+
     const logout = () => {
+        alertify.error('Logged out');
         deauthenticate();
         removeCookie();
         history.push('/');
     };
+
     return (
         <>
             <Navbar bg='dark' variant='dark'>
@@ -35,8 +40,8 @@ const Header = ({ isLoggedIn, deauthenticate, history }) => {
                                 Account
                             </Nav.Link>
                         )}
-                        {isLoggedIn && (
-                            <Nav.Link as={Link} to='/cart'>
+                        {!isLoggedIn && (
+                            <Nav.Link as={Button} onClick={openCart}>
                                 My cart
                             </Nav.Link>
                         )}
@@ -72,4 +77,6 @@ const mapStateToProps = (state) => ({
     isLoggedIn: state.authReducer.isLoggedIn,
 });
 
-export default connect(mapStateToProps, { deauthenticate })(withRouter(Header));
+export default connect(mapStateToProps, { deauthenticate, openCart })(
+    withRouter(Header)
+);

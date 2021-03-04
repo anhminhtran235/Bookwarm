@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useQuery } from '@apollo/client';
+import { useEffect } from 'react';
+import { Container } from 'react-bootstrap';
 
 import './App.css';
 import Page from './components/Page';
@@ -12,10 +14,9 @@ import Account from './pages/Account';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
-import { Container } from 'react-bootstrap';
+import CartModal from './components/Cart/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';
 import { authenticate, deauthenticate } from './redux/actions/auth';
-import { useEffect } from 'react';
 
 function App({ isLoggedIn, authenticate, deauthenticate }) {
     const hasNotAuthenticatedWithServer = isLoggedIn == null;
@@ -24,7 +25,6 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
             ? 'network-only'
             : 'cache-only',
     });
-    console.log(error);
     useEffect(() => {
         console.log(data);
         if (data && isLoggedIn == null) {
@@ -40,6 +40,7 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
     ) : (
         <Page>
             <Container>
+                <CartModal></CartModal>
                 <Route path='/' exact component={Home}></Route>
                 <PrivateRoute
                     path='/shopping'

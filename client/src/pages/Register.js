@@ -7,6 +7,7 @@ import useForm from '../lib/useForm';
 import { toDataURL } from '../lib/util';
 import { StyledForm, StyledButton } from '../lib/Form';
 import { authenticate } from '../redux/actions/auth';
+import * as alertify from '../lib/alertify';
 
 const SellerRegister = ({ authenticate, history }) => {
     const { form, handleChange } = useForm({
@@ -16,13 +17,20 @@ const SellerRegister = ({ authenticate, history }) => {
         avatar: '',
     });
 
-    const [register, { loading }] = useMutation(REGISTER_SELLER_MUTATION, {
-        update(proxy, result) {
-            const user = result.data.register;
-            authenticate(user);
-            history.push('/shopping');
-        },
-    });
+    const [register, { loading, error }] = useMutation(
+        REGISTER_SELLER_MUTATION,
+        {
+            update(proxy, result) {
+                const user = result.data.register;
+                authenticate(user);
+                history.push('/shopping');
+            },
+        }
+    );
+
+    if (error) {
+        alertify.error(error.graphQLErrors[0].message);
+    }
 
     const onSubmit = async (e) => {
         e.preventDefault();

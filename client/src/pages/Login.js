@@ -22,11 +22,10 @@ const Login = ({ history, authenticate, isLoggedIn }) => {
             authenticate(result.data.login);
             history.push('/shopping');
         },
+        onError(error) {
+            alertify.error(error.graphQLErrors[0].message);
+        },
     });
-
-    if (error) {
-        console.log(error.graphQLErrors[0].message);
-    }
 
     const onSubmit = async (e) => {
         e.preventDefault();
