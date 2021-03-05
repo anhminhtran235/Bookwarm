@@ -20,6 +20,7 @@ const Books = () => {
                 books.map((book) => (
                     <Book
                         key={book.id}
+                        id={book.id}
                         title={book.title}
                         description={book.description}
                         image={book.image}

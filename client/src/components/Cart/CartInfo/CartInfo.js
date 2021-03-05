@@ -1,6 +1,8 @@
 import styled from 'styled-components';
+import { useQuery } from '@apollo/client';
 
 import CartItems from './CartItems/CartItems';
+import { GET_CART_QUERY } from '../../../lib/graphql';
 
 const Header = styled.div`
     text-align: center;
@@ -16,14 +18,24 @@ const TotalPrice = styled.div`
 `;
 
 const CartInfo = () => {
-    return (
+    const { data, loading } = useQuery(GET_CART_QUERY);
+    const cartItems = data?.getMe?.cart;
+    let total = 0;
+    if (cartItems) {
+        cartItems.forEach((item) => {
+            total += item.quantity * item.book.price;
+        });
+    }
+    return cartItems ? (
         <>
             <Header>My cart</Header>
-            <CartItems />
+            <CartItems cartItems={cartItems} />
             <TotalPrice>
-                <p className='pr-3 pb-1'>Total: $230.65</p>
+                <p className='pr-3 pb-1'>Total: ${total}</p>
             </TotalPrice>
         </>
+    ) : (
+        'Loading...'
     );
 };
 

@@ -21,6 +21,15 @@ const sellerSchema = new Schema({
             ref: 'Order',
         },
     ],
+    cart: [
+        {
+            book: {
+                type: Schema.Types.ObjectId,
+                ref: 'Book',
+            },
+            quantity: Number,
+        },
+    ],
     books: [
         {
             type: Schema.Types.ObjectId,

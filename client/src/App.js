@@ -26,7 +26,6 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
             : 'cache-only',
     });
     useEffect(() => {
-        console.log(data);
         if (data && isLoggedIn == null) {
             if (data.getMe) {
                 authenticate(data.getMe);

@@ -30,6 +30,11 @@ module.exports = {
             return await orderModule.findAll(condition);
         },
     },
+    CartItem: {
+        async book(parent) {
+            return await bookModule.findOneById(parent.book);
+        },
+    },
     Query: {
         async findUserById(parent, args, context, info) {
             try {
@@ -179,6 +184,77 @@ module.exports = {
                     ...updatedUser._doc,
                     id: updatedUser._id,
                 };
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        async addToCart(parent, args, context, info) {
+            try {
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
+                const user = await userModule.findById(parsedToken.id);
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
+                }
+
+                const { bookId } = args;
+                const isBookExists = !!(await bookModule.findOneById(bookId));
+                if (!isBookExists) {
+                    throw new ApolloError('Book does not exist');
+                }
+
+                let newCartItem = null;
+                const index = user.cart.findIndex(
+                    (item) => item.book.toString() === bookId
+                );
+                if (index === -1) {
+                    newCartItem = { book: bookId, quantity: 1 };
+                    user.cart.push(newCartItem);
+                } else {
+                    user.cart[index].quantity++;
+                    newCartItem = user.cart[index];
+                }
+
+                await user.save();
+
+                return newCartItem;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        async removeFromCart(parent, args, context, info) {
+            try {
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
+                const user = await userModule.findById(parsedToken.id);
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
+                }
+
+                const { bookId } = args;
+                const isBookExists = !!(await bookModule.findOneById(bookId));
+                if (!isBookExists) {
+                    throw new ApolloError('Book does not exist');
+                }
+
+                const index = user.cart.findIndex(
+                    (item) => item.book.toString() === bookId
+                );
+                if (index === -1) {
+                    throw new ApolloError('Book is not in cart');
+                } else {
+                    user.cart[index].quantity--;
+                    if (user.cart[index].quantity === 0) {
+                        user.cart.splice(index, 1);
+                    }
+                    await user.save();
+                }
+
+                return { success: true };
             } catch (error) {
                 throw new Error(error);
             }

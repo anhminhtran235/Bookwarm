@@ -3,7 +3,7 @@ import styled from 'styled-components';
 const Item = styled.div`
     display: flex;
     align-items: center;
-    padding-bottom: 10px;
+    padding-bottom: 15px;
 `;
 
 const InfoLine = styled.div`
@@ -11,13 +11,21 @@ const InfoLine = styled.div`
     margin: 0;
 `;
 
-const CartItem = () => {
+const ItemImage = styled.img`
+    height: 7rem;
+    width: 5rem;
+    object-fit: fill;
+`;
+
+const CartItem = ({ cartItem: { book, quantity } }) => {
     return (
         <Item>
-            <img src='assets/images/Minh.jpg' alt='Minh' />
+            <ItemImage src={book.image} alt='Book image' />
             <div className='pl-3'>
-                <InfoLine>Set for life</InfoLine>
-                <InfoLine>$23 x 2 = $46</InfoLine>
+                <InfoLine>{book.title}</InfoLine>
+                <InfoLine>
+                    ${book.price} x {quantity} = {book.price * quantity}
+                </InfoLine>
             </div>
         </Item>
     );

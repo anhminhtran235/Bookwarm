@@ -16,6 +16,25 @@ const GET_ME_QUERY = gql`
     }
 `;
 
+const GET_CART_QUERY = gql`
+    query {
+        getMe {
+            cart {
+                id
+                book {
+                    id
+                    title
+                    description
+                    image
+                    price
+                }
+                quantity
+            }
+        }
+    }
+`;
+
 module.exports = {
     GET_ME_QUERY,
+    GET_CART_QUERY,
 };

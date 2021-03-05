@@ -9,16 +9,13 @@ const Container = styled.div`
     }
 `;
 
-const CartItems = () => {
+const CartItems = ({ cartItems }) => {
     return (
         <Container>
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
-            <CartItem />
+            {cartItems &&
+                cartItems.map((item) => (
+                    <CartItem key={item.id} cartItem={item} />
+                ))}
         </Container>
     );
 };

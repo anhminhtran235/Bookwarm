@@ -40,7 +40,7 @@ const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
                                 Account
                             </Nav.Link>
                         )}
-                        {!isLoggedIn && (
+                        {isLoggedIn && (
                             <Nav.Link as={Button} onClick={openCart}>
                                 My cart
                             </Nav.Link>

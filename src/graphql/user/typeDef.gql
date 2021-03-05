@@ -4,8 +4,15 @@ type User {
     email: String!
     avatar: String!
     createdAt: Date!
+    cart: [CartItem]!
     orders: [ID]
     books: [Book]
+}
+
+type CartItem {
+    id: ID!
+    book: Book!
+    quantity: Int!
 }
 
 input RegisterInput {
@@ -28,14 +35,16 @@ input UpdateUserInput {
 }
 
 extend type Query {
-    findUserById(id: ID): User!
+    findUserById(id: ID!): User!
     findAllUsers: [User]!
     getMe: User
 }
 
 extend type Mutation {
-    register(registerInput: RegisterInput): User!
-    login(loginInput: LoginInput): User!
-    updateUser(updateInput: UpdateUserInput): User!
+    register(registerInput: RegisterInput!): User!
+    login(loginInput: LoginInput!): User!
+    updateUser(updateInput: UpdateUserInput!): User!
     logout: String
+    addToCart(bookId: ID!): CartItem!
+    removeFromCart(bookId: ID!): SuccessBoolean!
 }
