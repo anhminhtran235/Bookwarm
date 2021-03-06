@@ -1,5 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
-import { Route } from 'react-router-dom';
+import { Redirect, Route, Switch } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { useQuery } from '@apollo/client';
 import { useEffect } from 'react';
@@ -43,31 +43,41 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
         <Page>
             <Container>
                 <CartModal></CartModal>
-                <Route path='/' exact component={Home}></Route>
-                <PrivateRoute
-                    path='/shopping'
-                    exact
-                    component={Shopping}
-                ></PrivateRoute>
-                <PrivateRoute
-                    path='/sell'
-                    exact
-                    component={Sell}
-                ></PrivateRoute>
-                <PrivateRoute
-                    path='/account'
-                    exact
-                    component={Account}
-                ></PrivateRoute>
-                <Route path='/login' exact component={Login}></Route>
-                <Route path='/register' exact component={Register}></Route>
-                <PrivateRoute
-                    path='/orders'
-                    exact
-                    component={Orders}
-                ></PrivateRoute>
-                <Route path='/book/:id' exact component={Book}></Route>
-                <Route path='/edit/book/:id' exact component={EditBook}></Route>
+                <Switch>
+                    <Route path='/' exact component={Home}></Route>
+                    <PrivateRoute
+                        path='/shopping'
+                        exact
+                        component={Shopping}
+                    ></PrivateRoute>
+                    <PrivateRoute
+                        path='/sell'
+                        exact
+                        component={Sell}
+                    ></PrivateRoute>
+                    <PrivateRoute
+                        path='/account'
+                        exact
+                        component={Account}
+                    ></PrivateRoute>
+                    <Route path='/login' exact component={Login}></Route>
+                    <Route path='/register' exact component={Register}></Route>
+                    <PrivateRoute
+                        path='/orders'
+                        exact
+                        component={Orders}
+                    ></PrivateRoute>
+                    <Route path='/book/:id' exact component={Book}></Route>
+                    <Route
+                        path='/edit/book/:id'
+                        exact
+                        component={EditBook}
+                    ></Route>
+                    <Route
+                        path='/'
+                        render={() => <Redirect to='/shopping' />}
+                    ></Route>
+                </Switch>
             </Container>
         </Page>
     );

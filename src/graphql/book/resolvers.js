@@ -12,7 +12,8 @@ module.exports = {
 
             const criteria = [];
             if (titleContains) {
-                criteria.push({ $text: { $search: `${titleContains}` } });
+                const regex = new RegExp(`.*${titleContains}.*`, 'i');
+                criteria.push({ title: regex });
             }
             if (minPrice && maxPrice) {
                 criteria.push({
@@ -33,12 +34,13 @@ module.exports = {
             }
 
             try {
-                return bookModule.findPaginate(
+                const books = await bookModule.findPaginate(
                     condition,
                     { createdAt: -1 },
                     skip,
                     limit
                 );
+                return books;
             } catch (error) {
                 throw new Error(error);
             }

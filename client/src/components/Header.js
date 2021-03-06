@@ -10,6 +10,7 @@ import { openCart } from '../redux/actions/cart';
 import gql from 'graphql-tag';
 import * as alertify from '../lib/alertify';
 import { useUser } from '../lib/util';
+import Search from '../components/Search';
 
 const ItemCount = styled.div`
     position: absolute;
@@ -19,6 +20,12 @@ const ItemCount = styled.div`
     border-radius: 80%;
     padding: 2px 4px;
     color: white;
+`;
+
+const SearchWrapper = styled.div`
+    display: grid;
+    grid-template-columns: 1fr auto;
+    border-bottom: 1px solid black;
 `;
 
 const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
@@ -93,6 +100,9 @@ const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
                     </Nav>
                 </Container>
             </Navbar>
+            <SearchWrapper>
+                <Search />
+            </SearchWrapper>
         </>
     );
 };
