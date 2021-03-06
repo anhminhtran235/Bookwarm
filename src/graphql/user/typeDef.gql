@@ -5,8 +5,8 @@ type User {
     avatar: String!
     createdAt: Date!
     cart: [CartItem]
-    orders: [OrderItem]
-    books: [Book]
+    orders: [Order]!
+    books: [Book]!
 }
 
 type CartItem {
@@ -23,6 +23,7 @@ type OrderItem {
 }
 
 type Order {
+    id: ID!
     orderItems: [OrderItem]!
     createdAt: Date!
 }

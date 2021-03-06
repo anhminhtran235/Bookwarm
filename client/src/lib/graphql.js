@@ -211,6 +211,29 @@ const UPDATE_USER_MUTATION = gql`
     }
 `;
 
+const GET_ORDERS_QUERY = gql`
+    query {
+        getMe {
+            orders {
+                id
+                orderItems {
+                    book {
+                        id
+                        title
+                        description
+                        image
+                        price
+                        author
+                    }
+                    quantity
+                    pricePerItem
+                }
+                createdAt
+            }
+        }
+    }
+`;
+
 const cacheUpdateAddToCart = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
     const cartItemAdded = payload.data.addToCart;
@@ -325,6 +348,7 @@ module.exports = {
     SINGLE_BOOK_QUERY,
     CHECKOUT_MUTATION,
     UPDATE_USER_MUTATION,
+    GET_ORDERS_QUERY,
     cacheUpdateAddToCart,
     cacheUpdateRemoveFromCart,
     cacheUpdateAddBook,
