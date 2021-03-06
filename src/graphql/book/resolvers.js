@@ -2,6 +2,7 @@ const { ApolloError, AuthenticationError } = require('apollo-server');
 
 const bookModule = require('../../models/book/Book');
 const userModule = require('../../models/user/User');
+const cloudinary = require('../../util/cloudinary');
 
 module.exports = {
     Query: {
@@ -62,6 +63,13 @@ module.exports = {
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
+
+                if (args.image && args.image !== '') {
+                    args.image = (
+                        await cloudinary.uploader.upload(args.image)
+                    ).url;
+                }
+
                 const newBook = await bookModule.insert({
                     ...args,
                     seller: user._id,
