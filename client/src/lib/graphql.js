@@ -195,6 +195,22 @@ const CHECKOUT_MUTATION = gql`
     }
 `;
 
+const UPDATE_USER_MUTATION = gql`
+    mutation updateUser(
+        $username: String!
+        $oldPassword: String!
+        $newPassword: String!
+    ) {
+        updateUser(
+            username: $username
+            oldPassword: $oldPassword
+            newPassword: $newPassword
+        ) {
+            username
+        }
+    }
+`;
+
 const cacheUpdateAddToCart = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
     const cartItemAdded = payload.data.addToCart;
@@ -284,6 +300,19 @@ const cacheUpdateCheckout = (cache, payload) => {
     });
 };
 
+const cacheUpdateUpdateUser = (cache, payload) => {
+    const data = _.cloneDeep(cache.readQuery({ query: GET_ME_QUERY }));
+    cache.writeQuery({
+        query: GET_ME_QUERY,
+        data: {
+            getMe: {
+                ...data.getMe,
+                username: payload.data.updateUser.username,
+            },
+        },
+    });
+};
+
 module.exports = {
     GET_ME_QUERY,
     GET_CART_QUERY,
@@ -295,10 +324,12 @@ module.exports = {
     DELETE_BOOK_MUTATION,
     SINGLE_BOOK_QUERY,
     CHECKOUT_MUTATION,
+    UPDATE_USER_MUTATION,
     cacheUpdateAddToCart,
     cacheUpdateRemoveFromCart,
     cacheUpdateAddBook,
     cacheUpdateUpdateBook,
     cacheUpdateDeleteBook,
     cacheUpdateCheckout,
+    cacheUpdateUpdateUser,
 };

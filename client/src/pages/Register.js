@@ -9,7 +9,7 @@ import { StyledForm, StyledButton } from '../lib/Form';
 import { authenticate } from '../redux/actions/auth';
 import * as alertify from '../lib/alertify';
 
-const SellerRegister = ({ authenticate, history }) => {
+const Register = ({ authenticate, history }) => {
     const { form, handleChange } = useForm({
         username: 'Test user',
         email: 'minh@gmail.com',
@@ -129,4 +129,4 @@ const mapDispatchToProps = (dispatch) => ({
     authenticate: (user) => dispatch(authenticate(user)),
 });
 
-export default connect(null, mapDispatchToProps)(SellerRegister);
+export default connect(null, mapDispatchToProps)(Register);

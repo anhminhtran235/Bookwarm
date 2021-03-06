@@ -39,13 +39,6 @@ input LoginInput {
     password: String!
 }
 
-input UpdateUserInput {
-    username: String
-    oldPassword: String
-    newPassword: String
-    avatar: String
-}
-
 extend type Query {
     findUserById(id: ID!): User!
     findAllUsers: [User]!
@@ -55,7 +48,11 @@ extend type Query {
 extend type Mutation {
     register(registerInput: RegisterInput!): User!
     login(loginInput: LoginInput!): User!
-    updateUser(updateInput: UpdateUserInput!): User!
+    updateUser(
+        username: String!
+        oldPassword: String!
+        newPassword: String!
+    ): User!
     logout: String
     addToCart(bookId: ID!): CartItem!
     removeFromCart(bookId: ID!): CartItem!

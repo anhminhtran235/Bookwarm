@@ -158,7 +158,7 @@ module.exports = {
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
-                const { username, oldPassword, newPassword } = args.updateInput;
+                const { username, oldPassword, newPassword } = args;
                 if (newPassword) {
                     if (!oldPassword) {
                         throw new UserInputError('Empty old password');
