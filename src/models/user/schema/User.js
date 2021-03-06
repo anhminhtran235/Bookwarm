@@ -1,6 +1,6 @@
 const { model, Schema } = require('mongoose');
 
-const sellerSchema = new Schema({
+const userSchema = new Schema({
     username: String,
     email: {
         type: String,
@@ -38,4 +38,4 @@ const sellerSchema = new Schema({
     ],
 });
 
-module.exports = model('User', sellerSchema);
+module.exports = model('User', userSchema);

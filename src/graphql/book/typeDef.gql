@@ -22,7 +22,7 @@ extend type Mutation {
         title: String!
         author: String!
         description: String!
-        image: String
+        image: String!
         price: Float!
     ): Book!
     updateBook(
@@ -33,5 +33,5 @@ extend type Mutation {
         image: String
         price: Float
     ): Book!
-    deleteBook(id: ID!): String
+    deleteBook(id: ID!): Book!
 }

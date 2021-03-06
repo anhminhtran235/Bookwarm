@@ -41,6 +41,9 @@ const setupApolloServer = async () => {
             credentials: true,
             origin: process.env.FRONT_END_URL,
         },
+        bodyParserConfig: {
+            limit: '5mb',
+        },
     });
 
     app.listen({ port: process.env.PORT }, () => {

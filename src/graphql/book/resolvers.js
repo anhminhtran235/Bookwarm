@@ -113,8 +113,7 @@ module.exports = {
                     throw new ApolloError('Cannot find user profile');
                 }
                 if (user._doc.books.includes(id)) {
-                    await bookModule.deleteById(id);
-                    return 'Success';
+                    return await bookModule.deleteById(id);
                 } else {
                     throw new AuthenticationError(
                         'You are not allowed to update this book'

@@ -10,10 +10,13 @@ import Page from './components/Page';
 import PrivateRoute from './components/PrivateRoute';
 import Home from './pages/Home';
 import Shopping from './pages/Shopping';
+import Sell from './pages/Sell';
 import Account from './pages/Account';
 import Login from './pages/Login';
 import Register from './pages/Register';
 import Orders from './pages/Orders';
+import Book from './pages/Book';
+import EditBook from './pages/EditBook';
 import CartModal from './components/Cart/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';
 import { authenticate, deauthenticate } from './redux/actions/auth';
@@ -47,6 +50,11 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
                     component={Shopping}
                 ></PrivateRoute>
                 <PrivateRoute
+                    path='/sell'
+                    exact
+                    component={Sell}
+                ></PrivateRoute>
+                <PrivateRoute
                     path='/account'
                     exact
                     component={Account}
@@ -58,6 +66,8 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
                     exact
                     component={Orders}
                 ></PrivateRoute>
+                <Route path='/book/:id' exact component={Book}></Route>
+                <Route path='/edit/book/:id' exact component={EditBook}></Route>
             </Container>
         </Page>
     );

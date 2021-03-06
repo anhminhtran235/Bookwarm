@@ -1,3 +1,7 @@
+import { useQuery } from '@apollo/client';
+
+import { GET_ME_QUERY } from './graphql';
+
 export const toDataURL = (file) => {
     return new Promise((resolve, reject) => {
         try {
@@ -10,4 +14,9 @@ export const toDataURL = (file) => {
             reject(error);
         }
     });
+};
+
+export const useUser = () => {
+    const { data } = useQuery(GET_ME_QUERY);
+    return data?.getMe;
 };

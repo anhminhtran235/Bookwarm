@@ -3,14 +3,32 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { useMutation } from '@apollo/client';
+import styled from 'styled-components';
 
 import { deauthenticate } from '../redux/actions/auth';
 import { openCart } from '../redux/actions/cart';
 import gql from 'graphql-tag';
 import * as alertify from '../lib/alertify';
+import { useUser } from '../lib/util';
+
+const ItemCount = styled.div`
+    position: absolute;
+    top: -7px;
+    right: -6px;
+    background: red;
+    border-radius: 80%;
+    padding: 2px 4px;
+    color: white;
+`;
 
 const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
     const [removeCookie] = useMutation(LOGOUT_MUTATION);
+
+    const user = useUser();
+    let cartItemCount = user?.cart?.reduce(
+        (total, item) => total + item.quantity,
+        0
+    );
 
     const logout = () => {
         alertify.error('Logged out');
@@ -31,6 +49,11 @@ const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
                             </Nav.Link>
                         )}
                         {isLoggedIn && (
+                            <Nav.Link as={Link} to='/sell'>
+                                Sell
+                            </Nav.Link>
+                        )}
+                        {isLoggedIn && (
                             <Nav.Link as={Link} to='/orders'>
                                 Orders
                             </Nav.Link>
@@ -41,8 +64,15 @@ const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
                             </Nav.Link>
                         )}
                         {isLoggedIn && (
-                            <Nav.Link as={Button} onClick={openCart}>
+                            <Nav.Link
+                                as={Button}
+                                onClick={openCart}
+                                className='position-relative'
+                            >
                                 My cart
+                                {cartItemCount !== 0 && (
+                                    <ItemCount>{cartItemCount}</ItemCount>
+                                )}
                             </Nav.Link>
                         )}
                     </Nav>

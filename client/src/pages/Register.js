@@ -28,16 +28,9 @@ const SellerRegister = ({ authenticate, history }) => {
         }
     );
 
-    if (error) {
-        alertify.error(error.graphQLErrors[0].message);
-    }
-
     const onSubmit = async (e) => {
         e.preventDefault();
-        const formToSubmit = {};
-        formToSubmit.username = form.username;
-        formToSubmit.email = form.email;
-        formToSubmit.password = form.password;
+        const formToSubmit = { ...form };
 
         if (form.avatar && form.avatar !== '') {
             try {

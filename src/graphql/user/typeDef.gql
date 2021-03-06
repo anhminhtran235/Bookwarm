@@ -4,8 +4,8 @@ type User {
     email: String!
     avatar: String!
     createdAt: Date!
-    cart: [CartItem]!
-    orders: [ID]
+    cart: [CartItem]
+    orders: [OrderItem]
     books: [Book]
 }
 
@@ -13,6 +13,18 @@ type CartItem {
     id: ID!
     book: Book!
     quantity: Int!
+}
+
+type OrderItem {
+    id: ID!
+    book: Book!
+    quantity: Int!
+    pricePerItem: Int!
+}
+
+type Order {
+    orderItems: [OrderItem]!
+    createdAt: Date!
 }
 
 input RegisterInput {
@@ -46,5 +58,6 @@ extend type Mutation {
     updateUser(updateInput: UpdateUserInput!): User!
     logout: String
     addToCart(bookId: ID!): CartItem!
-    removeFromCart(bookId: ID!): SuccessBoolean!
+    removeFromCart(bookId: ID!): CartItem!
+    checkout(password: String!): Order!
 }

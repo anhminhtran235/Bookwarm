@@ -1,4 +1,13 @@
 import styled from 'styled-components';
+import { Button } from 'react-bootstrap';
+
+import {
+    ADD_TO_CART_MUTATION,
+    REMOVE_FROM_CART_MUTATION,
+    cacheUpdateAddToCart,
+    cacheUpdateRemoveFromCart,
+} from '../../../../../lib/graphql';
+import { useMutation } from '@apollo/client';
 
 const Item = styled.div`
     display: flex;
@@ -17,16 +26,59 @@ const ItemImage = styled.img`
     object-fit: fill;
 `;
 
+const InfoAndOptions = styled.div`
+    padding-left: 20px;
+    display: flex;
+    flex-grow: 1;
+    justify-content: space-between;
+`;
+
+const ItemOptions = styled.div`
+    display: flex;
+    align-items: center;
+`;
+
 const CartItem = ({ cartItem: { book, quantity } }) => {
+    const [addToCart] = useMutation(ADD_TO_CART_MUTATION, {
+        variables: { bookId: book.id },
+        update(cache, result) {
+            cacheUpdateAddToCart(cache, result);
+        },
+        onError(error) {
+            console.log(error);
+        },
+    });
+
+    const [removeFromCart] = useMutation(REMOVE_FROM_CART_MUTATION, {
+        variables: { bookId: book.id },
+        update(cache, result) {
+            cacheUpdateRemoveFromCart(cache, result);
+        },
+        onError(error) {
+            console.log(error);
+        },
+    });
+
     return (
         <Item>
             <ItemImage src={book.image} alt='Book image' />
-            <div className='pl-3'>
-                <InfoLine>{book.title}</InfoLine>
-                <InfoLine>
-                    ${book.price} x {quantity} = {book.price * quantity}
-                </InfoLine>
-            </div>
+            <InfoAndOptions>
+                <div>
+                    <InfoLine>{book.title}</InfoLine>
+                    <InfoLine>Price: ${book.price}</InfoLine>
+                    <InfoLine>Quantity: {quantity}</InfoLine>
+                    <InfoLine>Subtotal: ${book.price * quantity}</InfoLine>
+                </div>
+                <ItemOptions>
+                    <Button className='mr-2' onClick={addToCart}>
+                        +
+                    </Button>
+                    {quantity}
+                    <Button className='ml-2' onClick={removeFromCart}>
+                        -
+                    </Button>
+                </ItemOptions>
+            </InfoAndOptions>
         </Item>
     );
 };

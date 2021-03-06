@@ -35,6 +35,11 @@ module.exports = {
             return await bookModule.findOneById(parent.book);
         },
     },
+    OrderItem: {
+        async book(parent) {
+            return await bookModule.findOneById(parent.book);
+        },
+    },
     Query: {
         async findUserById(parent, args, context, info) {
             try {
@@ -241,6 +246,7 @@ module.exports = {
                     throw new ApolloError('Book does not exist');
                 }
 
+                let updatedItem;
                 const index = user.cart.findIndex(
                     (item) => item.book.toString() === bookId
                 );
@@ -248,13 +254,45 @@ module.exports = {
                     throw new ApolloError('Book is not in cart');
                 } else {
                     user.cart[index].quantity--;
+                    updatedItem = user.cart[index];
                     if (user.cart[index].quantity === 0) {
                         user.cart.splice(index, 1);
                     }
                     await user.save();
                 }
 
-                return { success: true };
+                return updatedItem;
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        async checkout(parent, args, context, info) {
+            try {
+                const { password } = args;
+                const parsedToken = context.req.parsedToken;
+                if (!parsedToken) {
+                    throw new ApolloError('Please login first');
+                }
+                const user = await userModule.findById(parsedToken.id);
+                await user.populate('cart.book').execPopulate();
+                if (!user) {
+                    throw new ApolloError('Cannot find user profile');
+                }
+
+                const isPasswordMatch = await bcrypt.compare(
+                    password,
+                    user.password
+                );
+
+                if (!isPasswordMatch) {
+                    throw new ApolloError('Invalid credential');
+                }
+
+                const newOrder = await orderModule.makeOrderFromCart(user.cart);
+                user.orders.push(newOrder._id);
+                user.cart = [];
+                await user.save();
+                return newOrder._doc;
             } catch (error) {
                 throw new Error(error);
             }
