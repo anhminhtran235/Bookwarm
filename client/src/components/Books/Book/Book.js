@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import AddToCartButton from './AddToCartButton';
 import RemoveBookButton from './RemoveBookButton';
 
-const Book = ({ book: { id, title, description, image }, isMine, history }) => {
+const Book = ({ book: { id, title, subtitle, image }, isMine, history }) => {
     const goToBook = () => {
         history.push('/book/' + id);
     };
@@ -24,7 +24,7 @@ const Book = ({ book: { id, title, description, image }, isMine, history }) => {
             />
             <Card.Body>
                 <Card.Title>{title}</Card.Title>
-                <Card.Text>{description}</Card.Text>
+                {subtitle && <Card.Text>{subtitle}</Card.Text>}
             </Card.Body>
             <Card.Body>
                 {isMine && (

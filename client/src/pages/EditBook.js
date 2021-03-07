@@ -27,6 +27,7 @@ const Edit = () => {
     const { form, handleChange } = useForm(
         book || {
             title: '',
+            subtitle: '',
             author: '',
             description: '',
             price: '',
@@ -63,6 +64,16 @@ const Edit = () => {
                         value={form.title}
                         onChange={handleChange}
                         required
+                    />
+                </Form.Group>
+                <Form.Group as={Col}>
+                    <Form.Label>Subtitle</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Subtitle'
+                        name='subtitle'
+                        value={form.subtitle}
+                        onChange={handleChange}
                     />
                 </Form.Group>
                 <Form.Group as={Col}>

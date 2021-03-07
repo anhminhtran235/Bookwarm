@@ -7,30 +7,19 @@ const cloudinary = require('../../util/cloudinary');
 module.exports = {
     Query: {
         async findBooks(parent, args, context, info) {
-            const { titleContains, minPrice, maxPrice } = args.criteria;
+            const { titleContains } = args.criteria;
             const { skip, limit } = args;
 
             const criteria = [];
             if (titleContains) {
                 const regex = new RegExp(`.*${titleContains}.*`, 'i');
                 criteria.push({ title: regex });
-            }
-            if (minPrice && maxPrice) {
-                criteria.push({
-                    $and: [
-                        { price: { $gte: minPrice } },
-                        { price: { $lte: maxPrice } },
-                    ],
-                });
-            } else if (minPrice) {
-                criteria.push({ price: { $gte: minPrice } });
-            } else if (maxPrice) {
-                criteria.push({ price: { $lte: maxPrice } });
+                criteria.push({ subtitle: regex });
             }
 
             let condition = {};
             if (criteria.length > 0) {
-                condition = { $and: criteria };
+                condition = { $or: criteria };
             }
 
             try {

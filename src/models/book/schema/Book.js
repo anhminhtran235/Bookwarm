@@ -6,6 +6,7 @@ const bookSchema = new Schema({
         ref: 'User',
     },
     title: String,
+    subtitle: String,
     author: String,
     description: String,
     image: String,

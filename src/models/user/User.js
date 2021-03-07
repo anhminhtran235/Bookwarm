@@ -15,6 +15,14 @@ const insert = async (username, email, password, avatar) => {
     }
 };
 
+const insertMany = async (arr) => {
+    try {
+        return await User.insertMany(arr);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const findById = async (id) => {
     try {
         return await User.findById(id);
@@ -59,6 +67,7 @@ const addNewBook = async (id, bookId) => {
 
 module.exports = {
     insert,
+    insertMany,
     findById,
     findOne,
     findAll,

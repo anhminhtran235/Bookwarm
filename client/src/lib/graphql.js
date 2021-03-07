@@ -34,6 +34,7 @@ const GET_CART_QUERY = gql`
                 book {
                     id
                     title
+                    subtitle
                     description
                     image
                     price
@@ -51,6 +52,7 @@ const ADD_TO_CART_MUTATION = gql`
             book {
                 id
                 title
+                subtitle
                 author
                 description
                 image
@@ -67,6 +69,7 @@ const REMOVE_FROM_CART_MUTATION = gql`
             book {
                 id
                 title
+                subtitle
                 author
                 description
                 image
@@ -77,24 +80,15 @@ const REMOVE_FROM_CART_MUTATION = gql`
 `;
 
 const FIND_BOOKS_QUERY = gql`
-    query findBooks(
-        $titleContains: String
-        $minPrice: Float
-        $maxPrice: Float
-        $skip: Int
-        $limit: Int
-    ) {
+    query findBooks($titleContains: String, $skip: Int, $limit: Int) {
         findBooks(
-            criteria: {
-                titleContains: $titleContains
-                minPrice: $minPrice
-                maxPrice: $maxPrice
-            }
+            criteria: { titleContains: $titleContains }
             skip: $skip
             limit: $limit
         ) {
             id
             title
+            subtitle
             description
             image
             price
@@ -105,6 +99,7 @@ const FIND_BOOKS_QUERY = gql`
 const ADD_BOOK_MUTATION = gql`
     mutation addBook(
         $title: String!
+        $subtitle: String
         $author: String!
         $description: String!
         $image: String!
@@ -112,6 +107,7 @@ const ADD_BOOK_MUTATION = gql`
     ) {
         addBook(
             title: $title
+            subtitle: $subtitle
             author: $author
             description: $description
             image: $image
@@ -119,6 +115,7 @@ const ADD_BOOK_MUTATION = gql`
         ) {
             id
             title
+            subtitle
             description
             image
             price
@@ -130,6 +127,7 @@ const UPDATE_BOOK_MUTATION = gql`
     mutation updateBook(
         $id: ID!
         $title: String
+        $subtitle: String
         $author: String
         $description: String
         $image: String
@@ -138,6 +136,7 @@ const UPDATE_BOOK_MUTATION = gql`
         updateBook(
             id: $id
             title: $title
+            subtitle: $subtitle
             author: $author
             description: $description
             image: $image
@@ -145,6 +144,7 @@ const UPDATE_BOOK_MUTATION = gql`
         ) {
             id
             title
+            subtitle
             author
             description
             image
@@ -158,6 +158,7 @@ const DELETE_BOOK_MUTATION = gql`
         deleteBook(id: $id) {
             id
             title
+            subtitle
             author
             description
             image
@@ -171,6 +172,7 @@ const SINGLE_BOOK_QUERY = gql`
         findBookById(id: $id) {
             id
             title
+            subtitle
             description
             image
             price
@@ -220,6 +222,7 @@ const GET_ORDERS_QUERY = gql`
                     book {
                         id
                         title
+                        subtitle
                         description
                         image
                         price

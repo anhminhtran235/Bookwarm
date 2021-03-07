@@ -32,6 +32,14 @@ const insert = async (data) => {
     }
 };
 
+const insertMany = async (arr) => {
+    try {
+        return await Book.insertMany(arr);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const updateById = async (id, data) => {
     try {
         return await Book.findByIdAndUpdate(id, data, { new: true });
@@ -53,6 +61,7 @@ module.exports = {
     findAll,
     findOneById,
     insert,
+    insertMany,
     updateById,
     deleteById,
 };

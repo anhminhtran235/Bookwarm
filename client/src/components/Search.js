@@ -75,7 +75,7 @@ const Search = ({ history }) => {
     } = useCombobox({
         items: books,
         onInputValueChange({ inputValue }) {
-            setInput(inputValue);
+            setInput({ value: inputValue });
             findItemsDebounced({
                 variables: { titleContains: inputValue, limit: 10 },
             });
@@ -85,6 +85,7 @@ const Search = ({ history }) => {
         },
         itemToString: (book) => book?.title || '',
     });
+
     return (
         <SearchStyles>
             <div {...getComboboxProps()}>
@@ -114,7 +115,7 @@ const Search = ({ history }) => {
                         </DropDownItem>
                     ))}
                 {isOpen && !books.length && !loading && (
-                    <DropDownItem>No item found for {input}</DropDownItem>
+                    <DropDownItem>No item found for {input.value}</DropDownItem>
                 )}
             </DropDown>
         </SearchStyles>

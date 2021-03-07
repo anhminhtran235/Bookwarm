@@ -9,10 +9,11 @@ import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../lib/graphql';
 
 const Sell = ({ history, authenticate, isLoggedIn }) => {
     const { form, handleChange, clearForm } = useForm({
-        title: 'Unleash the power within',
-        author: 'Tony Robbins',
-        description: 'This book will change your life',
-        price: 37,
+        title: '',
+        subtitle: '',
+        author: '',
+        description: '',
+        price: '',
         image: '',
     });
 
@@ -59,6 +60,16 @@ const Sell = ({ history, authenticate, isLoggedIn }) => {
                     />
                 </Form.Group>
                 <Form.Group as={Col}>
+                    <Form.Label>Subtitle</Form.Label>
+                    <Form.Control
+                        type='text'
+                        placeholder='Subtitle'
+                        name='subtitle'
+                        value={form.subtitle}
+                        onChange={handleChange}
+                    />
+                </Form.Group>
+                <Form.Group as={Col}>
                     <Form.Label>Author *</Form.Label>
                     <Form.Control
                         type='text'
@@ -72,7 +83,8 @@ const Sell = ({ history, authenticate, isLoggedIn }) => {
                 <Form.Group as={Col}>
                     <Form.Label>Description</Form.Label>
                     <Form.Control
-                        type='text'
+                        as='textarea'
+                        row={3}
                         placeholder='Description'
                         name='description'
                         value={form.description}

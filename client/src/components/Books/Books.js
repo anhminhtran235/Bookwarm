@@ -21,7 +21,7 @@ const Books = () => {
             {books &&
                 books.map((book) => {
                     const isMine =
-                        me?.books.findIndex((b) => b.id === book.id) !== 0;
+                        me?.books.findIndex((b) => b.id === book.id) !== -1;
                     return <Book key={book.id} book={book} isMine={isMine} />;
                 })}
         </Row>
