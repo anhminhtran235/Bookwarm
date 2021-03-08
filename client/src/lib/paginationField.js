@@ -12,12 +12,15 @@ export default function paginationField() {
             const data = cache.readQuery({
                 query: GET_BOOK_PAGINATION_META_QUERY,
             });
-            const count = data?.count;
+            const count = data?.getBookPaginationMeta.count;
             const page = skip / limit + 1;
             const pages = Math.ceil(count / limit);
+            const lastPageCount = count - limit * (pages - 1);
 
             const items = existing.slice(skip, skip + limit).filter((x) => x);
-            if (items.length !== limit && page !== pages) {
+            if (page !== pages && items.length !== limit) {
+                return false;
+            } else if (page === pages && items.length !== lastPageCount) {
                 return false;
             } else {
                 return items;
@@ -25,9 +28,10 @@ export default function paginationField() {
         },
         merge(existing, incoming, { args }) {
             const { skip, limit } = args;
-            console.log(
-                'Merging ' + incoming.length + ' items from the network'
-            );
+            if (!skip && !limit) {
+                return incoming;
+            }
+
             const merged = existing ? existing.slice(0) : [];
             for (let i = skip; i < skip + incoming.length; i++) {
                 merged[i] = incoming[i - skip];

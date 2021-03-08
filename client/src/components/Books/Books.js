@@ -8,7 +8,6 @@ import { useUser } from '../../lib/util';
 const Books = ({ match, perPage }) => {
     const me = useUser();
     const page = match.params.page || 1;
-    console.log(page);
     const { loading, data } = useQuery(FIND_BOOKS_QUERY, {
         variables: {
             criteria: {},

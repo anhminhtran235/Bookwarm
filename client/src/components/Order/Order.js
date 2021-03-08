@@ -22,7 +22,6 @@ const TotalPrice = styled.h2`
 `;
 
 const Order = ({ order: { createdAt, orderItems } }) => {
-    console.log(orderItems);
     const total = orderItems.reduce(
         (sum, item) => sum + item.quantity * item.pricePerItem,
         0

@@ -247,6 +247,7 @@ const GET_ORDERS_QUERY = gql`
 
 const cacheUpdateAddToCart = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
+    if (!data) return;
     const cartItemAdded = payload.data.addToCart;
     const index = data.getMe.cart.findIndex(
         (item) => item.book.id === cartItemAdded.book.id
@@ -264,6 +265,7 @@ const cacheUpdateAddToCart = (cache, payload) => {
 
 const cacheUpdateRemoveFromCart = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
+    if (!data) return;
     const cartItemRemoved = payload.data.removeFromCart;
     const index = data.getMe.cart.findIndex(
         (item) => item.book.id === cartItemRemoved.book.id
@@ -281,21 +283,42 @@ const cacheUpdateRemoveFromCart = (cache, payload) => {
 };
 
 const cacheUpdateAddBook = (cache, payload) => {
-    debugger;
     const data = _.cloneDeep(cache.readQuery({ query: FIND_BOOKS_QUERY }));
+    if (!data) return;
     const bookAdded = payload.data.addBook;
     cache.writeQuery({
         query: FIND_BOOKS_QUERY,
-        variables: {
-            criteria: {},
-            skip: 0,
-            limit: 100,
-        },
         data: {
             findBooks: [bookAdded, ...data.findBooks],
         },
     });
-    const x = cache.readQuery({ query: FIND_BOOKS_QUERY });
+
+    const meta = _.cloneDeep(
+        cache.readQuery({ query: GET_BOOK_PAGINATION_META_QUERY })
+    );
+    if (!meta) return;
+    cache.writeQuery({
+        query: GET_BOOK_PAGINATION_META_QUERY,
+        variables: {
+            criteria: {},
+        },
+        data: {
+            getBookPaginationMeta: {
+                ...meta.getBookPaginationMeta,
+                count: meta.getBookPaginationMeta.count + 1,
+            },
+        },
+    });
+
+    const user = _.cloneDeep(cache.readQuery({ query: GET_ME_QUERY }));
+    if (!user) return;
+    user.getMe.books.push(payload.data.addBook.id);
+    cache.writeQuery({
+        query: GET_ME_QUERY,
+        data: {
+            getMe: user,
+        },
+    });
 };
 
 const cacheUpdateUpdateBook = (cache, payload) => {
@@ -314,29 +337,29 @@ const cacheUpdateUpdateBook = (cache, payload) => {
 };
 
 const cacheUpdateDeleteBook = (cache, payload) => {
-    // cache.evict(cache.identify(payload.data.deleteBook));
+    cache.evict(cache.identify(payload.data.deleteBook));
 
-    const data = _.cloneDeep(cache.readQuery({ query: FIND_BOOKS_QUERY }));
-    if (!data) return;
-    const bookRemoved = payload.data.deleteBook;
-    data.findBooks = data.findBooks.filter(
-        (book) => book?.id !== bookRemoved.id
+    const meta = _.cloneDeep(
+        cache.readQuery({ query: GET_BOOK_PAGINATION_META_QUERY })
     );
+    if (!meta) return;
     cache.writeQuery({
-        query: FIND_BOOKS_QUERY,
+        query: GET_BOOK_PAGINATION_META_QUERY,
         variables: {
             criteria: {},
-            skip: 0,
-            limit: 100,
         },
         data: {
-            findBooks: [...data.findBooks],
+            getBookPaginationMeta: {
+                ...meta.getBookPaginationMeta,
+                count: meta.getBookPaginationMeta.count - 1,
+            },
         },
     });
 };
 
 const cacheUpdateCheckout = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
+    if (!data) return;
     cache.writeQuery({
         query: GET_CART_QUERY,
         data: {
@@ -350,6 +373,7 @@ const cacheUpdateCheckout = (cache, payload) => {
 
 const cacheUpdateUpdateUser = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_ME_QUERY }));
+    if (!data) return;
     cache.writeQuery({
         query: GET_ME_QUERY,
         data: {

@@ -20,7 +20,12 @@ const AddToCartButton = ({ bookId }) => {
     });
 
     return (
-        <Button bg='dark' variant='dark' onClick={addToCart}>
+        <Button
+            bg='dark'
+            variant='dark'
+            style={{ display: 'block' }}
+            onClick={addToCart}
+        >
             Add to cart
         </Button>
     );

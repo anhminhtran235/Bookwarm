@@ -9,14 +9,6 @@ const PaginationBar = ({ history, perPage, bookCount }) => {
         history.push('/shopping/' + page);
     };
 
-    console.log(bookCount);
-    console.log(currentPage);
-    console.log(perPage);
-    console.log(
-        'Disabled? ' + parseInt(bookCount) <=
-            parseInt(currentPage) * parseInt(perPage)
-    );
-
     return (
         <Pagination className='mt-4'>
             <Pagination.Prev
