@@ -96,6 +96,14 @@ const FIND_BOOKS_QUERY = gql`
     }
 `;
 
+const GET_BOOK_PAGINATION_META_QUERY = gql`
+    query getBookPaginationMeta($titleContains: String) {
+        getBookPaginationMeta(criteria: { titleContains: $titleContains }) {
+            count
+        }
+    }
+`;
+
 const ADD_BOOK_MUTATION = gql`
     mutation addBook(
         $title: String!
@@ -273,14 +281,21 @@ const cacheUpdateRemoveFromCart = (cache, payload) => {
 };
 
 const cacheUpdateAddBook = (cache, payload) => {
+    debugger;
     const data = _.cloneDeep(cache.readQuery({ query: FIND_BOOKS_QUERY }));
     const bookAdded = payload.data.addBook;
     cache.writeQuery({
         query: FIND_BOOKS_QUERY,
+        variables: {
+            criteria: {},
+            skip: 0,
+            limit: 100,
+        },
         data: {
             findBooks: [bookAdded, ...data.findBooks],
         },
     });
+    const x = cache.readQuery({ query: FIND_BOOKS_QUERY });
 };
 
 const cacheUpdateUpdateBook = (cache, payload) => {
@@ -299,14 +314,21 @@ const cacheUpdateUpdateBook = (cache, payload) => {
 };
 
 const cacheUpdateDeleteBook = (cache, payload) => {
+    // cache.evict(cache.identify(payload.data.deleteBook));
+
     const data = _.cloneDeep(cache.readQuery({ query: FIND_BOOKS_QUERY }));
     if (!data) return;
     const bookRemoved = payload.data.deleteBook;
     data.findBooks = data.findBooks.filter(
-        (book) => book.id !== bookRemoved.id
+        (book) => book?.id !== bookRemoved.id
     );
     cache.writeQuery({
         query: FIND_BOOKS_QUERY,
+        variables: {
+            criteria: {},
+            skip: 0,
+            limit: 100,
+        },
         data: {
             findBooks: [...data.findBooks],
         },
@@ -343,6 +365,7 @@ module.exports = {
     GET_ME_QUERY,
     GET_CART_QUERY,
     FIND_BOOKS_QUERY,
+    GET_BOOK_PAGINATION_META_QUERY,
     ADD_TO_CART_MUTATION,
     REMOVE_FROM_CART_MUTATION,
     ADD_BOOK_MUTATION,

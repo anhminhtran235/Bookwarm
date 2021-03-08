@@ -3,3 +3,7 @@ scalar Date
 type SuccessBoolean {
     success: Boolean!
 }
+
+type PaginationMeta {
+    count: Int
+}

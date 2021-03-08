@@ -8,6 +8,14 @@ const findPaginate = async (condition, sort, skip, limit) => {
     }
 };
 
+const countBooks = async (condition) => {
+    try {
+        return await Book.find(condition).countDocuments();
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const findAll = async (condition) => {
     try {
         return await Book.find(condition);
@@ -58,6 +66,7 @@ const deleteById = async (id) => {
 
 module.exports = {
     findPaginate,
+    countBooks,
     findAll,
     findOneById,
     insert,

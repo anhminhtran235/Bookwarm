@@ -5,11 +5,15 @@ import Book from './Book/Book';
 import { FIND_BOOKS_QUERY } from '../../lib/graphql';
 import { useUser } from '../../lib/util';
 
-const Books = () => {
+const Books = ({ match, perPage }) => {
     const me = useUser();
+    const page = match.params.page || 1;
+    console.log(page);
     const { loading, data } = useQuery(FIND_BOOKS_QUERY, {
         variables: {
             criteria: {},
+            skip: (page - 1) * perPage,
+            limit: perPage,
         },
     });
     const books = data?.findBooks;

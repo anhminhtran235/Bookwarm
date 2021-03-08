@@ -45,9 +45,13 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
                 <CartModal></CartModal>
                 <Switch>
                     <Route path='/' exact component={Home}></Route>
-                    <PrivateRoute
+                    <Route
                         path='/shopping'
                         exact
+                        render={() => <Redirect to='/shopping/1' />}
+                    ></Route>
+                    <PrivateRoute
+                        path='/shopping'
                         component={Shopping}
                     ></PrivateRoute>
                     <PrivateRoute

@@ -4,25 +4,29 @@ const bookModule = require('../../models/book/Book');
 const userModule = require('../../models/user/User');
 const cloudinary = require('../../util/cloudinary');
 
+const constructConditionFromCriteria = (criteria) => {
+    const { titleContains } = criteria;
+
+    criteria = [];
+    if (titleContains) {
+        const regex = new RegExp(`.*${titleContains}.*`, 'i');
+        criteria.push({ title: regex });
+        criteria.push({ subtitle: regex });
+    }
+
+    let condition = {};
+    if (criteria.length > 0) {
+        condition = { $or: criteria };
+    }
+    return condition;
+};
+
 module.exports = {
     Query: {
         async findBooks(parent, args, context, info) {
-            const { titleContains } = args.criteria;
-            const { skip, limit } = args;
-
-            const criteria = [];
-            if (titleContains) {
-                const regex = new RegExp(`.*${titleContains}.*`, 'i');
-                criteria.push({ title: regex });
-                criteria.push({ subtitle: regex });
-            }
-
-            let condition = {};
-            if (criteria.length > 0) {
-                condition = { $or: criteria };
-            }
-
             try {
+                const condition = constructConditionFromCriteria(args.criteria);
+                const { skip, limit } = args;
                 const books = await bookModule.findPaginate(
                     condition,
                     { createdAt: -1 },
@@ -38,6 +42,15 @@ module.exports = {
             try {
                 const { id } = args;
                 return await bookModule.findOneById(id);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
+        async getBookPaginationMeta(parent, args, context, info) {
+            try {
+                const condition = constructConditionFromCriteria(args.criteria);
+                const count = await bookModule.countBooks(condition);
+                return { count };
             } catch (error) {
                 throw new Error(error);
             }

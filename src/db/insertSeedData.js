@@ -5,7 +5,7 @@ const User = require('../models/user/User');
 const bookData = require('./seedData/bookData');
 const userData = require('./seedData/userData');
 
-const MONGO_CONNECTION_STRING = 'ENTER YOUR CONNECTION STRING';
+const MONGO_CONNECTION_STRING = 'YOUR CONNECTION STRING';
 
 mongoose
     .connect(MONGO_CONNECTION_STRING, {

@@ -4,8 +4,9 @@ import {
     createHttpLink,
     ApolloProvider,
 } from '@apollo/client';
-
 import { onError } from 'apollo-link-error';
+
+import paginationField from '../lib/paginationField';
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:5000',
@@ -27,7 +28,16 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 
 const client = new ApolloClient({
     link: httpLink.concat(errorLink),
-    cache: new InMemoryCache(),
+    cache: new InMemoryCache({
+        typePolicies: {
+            Query: {
+                fields: {
+                    findBooks: paginationField(),
+                },
+            },
+        },
+    }),
+    connectToDevTools: true,
 });
 
 const Provider = ({ children }) => (
