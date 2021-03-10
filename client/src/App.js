@@ -1,9 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { useQuery } from '@apollo/client';
-import { useEffect } from 'react';
 import { Container } from 'react-bootstrap';
+import { useQuery } from '@apollo/client';
 
 import './App.css';
 import Page from './components/Page';
@@ -19,24 +17,13 @@ import Book from './pages/Book';
 import EditBook from './pages/EditBook';
 import CartModal from './components/Cart/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';
-import { authenticate, deauthenticate } from './redux/actions/auth';
 
-function App({ isLoggedIn, authenticate, deauthenticate }) {
-    const hasNotAuthenticatedWithServer = isLoggedIn == null;
-    const { loading, error, data } = useQuery(GET_ME_QUERY, {
-        fetchPolicy: hasNotAuthenticatedWithServer
-            ? 'network-only'
-            : 'cache-only',
-    });
-    useEffect(() => {
-        if (data && isLoggedIn == null) {
-            if (data.getMe) {
-                authenticate(data.getMe);
-            } else {
-                deauthenticate();
-            }
-        }
-    }, [authenticate, deauthenticate, data, isLoggedIn]);
+function App() {
+    const { data, loading, error } = useQuery(GET_ME_QUERY);
+    if (error) {
+        return <h1>Something went wrong. Please try again later</h1>;
+    }
+
     return loading ? (
         <p>Loading...</p>
     ) : (
@@ -87,13 +74,4 @@ function App({ isLoggedIn, authenticate, deauthenticate }) {
     );
 }
 
-const mapStateToProps = (state) => ({
-    isLoggedIn: state.authReducer.isLoggedIn,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-    authenticate: (user) => dispatch(authenticate(user)),
-    deauthenticate: () => dispatch(deauthenticate()),
-});
-
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default App;

@@ -1,16 +1,14 @@
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
-import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { useMutation } from '@apollo/client';
+import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
 import styled from 'styled-components';
 
-import { deauthenticate } from '../redux/actions/auth';
-import { openCart } from '../redux/actions/cart';
-import gql from 'graphql-tag';
 import * as alertify from '../lib/alertify';
 import { useUser } from '../lib/util';
 import Search from '../components/Search';
+import { GET_ME_QUERY, LOGOUT_MUTATION } from '../lib/graphql';
+import { useCart } from './CartStateProvider';
 
 const ItemCount = styled.div`
     position: absolute;
@@ -28,19 +26,25 @@ const SearchWrapper = styled.div`
     border-bottom: 1px solid black;
 `;
 
-const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
+const Header = ({ history }) => {
     const [removeCookie] = useMutation(LOGOUT_MUTATION);
+    const [refetchUser] = useLazyQuery(GET_ME_QUERY, {
+        fetchPolicy: 'network-only',
+    });
 
     const user = useUser();
+    const isLoggedIn = user != null;
     let cartItemCount = user?.cart?.reduce(
         (total, item) => total + item.quantity,
         0
     );
 
-    const logout = () => {
+    const { openCart } = useCart();
+
+    const logout = async () => {
         alertify.error('Logged out');
-        deauthenticate();
-        removeCookie();
+        await removeCookie();
+        await refetchUser();
         history.push('/');
     };
 
@@ -107,16 +111,4 @@ const Header = ({ isLoggedIn, deauthenticate, openCart, history }) => {
     );
 };
 
-const LOGOUT_MUTATION = gql`
-    mutation {
-        logout
-    }
-`;
-
-const mapStateToProps = (state) => ({
-    isLoggedIn: state.authReducer.isLoggedIn,
-});
-
-export default connect(mapStateToProps, { deauthenticate, openCart })(
-    withRouter(Header)
-);
+export default withRouter(Header);

@@ -7,7 +7,7 @@ import * as alertify from '../lib/alertify';
 import { UPDATE_USER_MUTATION, cacheUpdateUpdateUser } from '../lib/graphql';
 import { useUser } from '../lib/util';
 
-const Account = ({ authenticate, history }) => {
+const Account = ({ history }) => {
     const me = useUser();
 
     const { form, handleChange } = useForm(

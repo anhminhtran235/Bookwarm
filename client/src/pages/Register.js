@@ -1,15 +1,13 @@
 import { Form, Col } from 'react-bootstrap';
-import gql from 'graphql-tag';
 import { useMutation } from '@apollo/client';
-import { connect } from 'react-redux';
 
 import useForm from '../lib/useForm';
 import { toDataURL } from '../lib/util';
 import { StyledForm, StyledButton } from '../lib/Form';
-import { authenticate } from '../redux/actions/auth';
 import * as alertify from '../lib/alertify';
+import { REGISTER_USER_MUTATION, GET_ME_QUERY } from '../lib/graphql';
 
-const Register = ({ authenticate, history }) => {
+const Register = ({ history }) => {
     const { form, handleChange } = useForm({
         username: 'Test user',
         email: 'minh@gmail.com',
@@ -17,16 +15,14 @@ const Register = ({ authenticate, history }) => {
         avatar: '',
     });
 
-    const [register, { loading, error }] = useMutation(
-        REGISTER_SELLER_MUTATION,
-        {
-            update(proxy, result) {
-                const user = result.data.register;
-                authenticate(user);
-                history.push('/shopping');
-            },
-        }
-    );
+    const [register, { loading, error }] = useMutation(REGISTER_USER_MUTATION, {
+        refetchQueries: [{ query: GET_ME_QUERY }],
+        awaitRefetchQueries: true,
+        update(proxy, result) {
+            const user = result.data.register;
+            history.push('/shopping');
+        },
+    });
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -102,31 +98,4 @@ const Register = ({ authenticate, history }) => {
     );
 };
 
-const REGISTER_SELLER_MUTATION = gql`
-    mutation register(
-        $username: String!
-        $email: String!
-        $password: String!
-        $avatar: String
-    ) {
-        register(
-            registerInput: {
-                username: $username
-                email: $email
-                password: $password
-                avatar: $avatar
-            }
-        ) {
-            id
-            username
-            email
-            avatar
-        }
-    }
-`;
-
-const mapDispatchToProps = (dispatch) => ({
-    authenticate: (user) => dispatch(authenticate(user)),
-});
-
-export default connect(null, mapDispatchToProps)(Register);
+export default Register;

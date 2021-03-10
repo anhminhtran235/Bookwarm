@@ -27,7 +27,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const client = new ApolloClient({
-    link: httpLink.concat(errorLink),
+    link: errorLink.concat(httpLink),
     cache: new InMemoryCache({
         typePolicies: {
             Query: {

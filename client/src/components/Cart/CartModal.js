@@ -1,8 +1,7 @@
 import styled from 'styled-components';
-import { connect } from 'react-redux';
 
 import CartInfo from './CartInfo/CartInfo';
-import { closeCart } from '../../redux/actions/cart';
+import { useCart } from '../CartStateProvider';
 
 const Modal = styled.div`
     position: fixed;
@@ -30,19 +29,16 @@ const Backdrop = styled.div`
     content: 'dfsdf${(props) => JSON.stringify(props)}';
 `;
 
-const CartModal = ({ showCart, closeCart }) => {
+const CartModal = () => {
+    const { cartOpen, closeCart } = useCart();
     return (
         <>
-            <Backdrop show={showCart} onClick={closeCart}></Backdrop>
-            <Modal show={showCart}>
+            <Backdrop show={cartOpen} onClick={closeCart}></Backdrop>
+            <Modal show={cartOpen}>
                 <CartInfo />
             </Modal>
         </>
     );
 };
 
-const mapStateToProps = (state) => ({
-    showCart: state.cartReducer.show,
-});
-
-export default connect(mapStateToProps, { closeCart })(CartModal);
+export default CartModal;

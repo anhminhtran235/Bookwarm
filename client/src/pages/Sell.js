@@ -7,7 +7,7 @@ import { toDataURL } from '../lib/util';
 import * as alertify from '../lib/alertify';
 import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../lib/graphql';
 
-const Sell = ({ history, authenticate, isLoggedIn }) => {
+const Sell = ({ history }) => {
     const { form, handleChange, clearForm } = useForm({
         title: '',
         subtitle: '',

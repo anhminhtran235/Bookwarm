@@ -1,6 +1,5 @@
 import { Card, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
 
 import AddToCartButton from './AddToCartButton';
 import RemoveBookButton from './RemoveBookButton';
@@ -44,4 +43,4 @@ const Book = ({ book: { id, title, subtitle, image }, isMine, history }) => {
     );
 };
 
-export default connect()(withRouter(Book));
+export default withRouter(Book);

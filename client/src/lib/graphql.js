@@ -26,6 +26,45 @@ const GET_ME_QUERY = gql`
     }
 `;
 
+const LOGIN_MUTATION = gql`
+    mutation login($email: String!, $password: String!) {
+        login(loginInput: { email: $email, password: $password }) {
+            id
+            username
+            email
+            avatar
+        }
+    }
+`;
+const LOGOUT_MUTATION = gql`
+    mutation {
+        logout
+    }
+`;
+
+const REGISTER_USER_MUTATION = gql`
+    mutation register(
+        $username: String!
+        $email: String!
+        $password: String!
+        $avatar: String
+    ) {
+        register(
+            registerInput: {
+                username: $username
+                email: $email
+                password: $password
+                avatar: $avatar
+            }
+        ) {
+            id
+            username
+            email
+            avatar
+        }
+    }
+`;
+
 const GET_CART_QUERY = gql`
     query {
         getMe {
@@ -387,6 +426,9 @@ const cacheUpdateUpdateUser = (cache, payload) => {
 
 module.exports = {
     GET_ME_QUERY,
+    LOGIN_MUTATION,
+    LOGOUT_MUTATION,
+    REGISTER_USER_MUTATION,
     GET_CART_QUERY,
     FIND_BOOKS_QUERY,
     GET_BOOK_PAGINATION_META_QUERY,
