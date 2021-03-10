@@ -1,10 +1,10 @@
 import { Navbar, Nav, Button, Container } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { withRouter } from 'react-router';
-import { useLazyQuery, useMutation, useQuery } from '@apollo/client';
+import { useLazyQuery, useMutation } from '@apollo/client';
 import styled from 'styled-components';
+import alertify from 'alertifyjs';
 
-import * as alertify from '../lib/alertify';
 import { useUser } from '../lib/util';
 import Search from '../components/Search';
 import { GET_ME_QUERY, LOGOUT_MUTATION } from '../lib/graphql';
@@ -33,13 +33,14 @@ const Header = ({ history }) => {
     });
 
     const user = useUser();
+
+    const { openCart } = useCart();
+
     const isLoggedIn = user != null;
     let cartItemCount = user?.cart?.reduce(
         (total, item) => total + item.quantity,
         0
     );
-
-    const { openCart } = useCart();
 
     const logout = async () => {
         alertify.error('Logged out');

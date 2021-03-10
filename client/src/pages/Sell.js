@@ -1,10 +1,10 @@
 import { Form, Col } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import useForm from '../lib/useForm';
 import { StyledForm, StyledButton } from '../lib/Form';
 import { toDataURL } from '../lib/util';
-import * as alertify from '../lib/alertify';
 import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../lib/graphql';
 
 const Sell = ({ history }) => {

@@ -1,10 +1,10 @@
 import { Form, Col } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import useForm from '../lib/useForm';
 import { toDataURL } from '../lib/util';
 import { StyledForm, StyledButton } from '../lib/Form';
-import * as alertify from '../lib/alertify';
 import { REGISTER_USER_MUTATION, GET_ME_QUERY } from '../lib/graphql';
 
 const Register = ({ history }) => {
@@ -15,11 +15,11 @@ const Register = ({ history }) => {
         avatar: '',
     });
 
-    const [register, { loading, error }] = useMutation(REGISTER_USER_MUTATION, {
+    const [register, { loading }] = useMutation(REGISTER_USER_MUTATION, {
         refetchQueries: [{ query: GET_ME_QUERY }],
         awaitRefetchQueries: true,
         update(proxy, result) {
-            const user = result.data.register;
+            alertify.success('Registered sucessfully');
             history.push('/shopping');
         },
     });

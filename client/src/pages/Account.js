@@ -1,9 +1,9 @@
 import { Form, Col } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import useForm from '../lib/useForm';
 import { StyledForm, StyledButton } from '../lib/Form';
-import * as alertify from '../lib/alertify';
 import { UPDATE_USER_MUTATION, cacheUpdateUpdateUser } from '../lib/graphql';
 import { useUser } from '../lib/util';
 
@@ -35,9 +35,6 @@ const Account = ({ history }) => {
         update(cache, result) {
             alertify.success('Update profile successully');
             cacheUpdateUpdateUser(cache, result);
-        },
-        onError(error) {
-            alertify.error(error.graphQLErrors[0].message);
         },
     });
 

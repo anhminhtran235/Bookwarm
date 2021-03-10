@@ -8,7 +8,11 @@ import Books from '../components/Books/Books';
 const Shopping = ({ match }) => {
     const perPage = 6;
 
-    const { data, loading } = useQuery(GET_BOOK_PAGINATION_META_QUERY);
+    const { data, loading, error } = useQuery(GET_BOOK_PAGINATION_META_QUERY);
+
+    if (error) {
+        return <h1>Something went wrong. Please try again later</h1>;
+    }
 
     return loading ? (
         'Loading...'

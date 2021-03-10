@@ -1,11 +1,11 @@
 import { Form, Col } from 'react-bootstrap';
 import { Redirect, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import useForm from '../lib/useForm';
 import { StyledForm, StyledButton } from '../lib/Form';
-import { toDataURL, useUser } from '../lib/util';
-import * as alertify from '../lib/alertify';
+import { useUser } from '../lib/util';
 import {
     SINGLE_BOOK_QUERY,
     UPDATE_BOOK_MUTATION,

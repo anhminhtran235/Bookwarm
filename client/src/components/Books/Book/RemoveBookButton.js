@@ -1,12 +1,11 @@
 import { useMutation } from '@apollo/client';
 import { Button } from 'react-bootstrap';
+import alertify from 'alertifyjs';
 
 import {
     cacheUpdateDeleteBook,
     DELETE_BOOK_MUTATION,
 } from '../../../lib/graphql';
-
-import * as alertify from '../../../lib/alertify';
 
 const RemoveBookButton = ({ bookId }) => {
     const [removeBook, { loading }] = useMutation(DELETE_BOOK_MUTATION, {
@@ -16,9 +15,6 @@ const RemoveBookButton = ({ bookId }) => {
         update(cache, payload) {
             alertify.error('Book removed');
             cacheUpdateDeleteBook(cache, payload);
-        },
-        onError(error) {
-            console.log(error);
         },
     });
 

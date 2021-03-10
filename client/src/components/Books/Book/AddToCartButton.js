@@ -14,9 +14,6 @@ const AddToCartButton = ({ bookId }) => {
         update(cache, payload) {
             cacheUpdateAddToCart(cache, payload);
         },
-        onError(error) {
-            console.log(error);
-        },
     });
 
     return (

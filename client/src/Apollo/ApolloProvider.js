@@ -5,6 +5,7 @@ import {
     ApolloProvider,
 } from '@apollo/client';
 import { onError } from 'apollo-link-error';
+import alertify from 'alertifyjs';
 
 import paginationField from '../lib/paginationField';
 
@@ -16,13 +17,16 @@ const httpLink = createHttpLink({
 const errorLink = onError(({ graphQLErrors, networkError }) => {
     if (graphQLErrors) {
         graphQLErrors.forEach(({ message, locations, path }) => {
-            console.log(
-                `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`
-            );
+            const errorMessage = message.split(': ')[1];
+            if (errorMessage) {
+                alertify.error(errorMessage);
+            } else {
+                alertify.error(message);
+            }
         });
     }
     if (networkError) {
-        console.log(`[Network error]: ${networkError}`);
+        alertify.error('Network error: ' + networkError);
     }
 });
 

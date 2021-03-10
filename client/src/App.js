@@ -1,4 +1,5 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
+import 'alertifyjs/build/css/alertify.css';
 import { Redirect, Route, Switch } from 'react-router-dom';
 import { Container } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';

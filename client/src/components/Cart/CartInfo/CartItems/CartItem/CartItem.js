@@ -44,18 +44,12 @@ const CartItem = ({ cartItem: { book, quantity } }) => {
         update(cache, result) {
             cacheUpdateAddToCart(cache, result);
         },
-        onError(error) {
-            console.log(error);
-        },
     });
 
     const [removeFromCart] = useMutation(REMOVE_FROM_CART_MUTATION, {
         variables: { bookId: book.id },
         update(cache, result) {
             cacheUpdateRemoveFromCart(cache, result);
-        },
-        onError(error) {
-            console.log(error);
         },
     });
 

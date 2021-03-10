@@ -1,10 +1,10 @@
 import { Form, Col } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import { Redirect, withRouter } from 'react-router';
+import alertify from 'alertifyjs';
 
 import useForm from '../lib/useForm';
 import { StyledForm, StyledButton } from '../lib/Form';
-import * as alertify from '../lib/alertify';
 import { GET_ME_QUERY, LOGIN_MUTATION } from '../lib/graphql';
 import { useUser } from '../lib/util';
 
@@ -21,9 +21,6 @@ const Login = ({ history }) => {
             alertify.success('Logged in sucessfully');
             console.log(result);
             history.push('/shopping');
-        },
-        onError(error) {
-            alertify.error(error.graphQLErrors[0].message);
         },
     });
 

@@ -3,6 +3,7 @@ import { useQuery } from '@apollo/client';
 import { Button, Form, Col } from 'react-bootstrap';
 import { useState } from 'react';
 import { useMutation } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import CartItems from './CartItems/CartItems';
 import {
@@ -10,7 +11,6 @@ import {
     CHECKOUT_MUTATION,
     cacheUpdateCheckout,
 } from '../../../lib/graphql';
-import * as alertify from '../../../lib/alertify';
 
 const Header = styled.div`
     text-align: center;
@@ -40,6 +40,14 @@ const CartInfo = () => {
         });
     }
 
+    const [checkout] = useMutation(CHECKOUT_MUTATION, {
+        variables: { password: state.password },
+        update(cache, result) {
+            alertify.success('Purchase successully');
+            cacheUpdateCheckout(cache, result);
+        },
+    });
+
     const enableForm = () => {
         setState({
             ...state,
@@ -53,17 +61,6 @@ const CartInfo = () => {
             [e.target.name]: e.target.value,
         });
     };
-
-    const [checkout] = useMutation(CHECKOUT_MUTATION, {
-        variables: { password: state.password },
-        update(cache, result) {
-            alertify.success('Purchase successully');
-            cacheUpdateCheckout(cache, result);
-        },
-        onError(error) {
-            console.log(error);
-        },
-    });
 
     const onSubmit = (e) => {
         e.preventDefault();
