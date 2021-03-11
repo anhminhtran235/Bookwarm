@@ -1,10 +1,10 @@
 import { resetIdCounter, useCombobox } from 'downshift';
 import styled, { keyframes } from 'styled-components';
 import { useLazyQuery } from '@apollo/client';
-import { FIND_BOOKS_QUERY } from '../lib/graphql';
 import { withRouter } from 'react-router-dom';
 
-import { useDebouncedCallback } from '../lib/util';
+import { FIND_BOOKS_QUERY } from '../../../lib/graphql';
+import { useDebouncedCallback } from '../../../lib/util';
 import { useState } from 'react';
 
 const DropDown = styled.div`

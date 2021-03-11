@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import Header from './Header';
+import Header from './Header/Header';
 
 const Page = ({ children }) => {
     return (

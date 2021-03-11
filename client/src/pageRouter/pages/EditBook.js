@@ -1,52 +1,59 @@
 import { Form, Col } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
+import { Redirect, useParams } from 'react-router-dom';
+import { useMutation, useQuery } from '@apollo/client';
 import alertify from 'alertifyjs';
 
-import useForm from '../lib/useForm';
-import { StyledForm, StyledButton } from '../lib/Form';
-import { toDataURL } from '../lib/util';
-import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../lib/graphql';
+import useForm from '../../lib/useForm';
+import { StyledForm, StyledButton } from '../../lib/Form';
+import { useUser } from '../../lib/util';
+import {
+    SINGLE_BOOK_QUERY,
+    UPDATE_BOOK_MUTATION,
+    cacheUpdateUpdateBook,
+} from '../../lib/graphql';
 
-const Sell = ({ history }) => {
-    const { form, handleChange, clearForm } = useForm({
-        title: '',
-        subtitle: '',
-        author: '',
-        description: '',
-        price: '',
-        image: '',
+const Edit = () => {
+    const me = useUser();
+
+    const { id } = useParams();
+    const { data, loading, error } = useQuery(SINGLE_BOOK_QUERY, {
+        variables: { id },
     });
+    const book = data?.findBookById ? { ...data.findBookById } : null;
+    if (book && book.image) {
+        delete book.image;
+    }
 
-    const [addBook, { loading }] = useMutation(ADD_BOOK_MUTATION, {
+    const { form, handleChange } = useForm(
+        book || {
+            title: '',
+            subtitle: '',
+            author: '',
+            description: '',
+            price: '',
+        }
+    );
+
+    const [updateBook] = useMutation(UPDATE_BOOK_MUTATION, {
+        variables: { id, ...form },
         update(cache, result) {
-            clearForm();
-            alertify.success('Book added successfully');
-            cacheUpdateAddBook(cache, result);
+            alertify.success('Book updated successfully');
+            cacheUpdateUpdateBook(cache, result);
         },
     });
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        const formToSubmit = { ...form };
-
-        if (form.image && form.image !== '') {
-            try {
-                toDataURL(form.image).then((base64Image) => {
-                    formToSubmit.image = base64Image;
-                    addBook({ variables: formToSubmit });
-                });
-            } catch (error) {
-                throw new Error(error);
-            }
-        } else {
-            alertify.error('Please choose an image for this book');
-        }
+        updateBook();
     };
 
-    return (
+    const hasEditPermission =
+        me && me.books.findIndex((book) => book.id === id) !== -1;
+
+    return hasEditPermission ? (
         <div className='my-4'>
             <StyledForm onSubmit={onSubmit}>
-                <h2>Sell new Book</h2>
+                <h2>Edit book info</h2>
 
                 <Form.Group as={Col}>
                     <Form.Label>Title *</Form.Label>
@@ -83,8 +90,7 @@ const Sell = ({ history }) => {
                 <Form.Group as={Col}>
                     <Form.Label>Description</Form.Label>
                     <Form.Control
-                        as='textarea'
-                        row={3}
+                        type='text'
                         placeholder='Description'
                         name='description'
                         value={form.description}
@@ -102,23 +108,15 @@ const Sell = ({ history }) => {
                         required
                     />
                 </Form.Group>
-                <Form.Group>
-                    <Form.File
-                        className='px-3'
-                        id='image'
-                        label='Image *'
-                        name='image'
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
 
                 <StyledButton variant='primary' type='submit'>
-                    + Add book
+                    Update book
                 </StyledButton>
             </StyledForm>
         </div>
+    ) : (
+        <Redirect to='/shopping' />
     );
 };
 
-export default Sell;
+export default Edit;

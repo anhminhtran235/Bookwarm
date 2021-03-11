@@ -1,10 +1,11 @@
 import { useMutation } from '@apollo/client';
+import alertify from 'alertifyjs';
 import { Button } from 'react-bootstrap';
 
 import {
     cacheUpdateAddToCart,
     ADD_TO_CART_MUTATION,
-} from '../../../lib/graphql';
+} from '../../../../lib/graphql';
 
 const AddToCartButton = ({ bookId }) => {
     const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
@@ -12,6 +13,7 @@ const AddToCartButton = ({ bookId }) => {
             bookId,
         },
         update(cache, payload) {
+            alertify.success('Added to cart');
             cacheUpdateAddToCart(cache, payload);
         },
     });

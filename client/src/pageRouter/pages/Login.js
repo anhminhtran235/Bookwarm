@@ -3,10 +3,10 @@ import { useMutation } from '@apollo/client';
 import { Redirect, withRouter } from 'react-router';
 import alertify from 'alertifyjs';
 
-import useForm from '../lib/useForm';
-import { StyledForm, StyledButton } from '../lib/Form';
-import { GET_ME_QUERY, LOGIN_MUTATION } from '../lib/graphql';
-import { useUser } from '../lib/util';
+import useForm from '../../lib/useForm';
+import { StyledForm, StyledButton } from '../../lib/Form';
+import { GET_ME_QUERY, LOGIN_MUTATION } from '../../lib/graphql';
+import { useUser } from '../../lib/util';
 
 const Login = ({ history }) => {
     const { form, handleChange } = useForm({
@@ -32,9 +32,7 @@ const Login = ({ history }) => {
         login({ variables: form });
     };
 
-    return isLoggedIn == null ? (
-        'loading'
-    ) : isLoggedIn ? (
+    return isLoggedIn ? (
         <Redirect to='/shopping' />
     ) : (
         <div className='mt-4'>

@@ -1,11 +1,12 @@
 import { Form, Col } from 'react-bootstrap';
 import { useMutation } from '@apollo/client';
 import alertify from 'alertifyjs';
+import { Redirect } from 'react-router';
 
-import useForm from '../lib/useForm';
-import { toDataURL } from '../lib/util';
-import { StyledForm, StyledButton } from '../lib/Form';
-import { REGISTER_USER_MUTATION, GET_ME_QUERY } from '../lib/graphql';
+import useForm from '../../lib/useForm';
+import { toDataURL, useUser } from '../../lib/util';
+import { StyledForm, StyledButton } from '../../lib/Form';
+import { REGISTER_USER_MUTATION, GET_ME_QUERY } from '../../lib/graphql';
 
 const Register = ({ history }) => {
     const { form, handleChange } = useForm({
@@ -23,6 +24,9 @@ const Register = ({ history }) => {
             history.push('/shopping');
         },
     });
+
+    const me = useUser();
+    const isLoggedIn = me != null;
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -42,7 +46,9 @@ const Register = ({ history }) => {
         }
     };
 
-    return (
+    return isLoggedIn ? (
+        <Redirect to='/shopping' />
+    ) : (
         <div className='mt-4'>
             <StyledForm onSubmit={onSubmit}>
                 <h2>Join Bookworm now!</h2>

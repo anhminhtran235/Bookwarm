@@ -2,8 +2,8 @@ import { useParams } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
 import styled from 'styled-components';
 
-import { SINGLE_BOOK_QUERY } from '../lib/graphql';
-import AddToCartButton from '../components/Books/Book/AddToCartButton';
+import { SINGLE_BOOK_QUERY } from '../../lib/graphql';
+import AddToCartButton from '../../components/Books/Book/AddToCartButton/AddToCartButton';
 
 const Container = styled.div`
     display: flex;

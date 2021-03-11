@@ -1,8 +1,8 @@
 import { Card, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
-import AddToCartButton from './AddToCartButton';
-import RemoveBookButton from './RemoveBookButton';
+import AddToCartButton from './AddToCartButton/AddToCartButton';
+import RemoveBookButton from './RemoveBookButton/RemoveBookButton';
 
 const Book = ({ book: { id, title, subtitle, image }, isMine, history }) => {
     const goToBook = () => {

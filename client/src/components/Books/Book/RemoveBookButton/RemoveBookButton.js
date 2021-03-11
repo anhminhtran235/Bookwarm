@@ -5,7 +5,7 @@ import alertify from 'alertifyjs';
 import {
     cacheUpdateDeleteBook,
     DELETE_BOOK_MUTATION,
-} from '../../../lib/graphql';
+} from '../../../../lib/graphql';
 
 const RemoveBookButton = ({ bookId }) => {
     const [removeBook, { loading }] = useMutation(DELETE_BOOK_MUTATION, {

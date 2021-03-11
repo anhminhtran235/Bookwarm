@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import CartInfo from './CartInfo/CartInfo';
+import Cart from './Cart/Cart';
 import { useCart } from '../CartStateProvider';
 
 const Modal = styled.div`
@@ -26,7 +26,6 @@ const Backdrop = styled.div`
     z-index: ${(props) => (props.show ? 99 : -100)};
     opacity: ${(props) => (props.show ? 0.7 : 0)};
     background: grey;
-    content: 'dfsdf${(props) => JSON.stringify(props)}';
 `;
 
 const CartModal = () => {
@@ -35,7 +34,7 @@ const CartModal = () => {
         <>
             <Backdrop show={cartOpen} onClick={closeCart}></Backdrop>
             <Modal show={cartOpen}>
-                <CartInfo />
+                <Cart />
             </Modal>
         </>
     );

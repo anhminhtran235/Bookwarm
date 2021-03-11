@@ -1,9 +1,9 @@
 import { Route } from 'react-router';
 import { useQuery } from '@apollo/client';
 
-import PaginationBar from '../components/PaginationBar';
-import { GET_BOOK_PAGINATION_META_QUERY } from '../lib/graphql';
-import Books from '../components/Books/Books';
+import PaginationBar from '../../components/PaginationBar';
+import { GET_BOOK_PAGINATION_META_QUERY } from '../../lib/graphql';
+import Books from '../../components/Books/Books';
 
 const Shopping = ({ match }) => {
     const perPage = 6;

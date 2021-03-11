@@ -25,7 +25,7 @@ const TotalPrice = styled.div`
     font-weight: 600;
 `;
 
-const CartInfo = () => {
+const Cart = () => {
     const [state, setState] = useState({
         password: '',
         formEnabled: false,
@@ -113,4 +113,4 @@ const CartInfo = () => {
     );
 };
 
-export default CartInfo;
+export default Cart;
