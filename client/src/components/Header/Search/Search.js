@@ -112,6 +112,7 @@ const Search = ({ history }) => {
                                 width='50px'
                             />
                             {book.title}
+                            {book.subtitle ? `: ${book.subtitle}` : ''}
                         </DropDownItem>
                     ))}
                 {isOpen && !books.length && !loading && (
