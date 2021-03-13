@@ -6,8 +6,24 @@ import {
 } from '@apollo/client';
 import { onError } from 'apollo-link-error';
 import alertify from 'alertifyjs';
+import { createNetworkStatusNotifier } from 'react-apollo-network-status';
 
 import paginationField from '../lib/paginationField';
+import nprogress from 'nprogress';
+import 'nprogress/nprogress.css';
+
+const { link, useApolloNetworkStatus } = createNetworkStatusNotifier();
+
+function GlobalLoadingIndicator() {
+    const status = useApolloNetworkStatus();
+    if (status.numPendingMutations > 0) {
+        nprogress.start();
+        return null;
+    } else {
+        nprogress.done();
+        return null;
+    }
+}
 
 const httpLink = createHttpLink({
     uri: 'http://localhost:5000',
@@ -31,7 +47,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 });
 
 const client = new ApolloClient({
-    link: errorLink.concat(httpLink),
+    link: link.concat(errorLink).concat(httpLink),
     cache: new InMemoryCache({
         typePolicies: {
             Query: {
@@ -45,7 +61,10 @@ const client = new ApolloClient({
 });
 
 const Provider = ({ children }) => (
-    <ApolloProvider client={client}>{children}</ApolloProvider>
+    <ApolloProvider client={client}>
+        <GlobalLoadingIndicator />
+        {children}
+    </ApolloProvider>
 );
 
 export default Provider;
