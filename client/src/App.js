@@ -19,10 +19,8 @@ function App() {
         <p>Loading...</p>
     ) : (
         <Page>
-            <Container>
-                <CartModal />
-                <PageRouter />
-            </Container>
+            <CartModal />
+            <PageRouter />
         </Page>
     );
 }
