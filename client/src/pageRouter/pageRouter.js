@@ -1,5 +1,7 @@
 import { Redirect, Route, Switch } from 'react-router-dom';
-import PrivateRoute from '../components/PrivateRoute';
+
+import CustomRoute from '../components/Route/CustomRoute';
+import PrivateRoute from '../components/Route/PrivateRoute';
 import Home from './pages/Home';
 import Shopping from './pages/Shopping';
 import Sell from './pages/Sell';
@@ -13,14 +15,18 @@ import EditBook from './pages/EditBook';
 const PageRouter = () => {
     return (
         <Switch>
-            <Route path='/' exact component={Home}></Route>
-            <Route path='/login' exact component={Login}></Route>
-            <Route path='/register' exact component={Register}></Route>
-            <Route
+            <CustomRoute path='/' exact component={Home}></CustomRoute>
+            <CustomRoute path='/login' exact component={Login}></CustomRoute>
+            <CustomRoute
+                path='/register'
+                exact
+                component={Register}
+            ></CustomRoute>
+            <CustomRoute
                 path='/shopping'
                 exact
                 render={() => <Redirect to='/shopping/1' />}
-            ></Route>
+            ></CustomRoute>
 
             <PrivateRoute path='/shopping' component={Shopping}></PrivateRoute>
             <PrivateRoute path='/sell' exact component={Sell}></PrivateRoute>
@@ -34,13 +40,16 @@ const PageRouter = () => {
                 exact
                 component={Orders}
             ></PrivateRoute>
-            <Route path='/book/:id' exact component={Book}></Route>
+            <CustomRoute path='/book/:id' exact component={Book}></CustomRoute>
             <PrivateRoute
                 path='/edit/book/:id'
                 exact
                 component={EditBook}
             ></PrivateRoute>
-            <Route path='/' render={() => <Redirect to='/shopping' />}></Route>
+            <CustomRoute
+                path='/'
+                render={() => <Redirect to='/shopping' />}
+            ></CustomRoute>
         </Switch>
     );
 };

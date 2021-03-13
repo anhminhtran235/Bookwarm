@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { Card, Button } from 'react-bootstrap';
 import { withRouter } from 'react-router';
 
@@ -5,6 +6,8 @@ import AddToCartButton from './AddToCartButton/AddToCartButton';
 import RemoveBookButton from './RemoveBookButton/RemoveBookButton';
 
 const Book = ({ book: { id, title, subtitle, image }, isMine, history }) => {
+    console.log(history);
+
     const goToBook = () => {
         history.push('/book/' + id);
     };
