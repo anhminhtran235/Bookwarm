@@ -5,7 +5,6 @@ import { FlexRow } from '../../styles/common/UtilStyle';
 import {
     PopularBooks,
     OurLibrary,
-    Footer,
     InnerSection,
     Section,
 } from '../../styles/HomeStyle';
@@ -106,19 +105,6 @@ const Home = () => {
                     </p>
                 </InnerSection>
             </Section>
-
-            <Footer>
-                <p>
-                    An open source project by Anh Minh Tran{' '}
-                    <a
-                        href='https://github.com/anhminhtran235/Bookworm'
-                        target='_blank'
-                        rel='noreferrer'
-                    >
-                        <i className='fab fa-github'></i>
-                    </a>
-                </p>
-            </Footer>
         </>
     );
 };

@@ -1,7 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
-import styled, { createGlobalStyle } from 'styled-components';
-
-import Header from './Header/Header';
+import { createGlobalStyle } from 'styled-components';
+import Footer from '../component/Footer/Footer';
 
 const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,900|Roboto');
@@ -11,6 +10,7 @@ const GlobalStyles = createGlobalStyle`
         --light-blue: #24b6c8;
         --lighter-grey: #f4f7f9;
         --darker-grey: #dbdbdb;
+        --darkest-grey: #acacac;
         --lighter-black: #2d3e50;
         --darker-black: #222222;
         --container-padding: 120px;
@@ -54,12 +54,6 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
-const Container = styled.div`
-    padding: 2rem;
-    max-width: var(--maxWidth);
-    margin: 0 auto;
-`;
-
 const Page = ({ children }) => {
     return (
         <>
@@ -67,6 +61,7 @@ const Page = ({ children }) => {
                 <GlobalStyles />
                 {/* <Header></Header> */}
                 {children}
+                <Footer />
             </BrowserRouter>
         </>
     );

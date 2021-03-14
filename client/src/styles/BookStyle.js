@@ -1,10 +1,8 @@
 import styled from 'styled-components';
 
-export const BookStyle = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+import { FlexColumn } from './common/UtilStyle';
+
+export const BookStyle = styled(FlexColumn)`
     background: white;
     padding: 10px;
     box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
@@ -18,13 +16,8 @@ export const BookStyle = styled.div`
     }
 `;
 
-export const BookInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+export const BookInfo = styled(FlexColumn)`
     margin: 10px 0px;
-
     p {
         margin: 0;
     }

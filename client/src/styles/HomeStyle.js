@@ -26,15 +26,6 @@ export const OurLibrary = styled(FlexColumn)`
     }
 `;
 
-export const Footer = styled(FlexRow)`
-    background: var(--darker-black);
-    color: white;
-    padding: 40px;
-    p {
-        margin: 0px;
-    }
-`;
-
 export const Section = styled(FlexRow)`
     padding: 40px var(--container-padding);
     div {
