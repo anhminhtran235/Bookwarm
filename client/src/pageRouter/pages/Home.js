@@ -12,8 +12,7 @@ const Header = styled.header`
 `;
 
 const Outer = styled.div`
-    background: ${(props) =>
-        props.showNavBackground ? 'var(--light-blue)' : 'none'};
+    background: ${(props) => (props.showNavBg ? 'var(--light-blue)' : 'none')};
     width: 100%;
     transition: 0.5s ease-out;
 `;
@@ -41,7 +40,7 @@ const Nav = styled.nav`
         }
     }
     ::after {
-        content: ${(props) => (props.showNavBackground ? 'none' : "''")};
+        content: ${(props) => (props.showNavBg ? 'none' : "''")};
         display: block;
         width: 100%;
         height: 0.4rem;
@@ -89,6 +88,8 @@ const NavLink = styled.a`
         color: white;
         text-decoration: none;
         ::after {
+            background: ${(props) =>
+                props.showNavBg ? 'white' : 'var(--light-blue)'};
             width: 100%;
             left: 0%;
             right: 0%;
@@ -293,7 +294,7 @@ const Footer = styled.div`
 
 const Home = () => {
     const [navState, setNavState] = useState({
-        showNavBackground: false,
+        showNavBg: false,
         navStyle: {
             position: 'relative',
         },
@@ -307,7 +308,7 @@ const Home = () => {
         window.addEventListener('scroll', (e) => {
             if (window.pageYOffset > 80) {
                 setNavState({
-                    showNavBackground: true,
+                    showNavBg: true,
                     navStyle: {
                         position: 'fixed',
                         top: '0px',
@@ -319,7 +320,7 @@ const Home = () => {
                 });
             } else {
                 setNavState({
-                    showNavBackground: false,
+                    showNavBg: false,
                     navStyle: {
                         position: 'relative',
                     },
@@ -336,31 +337,40 @@ const Home = () => {
         <>
             <Header>
                 <div style={navState.divStyle}></div>
-                <Outer
-                    showNavBackground={navState.showNavBackground}
-                    style={navState.navStyle}
-                >
+                <Outer showNavBg={navState.showNavBg} style={navState.navStyle}>
                     <Container>
-                        <Nav showNavBackground={navState.showNavBackground}>
+                        <Nav showNavBg={navState.showNavBg}>
                             <h1 className='special-text'>Bookworm</h1>
                             <ul>
                                 <li>
-                                    <NavLink>Shop</NavLink>
+                                    <NavLink showNavBg={navState.showNavBg}>
+                                        Shop
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink>Sell</NavLink>
+                                    <NavLink showNavBg={navState.showNavBg}>
+                                        Sell
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink>Order</NavLink>
+                                    <NavLink showNavBg={navState.showNavBg}>
+                                        Order
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink>Account</NavLink>
+                                    <NavLink showNavBg={navState.showNavBg}>
+                                        Account
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink>My Cart</NavLink>
+                                    <NavLink showNavBg={navState.showNavBg}>
+                                        My Cart
+                                    </NavLink>
                                 </li>
                                 <li>
-                                    <NavLink>Logout</NavLink>
+                                    <NavLink showNavBg={navState.showNavBg}>
+                                        Logout
+                                    </NavLink>
                                 </li>
                                 {/* <NavLink>Login</NavLink>
                         <NavLink>Register</NavLink> */}
