@@ -2,13 +2,20 @@ import styled from 'styled-components';
 
 import featureImg from '../../assets/images/feature.jpg';
 import bookIcon from '../../assets/icons/icons8-open-book.png';
+import { useEffect, useState } from 'react';
 
 const Header = styled.header`
     background: url(${featureImg}) no-repeat center center/cover;
-    height: 600px;
+    height: 700px;
     color: white;
-    padding: 10px 20px;
     margin: 0;
+`;
+
+const Outer = styled.div`
+    background: ${(props) =>
+        props.showNavBackground ? 'var(--light-blue)' : 'none'};
+    width: 100%;
+    transition: 0.5s ease-out;
 `;
 
 const Container = styled.div`
@@ -34,7 +41,7 @@ const Nav = styled.nav`
         }
     }
     ::after {
-        content: '';
+        content: ${(props) => (props.showNavBackground ? 'none' : "''")};
         display: block;
         width: 100%;
         height: 0.4rem;
@@ -52,7 +59,7 @@ const Content = styled.div`
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    margin-top: 100px;
+    padding-top: 150px;
     h1 {
         margin-bottom: 20px;
     }
@@ -72,7 +79,6 @@ const NavLink = styled.a`
         position: absolute;
         transition: all 0.3s;
         width: 0%;
-        background: var(--blue);
         top: 30px;
         left: 50%;
         right: 50%;
@@ -286,46 +292,92 @@ const Footer = styled.div`
 `;
 
 const Home = () => {
+    const [navState, setNavState] = useState({
+        showNavBackground: false,
+        navStyle: {
+            position: 'relative',
+        },
+        divStyle: {
+            width: '100%',
+            height: '0px',
+        },
+    });
+
+    useEffect(() => {
+        window.addEventListener('scroll', (e) => {
+            if (window.pageYOffset > 80) {
+                setNavState({
+                    showNavBackground: true,
+                    navStyle: {
+                        position: 'fixed',
+                        top: '0px',
+                    },
+                    divStyle: {
+                        width: '100%',
+                        height: '80px',
+                    },
+                });
+            } else {
+                setNavState({
+                    showNavBackground: false,
+                    navStyle: {
+                        position: 'relative',
+                    },
+                    divStyle: {
+                        width: '100%',
+                        height: '0px',
+                    },
+                });
+            }
+        });
+    }, []);
+
     return (
         <>
             <Header>
-                <Container>
-                    <Nav>
-                        <h1 className='special-text'>Bookworm</h1>
-                        <ul>
-                            <li>
-                                <NavLink>Shop</NavLink>
-                            </li>
-                            <li>
-                                <NavLink>Sell</NavLink>
-                            </li>
-                            <li>
-                                <NavLink>Order</NavLink>
-                            </li>
-                            <li>
-                                <NavLink>Account</NavLink>
-                            </li>
-                            <li>
-                                <NavLink>My Cart</NavLink>
-                            </li>
-                            <li>
-                                <NavLink>Logout</NavLink>
-                            </li>
-                            {/* <NavLink>Login</NavLink>
+                <div style={navState.divStyle}></div>
+                <Outer
+                    showNavBackground={navState.showNavBackground}
+                    style={navState.navStyle}
+                >
+                    <Container>
+                        <Nav showNavBackground={navState.showNavBackground}>
+                            <h1 className='special-text'>Bookworm</h1>
+                            <ul>
+                                <li>
+                                    <NavLink>Shop</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink>Sell</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink>Order</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink>Account</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink>My Cart</NavLink>
+                                </li>
+                                <li>
+                                    <NavLink>Logout</NavLink>
+                                </li>
+                                {/* <NavLink>Login</NavLink>
                         <NavLink>Register</NavLink> */}
-                        </ul>
-                    </Nav>
-                    <Content>
-                        <h1 className='special-text'>
-                            Creative and Tech Training Library
-                        </h1>
-                        <p>
-                            Learn to create stunning movies, games, projects and
-                            more with professional video tutorials
-                        </p>
-                        <Button>Start Reading Now</Button>
-                    </Content>
-                </Container>
+                            </ul>
+                        </Nav>
+                    </Container>
+                </Outer>
+                <Content>
+                    <h1 className='special-text'>
+                        Creative and Tech Training Library
+                    </h1>
+                    <p>
+                        Learn to create stunning movies, games, projects and
+                        more with professional video tutorials
+                    </p>
+                    <Button>Start Reading Now</Button>
+                </Content>
             </Header>
             <Section>
                 <Inner>
@@ -475,7 +527,7 @@ const Home = () => {
                         target='_blank'
                         rel='noreferrer'
                     >
-                        <i class='fab fa-github'></i>
+                        <i className='fab fa-github'></i>
                     </a>
                 </p>
             </Footer>
