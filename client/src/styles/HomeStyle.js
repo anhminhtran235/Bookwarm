@@ -34,3 +34,24 @@ export const Footer = styled(FlexRow)`
         margin: 0px;
     }
 `;
+
+export const Section = styled(FlexRow)`
+    padding: 40px var(--container-padding);
+    div {
+        margin-right: 20px;
+    }
+    div :last-child {
+        margin-right: 0px;
+    }
+`;
+
+export const InnerSection = styled(FlexColumn)`
+    p {
+        text-align: center;
+    }
+    img {
+        color: white;
+        padding: 20px;
+        border-radius: 50%;
+    }
+`;
