@@ -1,8 +1,12 @@
 import styled from 'styled-components';
+import { useEffect, useState } from 'react';
 
+import Book from '../../component/Book/Book';
+import FeaturedBook from '../../component/Book/FeaturedBook';
+import { FlexRow, FlexColumn } from '../../styles/common/UtilStyle';
+import { PopularBooks, OurLibrary, Footer } from '../../styles/HomeStyle';
 import featureImg from '../../assets/images/feature.jpg';
 import bookIcon from '../../assets/icons/icons8-open-book.png';
-import { useEffect, useState } from 'react';
 
 const Header = styled.header`
     background: url(${featureImg}) no-repeat center center/cover;
@@ -53,11 +57,7 @@ const Nav = styled.nav`
     }
 `;
 
-const Content = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+const Content = styled(FlexColumn)`
     padding-top: 150px;
     h1 {
         margin-bottom: 20px;
@@ -110,10 +110,8 @@ const Button = styled.div`
     }
 `;
 
-const Section = styled.div`
-    display: flex;
+const Section = styled(FlexRow)`
     padding: 40px var(--container-padding);
-    color: var(--darker-black);
     div {
         margin-right: 20px;
     }
@@ -122,11 +120,7 @@ const Section = styled.div`
     }
 `;
 
-const Inner = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
+const InnerSection = styled(FlexColumn)`
     p {
         text-align: center;
     }
@@ -134,161 +128,6 @@ const Inner = styled.div`
         color: white;
         padding: 20px;
         border-radius: 50%;
-    }
-`;
-
-const PopularBooks = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px var(--container-padding);
-    background: var(--lighter-grey);
-    color: var(--darker-black);
-    div {
-        margin-right: 20px;
-    }
-    div :last-child {
-        margin-right: 0px;
-    }
-    h3 {
-        margin-bottom: 15px;
-    }
-`;
-
-const Books = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-`;
-
-const Book = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: white;
-    padding: 10px;
-    box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
-    border-radius: 8px;
-
-    img {
-        width: 100%;
-        padding: 5px;
-        box-shadow: 2px 2px 7px rgb(0 0 0 / 30%);
-        border-radius: 2px;
-    }
-`;
-
-const BookInfo = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin: 10px 0px;
-
-    p {
-        margin: 0;
-    }
-    .book-title {
-        font-size: 20px;
-    }
-    .book-author {
-        color: var(--lighter-black);
-        font-size: 16px;
-        font-style: italic;
-    }
-    .book-price {
-        font-size: 25px;
-        margin-top: 0px;
-    }
-`;
-
-const ButtonGroup = styled.div`
-    margin-top: 10px;
-    button:first-child {
-        margin-right: 10px;
-    }
-`;
-
-const BookButton = styled.button`
-    background: white;
-    color: var(--lighter-black);
-    border-radius: 5px;
-    font-size: 20px;
-    :hover {
-        background: var(--darker-grey);
-    }
-`;
-
-const FeaturedBook = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 40px var(--container-padding);
-    color: var(--darker-black);
-    div {
-        width: 33.33%;
-        padding: 0px 20px;
-    }
-    img {
-        width: 100%;
-        display: block;
-        margin: auto;
-    }
-    h4 {
-        color: var(--lighter-black);
-    }
-    h3 {
-        color: var(--darker-black);
-        font-size: 30px;
-        margin-top: 25px;
-        margin-bottom: 0px;
-    }
-    .book-author {
-        color: var(--lighter-black);
-        font-style: italic;
-        font-size: 16px;
-    }
-    .book-description {
-        margin-top: 25px;
-    }
-`;
-
-const GetBookButton = styled.button`
-    margin-top: 10px;
-    background: var(--darker-black);
-    color: white;
-    padding: 5px 20px;
-    border-radius: 20px;
-    :hover {
-        background-color: var(--lighter-black);
-    }
-`;
-
-const OurLibrary = styled.div`
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    background: var(--lighter-grey);
-    color: var(--lighter-black);
-    padding: 40px 0px;
-    p:hover {
-        cursor: pointer;
-        color: var(--darker-black);
-    }
-`;
-
-const Footer = styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: var(--darker-black);
-    color: white;
-    padding: 40px;
-    p {
-        margin: 0px;
     }
 `;
 
@@ -389,144 +228,97 @@ const Home = () => {
                     <Button>Start Reading Now</Button>
                 </Content>
             </Header>
+
             <Section>
-                <Inner>
+                <InnerSection>
                     <img src={bookIcon} alt='img' />
                     <p>
                         We stock over 200 thousand books for immediate delivery
                     </p>
-                </Inner>
-                <Inner>
+                </InnerSection>
+                <InnerSection>
                     <img src={bookIcon} alt='img' />
                     <p>
                         We stock over 200 thousand books for immediate delivery
                     </p>
-                </Inner>
-                <Inner>
+                </InnerSection>
+                <InnerSection>
                     <img src={bookIcon} alt='img' />
                     <p>
                         We stock over 200 thousand books for immediate delivery
                     </p>
-                </Inner>
+                </InnerSection>
             </Section>
+
             <PopularBooks>
                 <h3>Popular Books</h3>
-                <Books>
-                    <Book>
-                        <img
-                            src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            alt=''
-                        />
-                        <BookInfo>
-                            <p className='book-title'>Big Magic</p>
-                            <p className='book-author'>Elizabeth Gilbert</p>
-                            <p className='book-price'>$22.59</p>
-                            <ButtonGroup>
-                                <BookButton>Detail</BookButton>
-                                <BookButton>Buy</BookButton>
-                            </ButtonGroup>
-                        </BookInfo>
-                    </Book>
-                    <Book>
-                        <img
-                            src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            alt=''
-                        />
-                        <BookInfo>
-                            <p className='book-title'>Big Magic</p>
-                            <p className='book-author'>Elizabeth Gilbert</p>
-                            <p className='book-price'>$22.59</p>
-                            <ButtonGroup>
-                                <BookButton>Detail</BookButton>
-                                <BookButton>Buy</BookButton>
-                            </ButtonGroup>
-                        </BookInfo>
-                    </Book>
-                    <Book>
-                        <img
-                            src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            alt=''
-                        />
-                        <BookInfo>
-                            <p className='book-title'>Big Magic</p>
-                            <p className='book-author'>Elizabeth Gilbert</p>
-                            <p className='book-price'>$22.59</p>
-                            <ButtonGroup>
-                                <BookButton>Detail</BookButton>
-                                <BookButton>Buy</BookButton>
-                            </ButtonGroup>
-                        </BookInfo>
-                    </Book>
-                    <Book>
-                        <img
-                            src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            alt=''
-                        />
-                        <BookInfo>
-                            <p className='book-title'>Big Magic</p>
-                            <p className='book-author'>Elizabeth Gilbert</p>
-                            <p className='book-price'>$22.59</p>
-                            <ButtonGroup>
-                                <BookButton>Detail</BookButton>
-                                <BookButton>Buy</BookButton>
-                            </ButtonGroup>
-                        </BookInfo>
-                    </Book>
-                </Books>
+                <FlexRow>
+                    <Book
+                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
+                        title='Big Magic'
+                        author='Elizabeth Gilbert'
+                        price='22.59'
+                    />
+                    <Book
+                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
+                        title='Big Magic'
+                        author='Elizabeth Gilbert'
+                        price='22.59'
+                    />
+                    <Book
+                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
+                        title='Big Magic'
+                        author='Elizabeth Gilbert'
+                        price='22.59'
+                    />
+                    <Book
+                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
+                        title='Big Magic'
+                        author='Elizabeth Gilbert'
+                        price='22.59'
+                    />
+                </FlexRow>
             </PopularBooks>
-            <FeaturedBook>
-                <div>
-                    <h4>Featured Book</h4>
-                    <h3>The Complete Idiots Guide to Graphic Design</h3>
-                    <p className='book-author'>Anggi Krisna</p>
-                    <p className='description'>
-                        From advanced selectors to generated content to web
-                        fonts, and from gradients, shadows, and rounded corners
-                        to elegant animations, CSS3 hold a universe of creative
-                        possibilities. No one can better guide you through these
-                        galaxies than Dan Cederholm.
-                    </p>
-                    <GetBookButton>Get This Book</GetBookButton>
-                </div>
-                <div>
-                    <img
-                        src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                        alt=''
-                    />
-                </div>
-                <div>
-                    <img
-                        src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                        alt=''
-                    />
-                </div>
-            </FeaturedBook>
+
+            <FeaturedBook
+                title='The Complete Idiots Guide to Graphic Design'
+                description='From advanced selectors to generated content to web
+                fonts, and from gradients, shadows, and rounded corners
+                to elegant animations, CSS3 hold a universe of creative
+                possibilities. No one can better guide you through these
+                galaxies than Dan Cederholm'
+                author='Anggi Krisna'
+                image1='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
+                image2='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
+            />
+
             <OurLibrary>
                 <h1>Browse Through Our Complete Library</h1>
                 <p>Browse Collection &rarr;</p>
             </OurLibrary>
+
             <Section>
-                <Inner>
+                <InnerSection>
                     <img src={bookIcon} alt='img' />
                     <h3>Tons of Books</h3>
                     <p>
                         We stock over 200 thousand books for immediate delivery
                     </p>
-                </Inner>
-                <Inner>
+                </InnerSection>
+                <InnerSection>
                     <img src={bookIcon} alt='img' />
                     <h3>Hundreds of Authors</h3>
                     <p>
                         We stock over 200 thousand books for immediate delivery
                     </p>
-                </Inner>
-                <Inner>
+                </InnerSection>
+                <InnerSection>
                     <img src={bookIcon} alt='img' />
                     <h3>Easily Bookmarked</h3>
                     <p>
                         We stock over 200 thousand books for immediate delivery
                     </p>
-                </Inner>
+                </InnerSection>
             </Section>
 
             <Footer>
