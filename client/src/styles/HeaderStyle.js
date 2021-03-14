@@ -11,6 +11,8 @@ export const HeaderStyle = styled.header`
 `;
 
 export const Outer = styled.div`
+    position: fixed;
+    color: white;
     background: ${(props) => (props.showNavBg ? 'var(--light-blue)' : 'none')};
     width: 100%;
     transition: 0.5s ease-out;
