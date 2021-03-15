@@ -1,123 +1,133 @@
-import { Form, Col } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
-import alertify from 'alertifyjs';
+import styled from 'styled-components';
 
-import useForm from '../../lib/useForm';
-import { StyledForm, StyledButton } from '../../lib/Form';
-import { toDataURL } from '../../lib/util';
-import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../../lib/graphql';
+import image from '../../assets/images/sell_image.jpg';
+import Navbar from '../../component/Navbar/Navbar';
+import { FlexColumn, FlexRow } from '../../styles/common/UtilStyle';
 
-const Sell = ({ history }) => {
-    const { form, handleChange, clearForm } = useForm({
-        title: '',
-        subtitle: '',
-        author: '',
-        description: '',
-        price: '',
-        image: '',
-    });
+const SellStyle = styled(FlexRow)`
+    height: 100vh;
+    margin-top: 80px;
+    padding: 0px var(--container-padding);
+    .side-img {
+        width: 33.33%;
+    }
+    background: var(--lighter-grey);
+`;
 
-    const [addBook, { loading }] = useMutation(ADD_BOOK_MUTATION, {
-        update(cache, result) {
-            clearForm();
-            alertify.success('Book added successfully');
-            cacheUpdateAddBook(cache, result);
-        },
-    });
+const Form = styled(FlexColumn)`
+    width: 66.67%;
+    background: white;
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
+    margin-left: 50px;
+    padding: 30px 40px;
+    border-radius: 8px;
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        const formToSubmit = { ...form };
+    h2 {
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
 
-        if (form.image && form.image !== '') {
-            try {
-                toDataURL(form.image).then((base64Image) => {
-                    formToSubmit.image = base64Image;
-                    addBook({ variables: formToSubmit });
-                });
-            } catch (error) {
-                throw new Error(error);
-            }
-        } else {
-            alertify.error('Please choose an image for this book');
+    input,
+    .custom-file-upload {
+        margin-top: 10px;
+        font-size: 20px;
+        min-width: 200px;
+        border-radius: 5px;
+        padding: 5px 15px;
+        border: 1px solid var(--darker-grey);
+        :focus {
+            outline: none;
+            border: 1px solid var(--lighter-blue);
         }
-    };
+    }
 
+    input[type='file'] {
+        display: none;
+    }
+    .custom-file-upload {
+        margin-bottom: 0px;
+        i {
+            color: var(--lighter-blue);
+        }
+        :hover {
+            cursor: pointer;
+            background: var(--lighter-grey);
+        }
+    }
+
+    button {
+        margin-top: 40px;
+        background: var(--lighter-blue);
+        color: white;
+        padding: 5px 20px;
+        width: 100%;
+        border: 1px solid var(--lighter-blue);
+        border-radius: 5px;
+        :hover {
+            background: var(--darker-blue);
+        }
+    }
+
+    p {
+        margin-top: 20px;
+        font-size: 16px;
+        a {
+            color: var(--darker-blue);
+        }
+    }
+`;
+
+const Column = styled(FlexColumn)`
+    width: 50%;
+`;
+
+const Row = styled(FlexRow)`
+    width: 100%;
+    .left {
+        align-items: flex-start;
+    }
+    .right {
+        align-items: flex-end;
+    }
+`;
+
+const Sell = () => {
     return (
-        <div className='my-4'>
-            <StyledForm onSubmit={onSubmit}>
-                <h2>Sell new Book</h2>
+        <>
+            <Navbar />
+            <SellStyle>
+                <div class='side-img'>
+                    <img src={image} alt='' />
+                </div>
+                <Form>
+                    <h2>Add new product</h2>
+                    <Row>
+                        <Column className='left'>
+                            <input type='text' placeholder='Title' />
+                            <input type='text' placeholder='Subtitle' />
+                            <input type='text' placeholder='Author' />
+                            <input type='text' placeholder='Category' />
+                        </Column>
+                        <Column className='right'>
+                            <input
+                                type='text'
+                                placeholder='Short description'
+                            />
+                            <input type='text' placeholder='Description' />
+                            <input type='text' placeholder='Price' />
+                            <input type='text' placeholder='Promotion' />
+                        </Column>
+                    </Row>
+                    <label class='custom-file-upload'>
+                        <input type='file' />
+                        <i class='fa fa-cloud-upload'></i> Upload Image *
+                    </label>
 
-                <Form.Group as={Col}>
-                    <Form.Label>Title *</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Title'
-                        name='title'
-                        value={form.title}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Subtitle</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Subtitle'
-                        name='subtitle'
-                        value={form.subtitle}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Author *</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Author'
-                        name='author'
-                        value={form.author}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control
-                        as='textarea'
-                        row={3}
-                        placeholder='Description'
-                        name='description'
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Price *</Form.Label>
-                    <Form.Control
-                        type='number'
-                        placeholder='Price'
-                        name='price'
-                        value={form.price}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group>
-                    <Form.File
-                        className='px-3'
-                        id='image'
-                        label='Image *'
-                        name='image'
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-
-                <StyledButton variant='primary' type='submit'>
-                    + Add book
-                </StyledButton>
-            </StyledForm>
-        </div>
+                    <button>+ Add product</button>
+                </Form>
+            </SellStyle>
+            ;
+        </>
     );
 };
 

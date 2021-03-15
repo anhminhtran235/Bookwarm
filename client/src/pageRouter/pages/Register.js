@@ -13,7 +13,7 @@ const RegisterStyle = styled(FlexRow)`
         top: 0;
         left: 0;
         right: 0;
-        height: 120vh;
+        height: 100vh;
     }
     height: 100vh;
 `;

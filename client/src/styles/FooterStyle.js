@@ -4,8 +4,9 @@ import { FlexRow } from './common/UtilStyle';
 
 export const FooterStyle = styled(FlexRow)`
     background: var(--darker-black);
+    font-size: 16px;
     color: white;
-    padding: 40px;
+    padding: 20px;
     p {
         margin: 0px;
     }

@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import { Container, Nav, NavLink, Outer } from '../../styles/HeaderStyle';
 
@@ -45,25 +46,43 @@ const Navbar = ({ transparentInitially }) => {
         <Outer showNavBg={navState.showNavBg} style={navState.outerStyle}>
             <Container>
                 <Nav showNavBg={navState.showNavBg}>
-                    <h1 className='special-text'>Bookworm</h1>
+                    <a href='/' className='special-text logo'>
+                        Bookworm
+                    </a>
                     <ul>
                         <li>
-                            <NavLink showNavBg={navState.showNavBg}>
+                            <NavLink
+                                as={Link}
+                                to='/shopping'
+                                showNavBg={navState.showNavBg}
+                            >
                                 Shop
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink showNavBg={navState.showNavBg}>
+                            <NavLink
+                                as={Link}
+                                to='/sell'
+                                showNavBg={navState.showNavBg}
+                            >
                                 Sell
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink showNavBg={navState.showNavBg}>
+                            <NavLink
+                                as={Link}
+                                to='/orders'
+                                showNavBg={navState.showNavBg}
+                            >
                                 Order
                             </NavLink>
                         </li>
                         <li>
-                            <NavLink showNavBg={navState.showNavBg}>
+                            <NavLink
+                                as={Link}
+                                to='/account'
+                                showNavBg={navState.showNavBg}
+                            >
                                 Account
                             </NavLink>
                         </li>

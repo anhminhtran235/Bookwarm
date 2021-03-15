@@ -12,6 +12,7 @@ export const HeaderStyle = styled.header`
 
 export const Outer = styled.div`
     position: fixed;
+    top: 0;
     color: white;
     background: ${(props) =>
         props.showNavBg ? 'var(--lighter-blue)' : 'none'};
@@ -29,6 +30,15 @@ export const Container = styled.div`
 export const Nav = styled.nav`
     display: flex;
     justify-content: space-between;
+    .logo {
+        font-size: 40px;
+        line-height: 1.2;
+        display: block;
+        :hover {
+            color: white;
+            text-decoration: none;
+        }
+    }
     ul,
     h1 {
         margin: 0;
