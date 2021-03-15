@@ -13,7 +13,8 @@ export const HeaderStyle = styled.header`
 export const Outer = styled.div`
     position: fixed;
     color: white;
-    background: ${(props) => (props.showNavBg ? 'var(--light-blue)' : 'none')};
+    background: ${(props) =>
+        props.showNavBg ? 'var(--lighter-blue)' : 'none'};
     width: 100%;
     transition: 0.5s ease-out;
 `;
@@ -86,7 +87,7 @@ export const NavLink = styled.a`
         text-decoration: none;
         ::after {
             background: ${(props) =>
-                props.showNavBg ? 'white' : 'var(--light-blue)'};
+                props.showNavBg ? 'white' : 'var(--lighter-blue)'};
             width: 100%;
             left: 0%;
             right: 0%;

@@ -7,7 +7,8 @@ const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap');
 
     html {
-        --light-blue: #24b6c8;
+        --lighter-blue: #24b6c8;
+        --darker-blue: #26aec0;
         --lighter-grey: #f4f7f9;
         --darker-grey: #dbdbdb;
         --darkest-grey: #acacac;

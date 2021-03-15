@@ -10,8 +10,27 @@ const ShoppingStyle = styled.div`
     background: var(--lighter-grey);
 `;
 
+const Pagination = styled.div`
+    margin-top: 30px;
+    display: flex;
+`;
+
+const PageNumber = styled.div`
+    background: ${(props) => (props.active ? 'var(--lighter-blue)' : 'white')};
+    color: ${(props) => (props.active ? 'white' : 'var(--lighter-blue)')};
+    border: 2px solid var(--lighter-blue);
+    margin-right: 10px;
+    padding: 5px 15px;
+    border-radius: 3px;
+    :hover {
+        cursor: pointer;
+        background: ${(props) =>
+            props.active ? 'var(--darker-blue)' : 'var(--lighter-grey)'};
+    }
+`;
+
 const MainArea = styled.div`
-    padding: 100px 0px;
+    padding: 30px 0px 100px 0px;
     display: flex;
     align-items: flex-start;
 `;
@@ -75,6 +94,17 @@ const Shopping = () => {
         <>
             <Navbar />
             <ShoppingStyle>
+                <Pagination>
+                    <PageNumber>
+                        <i class='fas fa-chevron-left'></i>
+                    </PageNumber>
+                    <PageNumber>1</PageNumber>
+                    <PageNumber active>2</PageNumber>
+                    <PageNumber>...</PageNumber>
+                    <PageNumber>
+                        <i class='fas fa-chevron-right'></i>
+                    </PageNumber>
+                </Pagination>
                 <MainArea>
                     <Books>
                         <Book
