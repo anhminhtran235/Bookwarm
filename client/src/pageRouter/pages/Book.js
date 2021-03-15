@@ -59,6 +59,9 @@ const PriceBox = styled(FlexColumn)`
             background: var(--darker-black);
             color: white;
             border-radius: 50px;
+            :hover {
+                background: var(--lighter-black);
+            }
         }
     }
 `;

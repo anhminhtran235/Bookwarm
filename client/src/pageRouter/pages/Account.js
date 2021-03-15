@@ -1,104 +1,87 @@
-import { Form, Col } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
-import alertify from 'alertifyjs';
+import styled from 'styled-components';
 
-import useForm from '../../lib/useForm';
-import { StyledForm, StyledButton } from '../../lib/Form';
-import { UPDATE_USER_MUTATION, cacheUpdateUpdateUser } from '../../lib/graphql';
-import { useUser } from '../../lib/util';
+import backgroundImage from '../../assets/images/account_background.jpg';
+import Navbar from '../../component/Navbar/Navbar';
+import { FlexColumn, FlexRow } from '../../styles/common/UtilStyle';
 
-const Account = ({ history }) => {
-    const me = useUser();
+const AccountStyle = styled(FlexRow)`
+    ::before {
+        content: '';
+        position: absolute;
+        background: url(${backgroundImage}) no-repeat center/cover;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120vh;
+        filter: brightness(50%);
+    }
+    height: 100vh;
+`;
 
-    const { form, handleChange } = useForm(
-        me
-            ? {
-                  username: me.username,
-                  email: me.email,
-                  oldPassword: '',
-                  newPassword: '',
-              }
-            : {
-                  username: '',
-                  email: '',
-                  oldPassword: '',
-                  newPassword: '',
-              }
-    );
+const Form = styled(FlexColumn)`
+    background: white;
+    padding: 30px 40px;
+    margin-top: 80px;
+    border-radius: 8px;
+    h2 {
+        font-weight: bold;
+    }
+    input {
+        margin-top: 10px;
+        font-size: 20px;
+        width: 350px;
+        border-radius: 5px;
+        padding: 5px 15px;
+        border: 1px solid var(--darker-grey);
+        :focus {
+            outline: none;
+            border: 1px solid var(--lighter-blue);
+        }
+    }
 
-    const [updateUser, { loading, error }] = useMutation(UPDATE_USER_MUTATION, {
-        variables: {
-            username: form.username,
-            oldPassword: form.oldPassword,
-            newPassword: form.newPassword,
-        },
-        update(cache, result) {
-            alertify.success('Update profile successully');
-            cacheUpdateUpdateUser(cache, result);
-        },
-    });
+    button {
+        margin-top: 20px;
+        background: var(--lighter-blue);
+        color: white;
+        padding: 5px 20px;
+        width: 100%;
+        border: 1px solid var(--lighter-blue);
+        border-radius: 5px;
+        :hover {
+            background: var(--darker-blue);
+        }
+    }
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        await updateUser();
-    };
+    p {
+        margin-top: 20px;
+        font-size: 16px;
+        a {
+            color: var(--darker-blue);
+        }
+    }
+`;
 
+const Account = () => {
     return (
-        <div className='mt-4'>
-            <StyledForm onSubmit={onSubmit}>
-                <h2>Your account</h2>
-
-                <Form.Group as={Col} controlId='formGridEmail'>
-                    <Form.Label>User name*</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='User name'
-                        name='username'
-                        value={form.username}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId='formGridEmail'>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type='email'
-                        placeholder='Email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                        disabled
-                    />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId='formGridPassword'>
-                    <Form.Label>Old password</Form.Label>
-                    <Form.Control
-                        type='password'
-                        placeholder='Old password'
-                        name='oldPassword'
-                        value={form.oldPassword}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId='formGridoldPassword'>
-                    <Form.Label>New oldPassword</Form.Label>
-                    <Form.Control
-                        type='password'
-                        placeholder='New password'
-                        name='newPassword'
-                        value={form.newPassword}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <StyledButton variant='primary' type='submit'>
-                    Update profile
-                </StyledButton>
-            </StyledForm>
-        </div>
+        <>
+            <Navbar transparentInitially />
+            <AccountStyle>
+                <Form>
+                    <h2>Edit Your Info</h2>
+                    <input type='text' placeholder='Username' />
+                    <input type='text' placeholder='Email' disabled />
+                    <input type='text' placeholder='Re-enter password *' />
+                    <input type='text' placeholder='New password' />
+                    <button>Update info</button>
+                    <p>
+                        Came here by mistake?{' '}
+                        <a href='/shopping'>Go back to shopping</a>
+                    </p>
+                </Form>
+            </AccountStyle>
+            ;
+        </>
     );
 };
 

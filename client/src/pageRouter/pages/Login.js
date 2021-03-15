@@ -1,72 +1,87 @@
-import { Form, Col } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
-import { Redirect, withRouter } from 'react-router';
-import alertify from 'alertifyjs';
+import styled from 'styled-components';
 
-import useForm from '../../lib/useForm';
-import { StyledForm, StyledButton } from '../../lib/Form';
-import { GET_ME_QUERY, LOGIN_MUTATION } from '../../lib/graphql';
-import { useUser } from '../../lib/util';
+import backgroundImage from '../../assets/images/login_background.jpg';
+import Navbar from '../../component/Navbar/Navbar';
+import { FlexColumn, FlexRow } from '../../styles/common/UtilStyle';
 
-const Login = ({ history }) => {
-    const { form, handleChange } = useForm({
-        email: 'user1@gmail.com',
-        password: '123456',
-    });
+const Login = styled(FlexRow)`
+    ::before {
+        content: '';
+        opacity: 70%;
+        position: absolute;
+        background: url(${backgroundImage}) no-repeat center/cover;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120vh;
+        filter: brightness(50%);
+    }
+    height: 100vh;
+`;
 
-    const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
-        refetchQueries: [{ query: GET_ME_QUERY }],
-        awaitRefetchQueries: true,
-        update(proxy, result) {
-            alertify.success('Logged in sucessfully');
-            console.log(result);
-            history.push('/shopping');
-        },
-    });
+const Form = styled(FlexColumn)`
+    background: white;
+    padding: 30px 40px;
+    margin-top: 80px;
+    border-radius: 8px;
+    h2 {
+        font-weight: bold;
+    }
+    input {
+        margin-top: 10px;
+        font-size: 20px;
+        width: 350px;
+        border-radius: 5px;
+        padding: 5px 15px;
+        border: 1px solid var(--darker-grey);
+        :focus {
+            outline: none;
+            border: 1px solid var(--lighter-blue);
+        }
+    }
 
-    const me = useUser();
-    const isLoggedIn = me != null;
+    button {
+        margin-top: 20px;
+        background: var(--lighter-blue);
+        color: white;
+        padding: 5px 20px;
+        width: 100%;
+        border: 1px solid var(--lighter-blue);
+        border-radius: 5px;
+        :hover {
+            background: var(--darker-blue);
+        }
+    }
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        login({ variables: form });
-    };
+    p {
+        margin-top: 20px;
+        font-size: 16px;
+        a {
+            color: var(--darker-blue);
+        }
+    }
+`;
 
-    return isLoggedIn ? (
-        <Redirect to='/shopping' />
-    ) : (
-        <div className='mt-4'>
-            <StyledForm onSubmit={onSubmit}>
-                <h2>Login to your account</h2>
-
-                <Form.Group as={Col} controlId='formGridEmail'>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type='email'
-                        placeholder='Email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId='formGridPassword'>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        value={form.password}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <StyledButton variant='primary' type='submit'>
-                    Login
-                </StyledButton>
-            </StyledForm>
-        </div>
+const Register = () => {
+    return (
+        <>
+            <Navbar transparentInitially />
+            <Login>
+                <Form>
+                    <h2>Login</h2>
+                    <input type='text' placeholder='Email' />
+                    <input type='text' placeholder='Password' />
+                    <button>Login</button>
+                    <p>
+                        New to this website?{' '}
+                        <a href='/register'>Register here</a>
+                    </p>
+                </Form>
+            </Login>
+            ;
+        </>
     );
 };
 
-export default withRouter(Login);
+export default Register;

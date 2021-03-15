@@ -1,106 +1,85 @@
-import { Form, Col } from 'react-bootstrap';
-import { useMutation } from '@apollo/client';
-import alertify from 'alertifyjs';
-import { Redirect } from 'react-router';
+import styled from 'styled-components';
 
-import useForm from '../../lib/useForm';
-import { toDataURL, useUser } from '../../lib/util';
-import { StyledForm, StyledButton } from '../../lib/Form';
-import { REGISTER_USER_MUTATION, GET_ME_QUERY } from '../../lib/graphql';
+import backgroundImage from '../../assets/images/register_background.jpg';
+import Navbar from '../../component/Navbar/Navbar';
+import { FlexColumn, FlexRow } from '../../styles/common/UtilStyle';
 
-const Register = ({ history }) => {
-    const { form, handleChange } = useForm({
-        username: 'Test user',
-        email: 'minh@gmail.com',
-        password: '123456',
-        avatar: '',
-    });
+const RegisterStyle = styled(FlexRow)`
+    ::before {
+        content: '';
+        position: absolute;
+        background: url(${backgroundImage}) no-repeat center/cover;
+        z-index: -1;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 120vh;
+    }
+    height: 100vh;
+`;
 
-    const [register, { loading }] = useMutation(REGISTER_USER_MUTATION, {
-        refetchQueries: [{ query: GET_ME_QUERY }],
-        awaitRefetchQueries: true,
-        update(proxy, result) {
-            alertify.success('Registered sucessfully');
-            history.push('/shopping');
-        },
-    });
-
-    const me = useUser();
-    const isLoggedIn = me != null;
-
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        const formToSubmit = { ...form };
-
-        if (form.avatar && form.avatar !== '') {
-            try {
-                toDataURL(form.avatar).then((base64Image) => {
-                    formToSubmit.avatar = base64Image;
-                    register({ variables: formToSubmit });
-                });
-            } catch (error) {
-                throw new Error(error);
-            }
-        } else {
-            register({ variables: formToSubmit });
+const Form = styled(FlexColumn)`
+    background: white;
+    padding: 30px 40px;
+    margin-top: 80px;
+    border-radius: 8px;
+    h2 {
+        font-weight: bold;
+    }
+    input {
+        margin-top: 10px;
+        font-size: 20px;
+        width: 350px;
+        border-radius: 5px;
+        padding: 5px 15px;
+        border: 1px solid var(--darker-grey);
+        :focus {
+            outline: none;
+            border: 1px solid var(--lighter-blue);
         }
-    };
+    }
 
-    return isLoggedIn ? (
-        <Redirect to='/shopping' />
-    ) : (
-        <div className='mt-4'>
-            <StyledForm onSubmit={onSubmit}>
-                <h2>Join Bookworm now!</h2>
+    button {
+        margin-top: 20px;
+        background: var(--lighter-blue);
+        color: white;
+        padding: 5px 20px;
+        width: 100%;
+        border: 1px solid var(--lighter-blue);
+        border-radius: 5px;
+        :hover {
+            background: var(--darker-blue);
+        }
+    }
 
-                <Form.Group as={Col} controlId='formGridEmail'>
-                    <Form.Label>User name</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='User name'
-                        name='username'
-                        value={form.username}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
+    p {
+        margin-top: 20px;
+        font-size: 16px;
+        a {
+            color: var(--darker-blue);
+        }
+    }
+`;
 
-                <Form.Group as={Col} controlId='formGridEmail'>
-                    <Form.Label>Email</Form.Label>
-                    <Form.Control
-                        type='email'
-                        placeholder='Email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Form.Group as={Col} controlId='formGridPassword'>
-                    <Form.Label>Password</Form.Label>
-                    <Form.Control
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        value={form.password}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <Form.Group>
-                    <Form.File
-                        className='px-3'
-                        id='avatar'
-                        label='Avatar'
-                        name='avatar'
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-
-                <StyledButton variant='primary' type='submit'>
-                    Register
-                </StyledButton>
-            </StyledForm>
-        </div>
+const Register = () => {
+    return (
+        <>
+            <Navbar transparentInitially />
+            <RegisterStyle>
+                <Form>
+                    <h2>Create Account</h2>
+                    <input type='text' placeholder='Username' />
+                    <input type='text' placeholder='Email' />
+                    <input type='text' placeholder='Password' />
+                    <input type='text' placeholder='Confirm password' />
+                    <button>Sign up</button>
+                    <p>
+                        Already have an account? <a href='/login'>Login here</a>
+                    </p>
+                </Form>
+            </RegisterStyle>
+            ;
+        </>
     );
 };
 
