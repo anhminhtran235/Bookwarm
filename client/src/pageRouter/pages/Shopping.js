@@ -96,13 +96,13 @@ const Shopping = () => {
             <ShoppingStyle>
                 <Pagination>
                     <PageNumber>
-                        <i class='fas fa-chevron-left'></i>
+                        <i className='fas fa-chevron-left'></i>
                     </PageNumber>
                     <PageNumber>1</PageNumber>
                     <PageNumber active>2</PageNumber>
                     <PageNumber>...</PageNumber>
                     <PageNumber>
-                        <i class='fas fa-chevron-right'></i>
+                        <i className='fas fa-chevron-right'></i>
                     </PageNumber>
                 </Pagination>
                 <MainArea>

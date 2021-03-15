@@ -96,7 +96,7 @@ const Sell = () => {
         <>
             <Navbar />
             <SellStyle>
-                <div class='side-img'>
+                <div className='side-img'>
                     <img src={image} alt='' />
                 </div>
                 <Form>
@@ -118,9 +118,9 @@ const Sell = () => {
                             <input type='text' placeholder='Promotion' />
                         </Column>
                     </Row>
-                    <label class='custom-file-upload'>
+                    <label className='custom-file-upload'>
                         <input type='file' />
-                        <i class='fa fa-cloud-upload'></i> Upload Image *
+                        <i className='fa fa-cloud-upload'></i> Upload Image *
                     </label>
 
                     <button>+ Add product</button>

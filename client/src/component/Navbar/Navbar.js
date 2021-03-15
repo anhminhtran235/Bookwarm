@@ -74,7 +74,7 @@ const Navbar = ({ transparentInitially }) => {
                                 to='/orders'
                                 showNavBg={navState.showNavBg}
                             >
-                                Order
+                                Orders
                             </NavLink>
                         </li>
                         <li>
