@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const LoaderStyle = styled.div`
     display: inline-block;
-    position: fixed;
+    position: absolute;
     z-index: 100;
     top: 50%;
     left: 50%;
@@ -20,7 +20,7 @@ const LoaderStyle = styled.div`
         width: 7px;
         height: 7px;
         border-radius: 50%;
-        background: var(--lighter-blue);
+        background: #24b6c8;
         margin: -4px 0 0 -4px;
     }
     div:nth-child(1) {

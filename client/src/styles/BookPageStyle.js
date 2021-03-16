@@ -1,0 +1,89 @@
+import styled from 'styled-components';
+
+import { FlexColumn } from './common/UtilStyle';
+
+export const BookPageStyle = styled.div`
+    padding-top: 80px;
+`;
+
+export const Container = styled.div`
+    background: var(--lighter-grey);
+    padding: 40px var(--container-padding);
+`;
+
+export const Showcase = styled.div`
+    background: white;
+    padding: 60px;
+    border-radius: 8px;
+`;
+
+export const ShowcaseInfo = styled(FlexColumn)`
+    padding: 10px 0px;
+    align-self: stretch;
+    margin-left: 40px;
+    justify-content: flex-start;
+    align-items: flex-start;
+    h1 {
+        margin: 0;
+    }
+    .book-author {
+        font-style: italic;
+    }
+`;
+
+export const PriceBox = styled(FlexColumn)`
+    justify-content: flex-start;
+    margin-top: 20px;
+    border: 2px solid var(--darker-grey);
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    .top {
+        padding: 10px 100px;
+        background: var(--lighter-grey);
+    }
+    .bottom {
+        padding: 10px 20px;
+        display: flex;
+        input {
+            padding: 10px;
+            width: 70px;
+            margin-right: 10px;
+            border-radius: 5px;
+        }
+        button {
+            padding: 0px 20px;
+            background: var(--darker-black);
+            color: white;
+            border-radius: 50px;
+            :hover {
+                background: var(--lighter-black);
+            }
+        }
+    }
+`;
+
+export const Description = styled.div`
+    margin-top: 30px;
+    h2::after {
+        content: '';
+        margin-top: 10px;
+        display: block;
+        border: dashed 1px var(--darker-grey);
+    }
+`;
+
+export const RelatedBooks = styled(FlexColumn)`
+    padding: 40px var(--container-padding);
+    background: var(--lighter-grey);
+    div {
+        margin-right: 20px;
+    }
+    div :last-child {
+        margin-right: 0px;
+    }
+    h3 {
+        margin-bottom: 15px;
+    }
+`;

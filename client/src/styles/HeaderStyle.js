@@ -11,6 +11,7 @@ export const HeaderStyle = styled.header`
 `;
 
 export const Outer = styled.div`
+    z-index: 1000;
     position: fixed;
     top: 0;
     color: white;

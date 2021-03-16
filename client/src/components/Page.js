@@ -1,6 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
 import { createGlobalStyle } from 'styled-components';
-import CartModal from '../component/CartModal/CartModal';
 import Footer from '../component/Footer/Footer';
 
 const GlobalStyles = createGlobalStyle`
@@ -10,12 +9,20 @@ const GlobalStyles = createGlobalStyle`
     html {
         --lighter-blue: #24b6c8;
         --darker-blue: #26aec0;
+        --darkest-blue: #22a0b1;
+
         --lighter-grey: #f4f7f9;
         --darker-grey: #dbdbdb;
         --darkest-grey: #acacac;
-        --orange: '#e05100';
+
+        --lighter-orange: #e05100;
+        --darker-orange: #cc4b01;
+        --darkest-orange: #bd4703;
+
         --lighter-black: #2d3e50;
         --darker-black: #222222;
+        --darkest-black: #161616;
+
         --container-padding: 120px;
 
         box-sizing: border-box;
@@ -62,8 +69,6 @@ const Page = ({ children }) => {
         <>
             <BrowserRouter>
                 <GlobalStyles />
-                {/* <Header></Header> */}
-                <CartModal />
                 {children}
                 <Footer />
             </BrowserRouter>

@@ -1,13 +1,13 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'alertifyjs/build/css/alertify.css';
-import { Container } from 'react-bootstrap';
 import { useQuery } from '@apollo/client';
 
 import './App.css';
 import Page from './components/Page';
 import PageRouter from './pageRouter/pageRouter';
-import CartModal from './components/CartModal/CartModal';
+import CartModal from './component/CartModal/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';
+import Loader from './component/Loader/Loader';
 
 function App() {
     const { loading, error } = useQuery(GET_ME_QUERY);
@@ -16,7 +16,7 @@ function App() {
     }
 
     return loading ? (
-        <p>Loading...</p>
+        <Loader />
     ) : (
         <Page>
             <CartModal />
