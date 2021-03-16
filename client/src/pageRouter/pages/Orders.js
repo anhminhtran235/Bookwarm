@@ -25,6 +25,10 @@ const Order = styled(FlexColumn)`
     width: 100%;
     margin-bottom: 20px;
 
+    :last-child {
+        margin-bottom: 60px;
+    }
+
     .top {
         width: 100%;
         background: var(--lighter-grey);
