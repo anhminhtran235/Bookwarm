@@ -31,7 +31,7 @@ const Form = styled(FlexColumn)`
     .custom-file-upload {
         margin-top: 10px;
         font-size: 20px;
-        min-width: 200px;
+        min-width: 180px;
         border-radius: 5px;
         padding: 5px 15px;
         border: 1px solid var(--darker-grey);

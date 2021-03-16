@@ -113,7 +113,7 @@ const Form = styled(FlexRow)`
 `;
 
 const CartModal = () => {
-    const show = true;
+    const show = false;
     return (
         <>
             <Backdrop show={show} />

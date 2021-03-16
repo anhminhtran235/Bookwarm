@@ -1,122 +1,134 @@
-import { Form, Col } from 'react-bootstrap';
-import { Redirect, useParams } from 'react-router-dom';
-import { useMutation, useQuery } from '@apollo/client';
-import alertify from 'alertifyjs';
+import styled from 'styled-components';
 
-import useForm from '../../lib/useForm';
-import { StyledForm, StyledButton } from '../../lib/Form';
-import { useUser } from '../../lib/util';
-import {
-    SINGLE_BOOK_QUERY,
-    UPDATE_BOOK_MUTATION,
-    cacheUpdateUpdateBook,
-} from '../../lib/graphql';
+import image from '../../assets/images/sell_image.jpg';
+import Navbar from '../../component/Navbar/Navbar';
+import { FlexColumn, FlexRow } from '../../styles/common/UtilStyle';
 
-const Edit = () => {
-    const me = useUser();
+const EditBookStyle = styled(FlexRow)`
+    height: 100vh;
+    margin-top: 80px;
+    padding: 0px var(--container-padding);
+    .side-img {
+        width: 33.33%;
+    }
+    background: var(--lighter-grey);
+`;
 
-    const { id } = useParams();
-    const { data, loading, error } = useQuery(SINGLE_BOOK_QUERY, {
-        variables: { id },
-    });
-    const book = data?.findBookById ? { ...data.findBookById } : null;
-    if (book && book.image) {
-        delete book.image;
+const Form = styled(FlexColumn)`
+    width: 66.67%;
+    background: white;
+    box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
+    margin-left: 50px;
+    padding: 30px 40px;
+    border-radius: 8px;
+
+    h2 {
+        font-weight: bold;
+        margin-bottom: 20px;
     }
 
-    const { form, handleChange } = useForm(
-        book || {
-            title: '',
-            subtitle: '',
-            author: '',
-            description: '',
-            price: '',
+    input,
+    .custom-file-upload {
+        margin-top: 10px;
+        font-size: 20px;
+        min-width: 180px;
+        border-radius: 5px;
+        padding: 5px 15px;
+        border: 1px solid var(--darker-grey);
+        :focus {
+            outline: none;
+            border: 1px solid var(--lighter-blue);
         }
-    );
+    }
 
-    const [updateBook] = useMutation(UPDATE_BOOK_MUTATION, {
-        variables: { id, ...form },
-        update(cache, result) {
-            alertify.success('Book updated successfully');
-            cacheUpdateUpdateBook(cache, result);
-        },
-    });
+    input[type='file'] {
+        display: none;
+    }
+    .custom-file-upload {
+        margin-bottom: 0px;
+        i {
+            color: var(--lighter-blue);
+        }
+        :hover {
+            cursor: pointer;
+            background: var(--lighter-grey);
+        }
+    }
 
-    const onSubmit = async (e) => {
-        e.preventDefault();
-        updateBook();
-    };
+    button {
+        margin-top: 40px;
+        background: var(--lighter-blue);
+        color: white;
+        padding: 5px 20px;
+        width: 100%;
+        border: 1px solid var(--lighter-blue);
+        border-radius: 5px;
+        :hover {
+            background: var(--darker-blue);
+        }
+    }
 
-    const hasEditPermission =
-        me && me.books.findIndex((book) => book.id === id) !== -1;
+    p {
+        margin-top: 20px;
+        font-size: 16px;
+        a {
+            color: var(--darker-blue);
+        }
+    }
+`;
 
-    return hasEditPermission ? (
-        <div className='my-4'>
-            <StyledForm onSubmit={onSubmit}>
-                <h2>Edit book info</h2>
+const Column = styled(FlexColumn)`
+    width: 50%;
+`;
 
-                <Form.Group as={Col}>
-                    <Form.Label>Title *</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Title'
-                        name='title'
-                        value={form.title}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Subtitle</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Subtitle'
-                        name='subtitle'
-                        value={form.subtitle}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Author *</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Author'
-                        name='author'
-                        value={form.author}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Description</Form.Label>
-                    <Form.Control
-                        type='text'
-                        placeholder='Description'
-                        name='description'
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                </Form.Group>
-                <Form.Group as={Col}>
-                    <Form.Label>Price *</Form.Label>
-                    <Form.Control
-                        type='number'
-                        placeholder='Price'
-                        name='price'
-                        value={form.price}
-                        onChange={handleChange}
-                        required
-                    />
-                </Form.Group>
+const Row = styled(FlexRow)`
+    width: 100%;
+    .left {
+        align-items: flex-start;
+    }
+    .right {
+        align-items: flex-end;
+    }
+`;
 
-                <StyledButton variant='primary' type='submit'>
-                    Update book
-                </StyledButton>
-            </StyledForm>
-        </div>
-    ) : (
-        <Redirect to='/shopping' />
+const EditBook = () => {
+    return (
+        <>
+            <Navbar />
+            <EditBookStyle>
+                <div className='side-img'>
+                    <img src={image} alt='' />
+                </div>
+                <Form>
+                    <h2>Edit product</h2>
+                    <Row>
+                        <Column className='left'>
+                            <input type='text' placeholder='Title' />
+                            <input type='text' placeholder='Subtitle' />
+                            <input type='text' placeholder='Author' />
+                            <input type='text' placeholder='Category' />
+                        </Column>
+                        <Column className='right'>
+                            <input
+                                type='text'
+                                placeholder='Short description'
+                            />
+                            <input type='text' placeholder='Description' />
+                            <input type='text' placeholder='Price' />
+                            <input type='text' placeholder='Promotion' />
+                        </Column>
+                    </Row>
+                    <label className='custom-file-upload'>
+                        <input type='file' />
+                        <i className='fa fa-cloud-upload'></i> Change Image
+                    </label>
+
+                    <button>Edit product</button>
+                </Form>
+            </EditBookStyle>
+            ;
+        </>
     );
 };
 
-export default Edit;
+export default EditBook;
