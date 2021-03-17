@@ -42,6 +42,10 @@ export const SearchBar = styled(FlexRow)`
     .dropdown {
         display: ${(props) => (props.showSearch ? 'block' : 'none')};
     }
+
+    @media (max-width: 500px) {
+        width: ${(props) => (props.showSearch ? '270px' : '20px')};
+    }
 `;
 
 export const Dropdown = styled.div`

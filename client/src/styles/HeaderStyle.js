@@ -37,22 +37,16 @@ export const Nav = styled.nav`
         font-size: 40px;
         line-height: 1.2;
         display: block;
+        transition: all 1s;
+        transform: translateX(0px);
         :hover {
             color: white;
             text-decoration: none;
         }
     }
-    ul,
     h1 {
         margin: 0;
         cursor: pointer;
-    }
-    ul {
-        display: flex;
-        li {
-            margin-left: 8px;
-            align-self: center;
-        }
     }
     ::after {
         content: ${(props) => (props.showNavBg ? 'none' : "''")};
@@ -66,9 +60,71 @@ export const Nav = styled.nav`
         top: 4.5rem;
         border-radius: 5px;
     }
+    .disable {
+        @media (max-width: 720px) {
+            transform: translateX(-400px);
+        }
+    }
+    @media (max-width: 720px) {
+        justify-content: ${(props) =>
+            props.searchOn ? 'flex-end' : 'space-between'};
+    }
 `;
 
-export const Menu = styled(FlexRow)``;
+export const Menu = styled(FlexRow)`
+    align-self: flex-end;
+    justify-self: flex-end;
+    .dropdown-nav {
+        display: flex;
+        position: absolute;
+        top: 80px;
+        left: 0px;
+        flex-direction: column;
+        width: 100%;
+        overflow: hidden;
+        padding-left: 0px;
+        background: var(--darker-blue);
+        border-bottom-right-radius: 5px;
+        border-bottom-left-radius: 5px;
+        animation-name: anim;
+        animation-duration: 1s;
+        @keyframes anim {
+            from {
+                opacity: 0%;
+                height: 0px;
+            }
+            to {
+                height: 240px;
+                opacity: 100%;
+            }
+        }
+        a {
+            ::after {
+                content: none;
+            }
+            padding: 5px;
+            margin: 0px;
+            width: 100%;
+            text-align: center;
+            :last-child {
+                padding-bottom: 5px;
+            }
+            :hover {
+                background: var(--darkest-blue);
+                cursor: pointer;
+            }
+        }
+    }
+`;
+
+export const NavLinksContainer = styled.ul`
+    display: flex;
+    margin: 0;
+    padding-left: 0;
+    @media (max-width: 1195px) {
+        display: none;
+    }
+`;
 
 export const Content = styled(FlexColumn)`
     h1 {
@@ -85,6 +141,8 @@ export const Content = styled(FlexColumn)`
 
 export const NavLink = styled.a`
     position: relative;
+    margin-left: 8px;
+    align-self: center;
     ::after {
         content: '';
         display: block;
@@ -120,5 +178,86 @@ export const Button = styled.div`
     :hover {
         cursor: pointer;
         background: var(--lighter-grey);
+    }
+`;
+
+export const BurgerWrapper = styled.div`
+    transform: translateY(-3px);
+    .open span:nth-child(1) {
+        top: 18px;
+        width: 0%;
+        left: 50%;
+    }
+
+    .open span:nth-child(2) {
+        -webkit-transform: rotate(45deg);
+        -moz-transform: rotate(45deg);
+        -o-transform: rotate(45deg);
+        transform: rotate(45deg);
+    }
+
+    .open span:nth-child(3) {
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        -o-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    .open span:nth-child(4) {
+        top: 18px;
+        width: 0%;
+        left: 50%;
+    }
+
+    display: none;
+    @media (max-width: 1195px) {
+        display: block;
+    }
+`;
+
+export const ButtonStyle = styled.div`
+    width: 30px;
+    height: 22px;
+    position: relative;
+    -webkit-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+    -webkit-transition: 0.5s ease-in-out;
+    -moz-transition: 0.5s ease-in-out;
+    -o-transition: 0.5s ease-in-out;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+
+    span {
+        display: block;
+        position: absolute;
+        height: 5px;
+        width: 100%;
+        background: white;
+        border-radius: 9px;
+        opacity: 1;
+        left: 0;
+        -webkit-transform: rotate(0deg);
+        -moz-transform: rotate(0deg);
+        -o-transform: rotate(0deg);
+        transform: rotate(0deg);
+        -webkit-transition: 0.25s ease-in-out;
+        -moz-transition: 0.25s ease-in-out;
+        -o-transition: 0.25s ease-in-out;
+        transition: 0.25s ease-in-out;
+    }
+
+    span:nth-child(1) {
+        top: 0px;
+    }
+
+    span:nth-child(2),
+    span:nth-child(3) {
+        top: 10px;
+    }
+
+    span:nth-child(4) {
+        top: 20px;
     }
 `;

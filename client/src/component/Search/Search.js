@@ -2,12 +2,13 @@ import { useState } from 'react';
 
 import { Dropdown, DropdownItem, SearchBar } from '../../styles/SearchStyle';
 
-const Search = () => {
+const Search = ({ searchToggled }) => {
     const [navState, setNavState] = useState({
         showSearch: false,
     });
 
     const toggleSearch = () => {
+        searchToggled(!navState.showSearch);
         setNavState({
             showSearch: !navState.showSearch,
         });
@@ -15,22 +16,22 @@ const Search = () => {
 
     return (
         <SearchBar showSearch={navState.showSearch}>
-            <div class='input-wrapper'>
+            <div className='input-wrapper'>
                 <input type='text' placeholder='Find book' />
-                <i class='fas fa-times' onClick={toggleSearch}></i>
+                <i className='fas fa-times' onClick={toggleSearch}></i>
             </div>
-            <i class='fas fa-search search-icon' onClick={toggleSearch}></i>
+            <i className='fas fa-search search-icon' onClick={toggleSearch}></i>
             <Dropdown className='dropdown'>
                 <DropdownItem className='active'>
                     <img
                         src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
                         alt=''
                     />
-                    <div class='book-info'>
-                        <p class='book-title'>
+                    <div className='book-info'>
+                        <p className='book-title'>
                             Big magic: Creative living without fear
                         </p>
-                        <p class='book-author'>Elizabeth Gilbert</p>
+                        <p className='book-author'>Elizabeth Gilbert</p>
                     </div>
                 </DropdownItem>
                 <DropdownItem>
@@ -38,9 +39,9 @@ const Search = () => {
                         src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
                         alt=''
                     />
-                    <div class='book-info'>
-                        <p class='book-title'>Big magic</p>
-                        <p class='book-author'>Elizabeth Gilbert</p>
+                    <div className='book-info'>
+                        <p className='book-title'>Big magic</p>
+                        <p className='book-author'>Elizabeth Gilbert</p>
                     </div>
                 </DropdownItem>
                 <DropdownItem>
@@ -48,9 +49,9 @@ const Search = () => {
                         src='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
                         alt=''
                     />
-                    <div class='book-info'>
-                        <p class='book-title'>Big magic</p>
-                        <p class='book-author'>Elizabeth Gilbert</p>
+                    <div className='book-info'>
+                        <p className='book-title'>Big magic</p>
+                        <p className='book-author'>Elizabeth Gilbert</p>
                     </div>
                 </DropdownItem>
             </Dropdown>
