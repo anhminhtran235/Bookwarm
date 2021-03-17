@@ -6,6 +6,11 @@ export const SearchBar = styled(FlexRow)`
     width: ${(props) => (props.showSearch ? '400px' : '20px')};
     transition: all 1s;
     position: relative;
+    margin-left: 10px;
+
+    :hover {
+        cursor: pointer;
+    }
 
     .input-wrapper {
         width: 100%;

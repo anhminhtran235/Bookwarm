@@ -1,13 +1,15 @@
 import styled from 'styled-components';
 
-import { FlexColumn } from './common/UtilStyle';
+import { FlexColumn, FlexRow } from './common/UtilStyle';
 import featureImg from '../assets/images/feature.jpg';
 
-export const HeaderStyle = styled.header`
+export const HeaderStyle = styled(FlexRow)`
     background: url(${featureImg}) no-repeat center center/cover;
     height: 700px;
     color: white;
     margin: 0;
+    text-align: center;
+    padding: 0px var(--container-padding);
 `;
 
 export const Outer = styled.div`
@@ -66,8 +68,9 @@ export const Nav = styled.nav`
     }
 `;
 
+export const Menu = styled(FlexRow)``;
+
 export const Content = styled(FlexColumn)`
-    padding-top: 150px;
     h1 {
         margin-bottom: 20px;
     }
@@ -77,6 +80,7 @@ export const Content = styled(FlexColumn)`
         max-width: 500px;
         text-align: center;
     }
+    transform: translateY(-80px);
 `;
 
 export const NavLink = styled.a`

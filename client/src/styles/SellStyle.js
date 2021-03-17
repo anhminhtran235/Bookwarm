@@ -2,24 +2,28 @@ import styled from 'styled-components';
 import { FlexRow, FlexColumn } from './common/UtilStyle';
 
 export const SellStyle = styled(FlexRow)`
-    height: 100vh;
     margin-top: 80px;
-    padding: 0px var(--container-padding);
+    padding: 40px var(--container-padding);
     .side-img {
         width: 33.33%;
     }
     background: var(--lighter-grey);
+    @media (max-width: 1180px) {
+        .side-img {
+            display: none;
+        }
+    }
 `;
 
 export const Form = styled(FlexColumn)`
     position: relative;
-
     width: 66.67%;
     background: white;
     box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
     margin-left: 50px;
     padding: 30px 40px;
     border-radius: 8px;
+    text-align: center;
 
     h2 {
         font-weight: bold;
@@ -27,10 +31,11 @@ export const Form = styled(FlexColumn)`
     }
 
     input,
+    textarea,
     .custom-file-upload {
         margin-top: 10px;
+        width: 100%;
         font-size: 20px;
-        min-width: 180px;
         border-radius: 5px;
         padding: 5px 15px;
         border: 1px solid var(--darker-grey);
@@ -44,6 +49,7 @@ export const Form = styled(FlexColumn)`
         display: none;
     }
     .custom-file-upload {
+        text-align: center;
         margin-bottom: 0px;
         i {
             color: var(--lighter-blue);
@@ -74,18 +80,29 @@ export const Form = styled(FlexColumn)`
             color: var(--darker-blue);
         }
     }
+
+    @media (max-width: 1180px) {
+        width: 100%;
+        margin-left: 0px;
+    }
 `;
 
 export const Column = styled(FlexColumn)`
     width: 50%;
+    @media (max-width: 720px) {
+        width: 100%;
+    }
 `;
 
 export const Row = styled(FlexRow)`
     width: 100%;
     .left {
-        align-items: flex-start;
+        margin-right: 20px;
     }
-    .right {
-        align-items: flex-end;
+    @media (max-width: 720px) {
+        flex-direction: column;
+        .left {
+            margin-right: 0px;
+        }
     }
 `;

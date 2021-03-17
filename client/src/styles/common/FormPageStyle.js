@@ -2,22 +2,14 @@ import styled from 'styled-components';
 import { FlexColumn, FlexRow } from './UtilStyle';
 
 export const FormPageStyle = styled(FlexRow)`
-    ::before {
-        content: '';
-        position: absolute;
-        z-index: -1;
-        top: 0;
-        left: 0;
-        right: 0;
-        height: 100vh;
-    }
-    height: 100vh;
+    min-height: 100vh;
 `;
 
 export const Form = styled(FlexColumn)`
     background: white;
     padding: 30px 40px;
-    margin-top: 80px;
+    margin-top: 100px;
+    margin-bottom: 20px;
     border-radius: 8px;
     h2 {
         font-weight: bold;
@@ -53,6 +45,21 @@ export const Form = styled(FlexColumn)`
         font-size: 16px;
         a {
             color: var(--darker-blue);
+        }
+    }
+
+    @media (max-width: 720px) {
+        input {
+            width: 250px;
+        }
+    }
+    @media (max-width: 460px) {
+        padding: 20px 30px;
+        input {
+            width: 200px;
+        }
+        p {
+            font-size: 12px;
         }
     }
 `;

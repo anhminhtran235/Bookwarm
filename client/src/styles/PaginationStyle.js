@@ -17,4 +17,8 @@ export const PageNumber = styled.div`
         background: ${(props) =>
             props.active ? 'var(--darker-blue)' : 'var(--lighter-grey)'};
     }
+    @media (max-width: 720px) {
+        padding: 2px 5px;
+        margin-right: 5px;
+    }
 `;

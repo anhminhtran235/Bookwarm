@@ -5,10 +5,7 @@ import Navbar from '../../component/Navbar/Navbar';
 import { FormPageStyle, Form } from '../../styles/common/FormPageStyle';
 
 const AccountStyle = styled(FormPageStyle)`
-    ::before {
-        background: url(${backgroundImage}) no-repeat center/cover;
-        filter: brightness(50%);
-    }
+    background: url(${backgroundImage}) no-repeat center/cover;
 `;
 
 const Account = () => {
@@ -29,7 +26,6 @@ const Account = () => {
                     </p>
                 </Form>
             </AccountStyle>
-            ;
         </>
     );
 };

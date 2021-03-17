@@ -5,9 +5,7 @@ import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
 
 const RegisterStyle = styled(FormPageStyle)`
-    ::before {
-        background: url(${backgroundImage}) no-repeat center/cover;
-    }
+    background: url(${backgroundImage}) no-repeat center/cover;
 `;
 
 const Register = () => {
@@ -27,7 +25,6 @@ const Register = () => {
                     </p>
                 </Form>
             </RegisterStyle>
-            ;
         </>
     );
 };

@@ -24,6 +24,18 @@ const GlobalStyles = createGlobalStyle`
         --darkest-black: #161616;
 
         --container-padding: 120px;
+        @media (max-width: 1300px) {
+            --container-padding: 60px;
+        }
+        @media (max-width: 1015px) {
+            --container-padding: 40px;
+        }
+        @media (max-width: 927px) {
+            --container-padding: 20px;
+        }
+        @media (max-width: 500px) {
+            --container-padding: 10px;
+        }
 
         box-sizing: border-box;
     }

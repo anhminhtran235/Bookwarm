@@ -7,6 +7,7 @@ import {
     OurLibrary,
     InnerSection,
     Section,
+    BooksContainer,
 } from '../../styles/HomeStyle';
 import bookIcon from '../../assets/icons/icons8-open-book.png';
 
@@ -37,7 +38,7 @@ const Home = () => {
 
             <PopularBooks>
                 <h3>Popular Books</h3>
-                <FlexRow>
+                <BooksContainer>
                     <Book
                         image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
                         title='Big Magic'
@@ -62,7 +63,7 @@ const Home = () => {
                         author='Elizabeth Gilbert'
                         price='22.59'
                     />
-                </FlexRow>
+                </BooksContainer>
             </PopularBooks>
 
             <FeaturedBook

@@ -32,6 +32,16 @@ export const FeaturedBookStyle = styled(FlexRow)`
     .book-description {
         margin-top: 25px;
     }
+    @media (max-width: 1015px) {
+        flex-direction: column;
+        div {
+            width: 100%;
+            margin-bottom: 10px;
+        }
+        img {
+            max-width: 500px;
+        }
+    }
 `;
 
 export const GetBookButton = styled.button`

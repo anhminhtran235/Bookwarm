@@ -7,7 +7,10 @@ export const Modal = styled.div`
     left: 50%;
     padding: 10px 30px;
     color: var(--darker-black);
-    transform: translate(-50%, ${(props) => (props.show ? '-50%' : '-200%')});
+    transform: translate(
+        -50%,
+        ${(props) => (props.show ? 'calc(-40%)' : '-300%')}
+    );
     transition: 0.5s ease-out;
     width: 650px;
     height: 450px;
@@ -26,6 +29,26 @@ export const Modal = styled.div`
     overflow-y: scroll;
     ::-webkit-scrollbar {
         width: 0;
+    }
+
+    @media (max-height: 550px) {
+        height: 350px;
+    }
+    @media (max-height: 455px) {
+        height: 200px;
+        transform: translate(
+            -50%,
+            ${(props) => (props.show ? 'calc(-25%)' : '-300%')}
+        );
+    }
+    @media (max-width: 720px) {
+        width: 450px;
+    }
+    @media (max-width: 550px) {
+        width: 300px;
+        img {
+            display: none;
+        }
     }
 `;
 
@@ -68,6 +91,9 @@ export const InfoAndOptions = styled.div`
     .info {
         font-size: 16px;
         font-style: italic;
+    }
+    @media (max-width: 550px) {
+        padding-left: 0px;
     }
 `;
 

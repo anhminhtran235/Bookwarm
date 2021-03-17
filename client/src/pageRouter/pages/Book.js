@@ -3,12 +3,14 @@ import Navbar from '../../component/Navbar/Navbar';
 import BookComponent from '../../component/Book/Book';
 import {
     BookPageStyle,
+    BooksContainer,
     Container,
     Description,
     PriceBox,
     RelatedBooks,
     Showcase,
     ShowcaseInfo,
+    ShowcaseTop,
 } from '../../styles/BookPageStyle';
 
 const Book = () => {
@@ -57,7 +59,7 @@ const Book = () => {
             <BookPageStyle>
                 <Container>
                     <Showcase>
-                        <FlexRow>
+                        <ShowcaseTop>
                             <img src={book.image} alt='' />
                             <ShowcaseInfo>
                                 <h1>{book.title}</h1>
@@ -73,7 +75,7 @@ const Book = () => {
                                     </div>
                                 </PriceBox>
                             </ShowcaseInfo>
-                        </FlexRow>
+                        </ShowcaseTop>
                         <Description>
                             <h2>Description</h2>
                             <p>{book.description}</p>
@@ -82,7 +84,7 @@ const Book = () => {
                 </Container>
                 <RelatedBooks>
                     <h3>Related Products</h3>
-                    <FlexRow>
+                    <BooksContainer>
                         <BookComponent
                             image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
                             title='Big Magic'
@@ -107,7 +109,7 @@ const Book = () => {
                             author='Elizabeth Gilbert'
                             price='22.59'
                         />
-                    </FlexRow>
+                    </BooksContainer>
                 </RelatedBooks>
             </BookPageStyle>
         </>

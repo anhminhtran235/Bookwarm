@@ -14,12 +14,25 @@ export const PopularBooks = styled(FlexColumn)`
     h3 {
         margin-bottom: 15px;
     }
+    @media (max-width: 1015px) {
+        div {
+            margin-right: 0px;
+            margin-bottom: 10px;
+        }
+    }
+`;
+
+export const BooksContainer = styled(FlexRow)`
+    @media (max-width: 1015px) {
+        flex-direction: column;
+    }
 `;
 
 export const OurLibrary = styled(FlexColumn)`
     background: var(--lighter-grey);
     color: var(--lighter-black);
     padding: 40px 0px;
+    text-align: center;
     p:hover {
         cursor: pointer;
         color: var(--darker-black);
@@ -34,15 +47,25 @@ export const Section = styled(FlexRow)`
     div :last-child {
         margin-right: 0px;
     }
+    @media (max-width: 927px) {
+        flex-direction: column;
+        div {
+            margin-right: 0px;
+        }
+    }
 `;
 
 export const InnerSection = styled(FlexColumn)`
-    p {
-        text-align: center;
-    }
+    text-align: center;
     img {
         color: white;
         padding: 20px;
         border-radius: 50%;
+    }
+    @media (max-width: 927px) {
+        border-bottom: 1px solid var(--darker-grey);
+        :last-child {
+            border-bottom: none;
+        }
     }
 `;

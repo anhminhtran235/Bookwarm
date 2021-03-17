@@ -8,19 +8,36 @@ export const ShoppingStyle = styled.div`
 `;
 
 export const MainArea = styled.div`
-    padding: 30px 0px 100px 0px;
+    padding: 30px 0px 40px 0px;
     display: flex;
     align-items: flex-start;
+    @media (max-width: 1300px) {
+        flex-direction: column;
+    }
 `;
 
 export const SideBars = styled.div`
     width: 50%;
+    @media (max-width: 1300px) {
+        width: 100%;
+        display: flex;
+        margin-top: 40px;
+    }
+    @media (max-width: 720px) {
+        flex-direction: column;
+    }
 `;
 
 export const BooksStyle = styled.div`
     display: grid;
     grid-template-columns: repeat(3, auto);
     gap: 20px;
+    @media (max-width: 720px) {
+        grid-template-columns: repeat(2, auto);
+    }
+    @media (max-width: 360px) {
+        grid-template-columns: repeat(1, auto);
+    }
 `;
 
 export const Card = styled.div`
@@ -34,6 +51,16 @@ export const Card = styled.div`
     margin-left: 40px;
     margin-bottom: 40px;
     box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
+    @media (max-width: 1300px) {
+        width: 50%;
+        :first-child {
+            margin-left: 0px;
+        }
+    }
+    @media (max-width: 720px) {
+        width: 100%;
+        margin-left: 0px;
+    }
 `;
 
 export const SmallBook = styled(FlexRow)`

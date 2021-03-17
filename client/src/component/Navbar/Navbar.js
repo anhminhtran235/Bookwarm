@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
-import { Container, Nav, NavLink, Outer } from '../../styles/HeaderStyle';
+import { Container, Menu, Nav, NavLink, Outer } from '../../styles/HeaderStyle';
 import Search from '../Search/Search';
 
 const Navbar = ({ transparentInitially }) => {
@@ -50,59 +50,59 @@ const Navbar = ({ transparentInitially }) => {
                     <a href='/' className='special-text logo'>
                         Bookworm
                     </a>
-                    <ul>
-                        <li>
-                            <NavLink
-                                as={Link}
-                                to='/shopping'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Shop
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                as={Link}
-                                to='/sell'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Sell
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                as={Link}
-                                to='/orders'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Orders
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink
-                                as={Link}
-                                to='/account'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Account
-                            </NavLink>
-                        </li>
-                        <li>
-                            <NavLink showNavBg={navState.showNavBg}>
-                                My Cart
-                            </NavLink>
-                        </li>
-                        <li>
-                            <Search />
-                        </li>
-                        <li>
-                            <NavLink showNavBg={navState.showNavBg}>
-                                Logout
-                            </NavLink>
-                        </li>
-                        {/* <NavLink>Login</NavLink>
+                    <Menu>
+                        <ul>
+                            <li>
+                                <NavLink
+                                    as={Link}
+                                    to='/shopping'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Shop
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    as={Link}
+                                    to='/sell'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Sell
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    as={Link}
+                                    to='/orders'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Orders
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink
+                                    as={Link}
+                                    to='/account'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Account
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink showNavBg={navState.showNavBg}>
+                                    My Cart
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink showNavBg={navState.showNavBg}>
+                                    Logout
+                                </NavLink>
+                            </li>
+                            {/* <NavLink>Login</NavLink>
             <NavLink>Register</NavLink> */}
-                    </ul>
+                        </ul>
+                        <Search />
+                    </Menu>
                 </Nav>
             </Container>
         </Outer>

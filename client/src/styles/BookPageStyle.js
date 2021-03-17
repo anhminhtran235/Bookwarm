@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 
-import { FlexColumn } from './common/UtilStyle';
+import { FlexColumn, FlexRow } from './common/UtilStyle';
 
 export const BookPageStyle = styled.div`
     padding-top: 80px;
@@ -17,6 +17,24 @@ export const Showcase = styled.div`
     border-radius: 8px;
 `;
 
+export const ShowcaseTop = styled(FlexRow)`
+    img {
+        width: 33%;
+    }
+    @media (max-width: 1096px) {
+        flex-direction: column-reverse;
+        img {
+            width: 80%;
+            margin-top: 20px;
+        }
+    }
+    @media (max-width: 720px) {
+        img {
+            width: 100%;
+        }
+    }
+`;
+
 export const ShowcaseInfo = styled(FlexColumn)`
     padding: 10px 0px;
     align-self: stretch;
@@ -28,6 +46,9 @@ export const ShowcaseInfo = styled(FlexColumn)`
     }
     .book-author {
         font-style: italic;
+    }
+    @media (max-width: 1096px) {
+        margin: 0;
     }
 `;
 
@@ -62,6 +83,20 @@ export const PriceBox = styled(FlexColumn)`
             }
         }
     }
+    @media (max-width: 572px) {
+        .top {
+            padding: 10px 80px;
+        }
+        .bottom {
+            input {
+                padding: 5px;
+                width: 30px;
+            }
+        }
+        button {
+            content: 'Add';
+        }
+    }
 `;
 
 export const Description = styled.div`
@@ -85,5 +120,20 @@ export const RelatedBooks = styled(FlexColumn)`
     }
     h3 {
         margin-bottom: 15px;
+    }
+    @media (max-width: 927px) {
+        margin-right: 0px;
+        div {
+            margin-right: 0px;
+        }
+    }
+`;
+
+export const BooksContainer = styled(FlexRow)`
+    @media (max-width: 927px) {
+        flex-direction: column;
+        > div {
+            margin-bottom: 10px;
+        }
     }
 `;

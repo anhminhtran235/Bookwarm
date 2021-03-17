@@ -7,6 +7,7 @@ export const FooterStyle = styled(FlexRow)`
     font-size: 16px;
     color: white;
     padding: 20px;
+    text-align: center;
     p {
         margin: 0px;
     }

@@ -5,11 +5,7 @@ import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
 
 const LoginStyle = styled(FormPageStyle)`
-    ::before {
-        background: url(${backgroundImage}) no-repeat center/cover;
-        opacity: 70%;
-        filter: brightness(50%);
-    }
+    background: url(${backgroundImage}) no-repeat center/cover;
 `;
 
 const Login = () => {
@@ -28,7 +24,6 @@ const Login = () => {
                     </p>
                 </Form>
             </LoginStyle>
-            ;
         </>
     );
 };
