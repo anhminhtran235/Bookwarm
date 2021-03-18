@@ -1,26 +1,70 @@
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import { useMutation } from '@apollo/client';
+import { Redirect, withRouter } from 'react-router';
+import alertify from 'alertifyjs';
 
 import backgroundImage from '../../assets/images/login_background.jpg';
 import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
+import useForm from '../../lib/useForm';
+import { GET_ME_QUERY, LOGIN_MUTATION } from '../../lib/graphql';
+import { useUser } from '../../lib/util';
 
 const LoginStyle = styled(FormPageStyle)`
     background: url(${backgroundImage}) no-repeat center/cover;
 `;
 
-const Login = () => {
-    return (
+const Login = ({ history }) => {
+    const { form, handleChange } = useForm({
+        email: 'user1@gmail.com',
+        password: '123456',
+    });
+
+    const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
+        refetchQueries: [{ query: GET_ME_QUERY }],
+        awaitRefetchQueries: true,
+        update(proxy, result) {
+            alertify.success('Logged in sucessfully');
+            console.log(result);
+            history.push('/shopping');
+        },
+    });
+
+    const me = useUser();
+    const isLoggedIn = me != null;
+
+    const onSubmit = async (e) => {
+        e.preventDefault();
+        login({ variables: form });
+    };
+
+    return isLoggedIn ? (
+        <Redirect to='/shopping' />
+    ) : (
         <>
             <Navbar transparentInitially />
             <LoginStyle>
                 <Form>
                     <h2>Login</h2>
-                    <input type='text' placeholder='Email' />
-                    <input type='text' placeholder='Password' />
-                    <button>Login</button>
+                    <input
+                        type='text'
+                        placeholder='Email'
+                        name='email'
+                        value={form.email}
+                        onChange={handleChange}
+                    />
+                    <input
+                        type='password'
+                        placeholder='Password'
+                        name='password'
+                        value={form.password}
+                        onChange={handleChange}
+                    />
+                    <button onClick={onSubmit}>Login</button>
                     <p>
                         New to this website?{' '}
-                        <a href='/register'>Register here</a>
+                        <Link to='/register'>Register here</Link>
                     </p>
                 </Form>
             </LoginStyle>
@@ -28,4 +72,4 @@ const Login = () => {
     );
 };
 
-export default Login;
+export default withRouter(Login);

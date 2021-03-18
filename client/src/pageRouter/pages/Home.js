@@ -12,6 +12,13 @@ import {
 import bookIcon from '../../assets/icons/icons8-open-book.png';
 
 const Home = () => {
+    const book = {
+        image:
+            'https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg',
+        title: 'Big Magic',
+        author: 'Elizabeth Gilbert',
+        price: '22.59',
+    };
     return (
         <>
             <Header />
@@ -39,30 +46,10 @@ const Home = () => {
             <PopularBooks>
                 <h3>Popular Books</h3>
                 <BooksContainer>
-                    <Book
-                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                        title='Big Magic'
-                        author='Elizabeth Gilbert'
-                        price='22.59'
-                    />
-                    <Book
-                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                        title='Big Magic'
-                        author='Elizabeth Gilbert'
-                        price='22.59'
-                    />
-                    <Book
-                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                        title='Big Magic'
-                        author='Elizabeth Gilbert'
-                        price='22.59'
-                    />
-                    <Book
-                        image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                        title='Big Magic'
-                        author='Elizabeth Gilbert'
-                        price='22.59'
-                    />
+                    <Book book={book} />
+                    <Book book={book} />
+                    <Book book={book} />
+                    <Book book={book} />
                 </BooksContainer>
             </PopularBooks>
 

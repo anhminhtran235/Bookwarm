@@ -1,4 +1,6 @@
-import { FlexRow } from '../../styles/common/UtilStyle';
+import { useParams } from 'react-router';
+import { useQuery } from '@apollo/client';
+
 import Navbar from '../../component/Navbar/Navbar';
 import BookComponent from '../../component/Book/Book';
 import {
@@ -12,48 +14,19 @@ import {
     ShowcaseInfo,
     ShowcaseTop,
 } from '../../styles/BookPageStyle';
+import { SINGLE_BOOK_QUERY } from '../../lib/graphql';
 
 const Book = () => {
-    const book = {
-        image:
-            'https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg',
-        title: 'Under the Dome: A Novel',
-        author: 'Elizabeth Gilbert',
-        shortDescription: `What can you do to save money with online
-                        shopping? You may be wondering if finding
-                        coupons and sales is time consuming. If you
-                        aren’t into that, there are other options.
-                        You simply need to heed the tips in this
-                        piece and act on them.`,
-        description: `If you want to buy books online, you’ll get a
-                    better deal if you get them used. Depending on
-                    the condition you get them in, you may just end
-                    up paying a few cents plus shipping. Make sure
-                    you read through the description of the book to
-                    see if there are any damages you should be aware
-                    of. Be sure to read everything about the item
-                    that you want to buy. A picture of a product can
-                    be deceiving. They can make products look much
-                    smaller or bigger that they really are. Reading
-                    the description will allow you to be confident
-                    in the item you are purchasing. Look into online
-                    shopping clubs. Sites like ebates.com have some
-                    tremendous offers. You not only find out about
-                    sales going on at different sites, but they pay
-                    you a percentage of your purchase when you buy
-                    from those sites. It is a great way to get a
-                    bonus check every four months and get the things
-                    you need. Be aware of shipping order laws for
-                    online merchants. The company is supposed to
-                    send your order within the time frame listed in
-                    its ad. By law, they have 30 days to send you
-                    your order or give you an option to cancel your
-                    order. If you do not receive your order within
-                    this time frame, call the company to let them
-                    know.`,
-        price: 23.49,
-    };
-    return (
+    const { id } = useParams();
+    const { data, loading, error } = useQuery(SINGLE_BOOK_QUERY, {
+        variables: { id },
+    });
+
+    const book = data?.findBookById;
+
+    return loading ? (
+        'Loading...'
+    ) : (
         <>
             <Navbar />
             <BookPageStyle>
@@ -85,30 +58,10 @@ const Book = () => {
                 <RelatedBooks>
                     <h3>Related Products</h3>
                     <BooksContainer>
-                        <BookComponent
-                            image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            title='Big Magic'
-                            author='Elizabeth Gilbert'
-                            price='22.59'
-                        />
-                        <BookComponent
-                            image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            title='Big Magic'
-                            author='Elizabeth Gilbert'
-                            price='22.59'
-                        />
-                        <BookComponent
-                            image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            title='Big Magic'
-                            author='Elizabeth Gilbert'
-                            price='22.59'
-                        />
-                        <BookComponent
-                            image='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                            title='Big Magic'
-                            author='Elizabeth Gilbert'
-                            price='22.59'
-                        />
+                        <BookComponent book={book} />
+                        <BookComponent book={book} />
+                        <BookComponent book={book} />
+                        <BookComponent book={book} />
                     </BooksContainer>
                 </RelatedBooks>
             </BookPageStyle>

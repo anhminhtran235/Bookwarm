@@ -1,6 +1,10 @@
+import { withRouter } from 'react-router';
 import { SmallBook, BookDetails } from '../../../styles/ShoppingStyle';
 
-const SmallBooks = ({ books }) => {
+const SmallBooks = ({ books, history }) => {
+    const goToBook = (id) => {
+        history.push('/book/' + id);
+    };
     return (
         <>
             {books &&
@@ -9,7 +13,12 @@ const SmallBooks = ({ books }) => {
                     <SmallBook>
                         <img src={book.image} alt='' />
                         <BookDetails>
-                            <p className='book-title'>{book.title}</p>
+                            <p
+                                className='book-title'
+                                onClick={() => goToBook(book.id)}
+                            >
+                                {book.title}
+                            </p>
                             <p className='book-author'>{book.author}</p>
                             <p className='book-price'>${book.price}</p>
                         </BookDetails>
@@ -19,4 +28,4 @@ const SmallBooks = ({ books }) => {
     );
 };
 
-export default SmallBooks;
+export default withRouter(SmallBooks);

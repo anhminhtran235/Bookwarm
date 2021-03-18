@@ -19,7 +19,7 @@ export const Showcase = styled.div`
 
 export const ShowcaseTop = styled(FlexRow)`
     img {
-        width: 33%;
+        flex: 1 1 0px;
     }
     @media (max-width: 1096px) {
         flex-direction: column-reverse;
@@ -36,6 +36,7 @@ export const ShowcaseTop = styled(FlexRow)`
 `;
 
 export const ShowcaseInfo = styled(FlexColumn)`
+    flex: 3 3 0px;
     padding: 10px 0px;
     align-self: stretch;
     margin-left: 40px;

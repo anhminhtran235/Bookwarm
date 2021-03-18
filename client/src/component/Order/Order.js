@@ -2,17 +2,21 @@ import { OrderStyle } from '../../styles/OrdersStyle';
 import OrderItem from './OrderItem/OrderItem';
 
 const Order = ({ order: { orderItems, createdAt } }) => {
+    const total = orderItems.reduce(
+        (sum, item) => sum + item.quantity * item.pricePerItem,
+        0
+    );
     return (
         <OrderStyle>
             <div className='top'>
                 <div className='inner'>
                     <div className='info-group'>
                         <p>Purchase date</p>
-                        <p>March 9, 2021</p>
+                        <p>{createdAt}</p>
                     </div>
                     <div className='info-group'>
                         <p>Total</p>
-                        <p>$25.79</p>
+                        <p>${total}</p>
                     </div>
                 </div>
             </div>

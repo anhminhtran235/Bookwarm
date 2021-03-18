@@ -10,6 +10,7 @@ export const BookStyle = styled(FlexColumn)`
 
     img {
         width: 100%;
+        height: 100%;
         padding: 5px;
         box-shadow: 2px 2px 7px rgb(0 0 0 / 30%);
         border-radius: 2px;

@@ -46,6 +46,7 @@ export const OrderStyle = styled(FlexColumn)`
 `;
 
 export const OrderItemStyle = styled(FlexRow)`
+    justify-content: flex-start;
     margin-top: 10px;
     img {
         width: 50px;

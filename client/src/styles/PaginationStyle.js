@@ -22,3 +22,8 @@ export const PageNumber = styled.div`
         margin-right: 5px;
     }
 `;
+
+export const PaginationArrow = styled(PageNumber)`
+    background: ${(props) => (props.disabled ? 'var(--darker-grey)' : 'white')};
+    pointer-events: ${(props) => (props.disabled ? 'none' : 'all')};
+`;

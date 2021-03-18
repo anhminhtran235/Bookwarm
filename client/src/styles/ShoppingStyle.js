@@ -11,12 +11,14 @@ export const MainArea = styled.div`
     padding: 30px 0px 40px 0px;
     display: flex;
     align-items: flex-start;
+
     @media (max-width: 1300px) {
         flex-direction: column;
     }
 `;
 
 export const SideBars = styled.div`
+    flex: 1 1 0px;
     width: 50%;
     @media (max-width: 1300px) {
         width: 100%;
@@ -29,6 +31,8 @@ export const SideBars = styled.div`
 `;
 
 export const BooksStyle = styled.div`
+    flex: 2 2 0px;
+    position: relative;
     display: grid;
     grid-template-columns: repeat(3, auto);
     gap: 20px;
@@ -80,6 +84,11 @@ export const BookDetails = styled(FlexColumn)`
     padding-left: 30px;
     .book-title {
         font-size: 18px;
+        color: var(--lighter-blue);
+        :hover {
+            text-decoration: underline;
+            cursor: pointer;
+        }
     }
     .book-author {
         font-size: 14px;

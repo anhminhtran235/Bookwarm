@@ -1,3 +1,4 @@
+import { withRouter } from 'react-router';
 import {
     BookStyle,
     BookInfo,
@@ -5,7 +6,11 @@ import {
     BookButton,
 } from '../../styles/BookStyle';
 
-const Book = ({ id, image, title, author, price }) => {
+const Book = ({ book: { id, image, title, author, price }, history }) => {
+    const goToBook = () => {
+        history.push('/book/' + id);
+    };
+
     return (
         <BookStyle>
             <img src={image} alt='' />
@@ -14,7 +19,7 @@ const Book = ({ id, image, title, author, price }) => {
                 <p className='book-author'>{author}</p>
                 <p className='book-price'>${price}</p>
                 <ButtonGroup>
-                    <BookButton>Detail</BookButton>
+                    <BookButton onClick={goToBook}>Detail</BookButton>
                     <BookButton>Buy</BookButton>
                 </ButtonGroup>
             </BookInfo>
@@ -22,4 +27,4 @@ const Book = ({ id, image, title, author, price }) => {
     );
 };
 
-export default Book;
+export default withRouter(Book);
