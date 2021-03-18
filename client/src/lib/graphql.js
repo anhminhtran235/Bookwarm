@@ -128,6 +128,7 @@ const FIND_BOOKS_QUERY = gql`
             id
             title
             subtitle
+            author
             description
             image
             price

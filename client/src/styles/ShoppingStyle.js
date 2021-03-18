@@ -39,7 +39,7 @@ export const BooksStyle = styled.div`
     @media (max-width: 720px) {
         grid-template-columns: repeat(2, auto);
     }
-    @media (max-width: 360px) {
+    @media (max-width: 500px) {
         grid-template-columns: repeat(1, auto);
     }
 `;

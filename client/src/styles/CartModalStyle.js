@@ -11,7 +11,7 @@ export const Modal = styled.div`
         -50%,
         ${(props) => (props.show ? 'calc(-40%)' : '-300%')}
     );
-    transition: 0.5s ease-out;
+    transition: 1s ease-out;
     width: 650px;
     height: 450px;
     z-index: 100;

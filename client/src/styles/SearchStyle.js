@@ -54,20 +54,18 @@ export const Dropdown = styled.div`
     width: 100%;
     top: 43px;
     box-shadow: 0px 3px 5px 0 rgb(0 0 0 / 30%);
-    .active {
-        background: var(--lighter-grey);
-        border: 2px solid yellow;
-        padding-left: 30px;
-    }
 `;
 
 export const DropdownItem = styled(FlexRow)`
+    transition: all 0.3s;
     z-index: -1;
     justify-content: flex-start;
-    background: white;
+    background: ${(props) => (props.active ? 'var(--darker-grey)' : 'white')};
     color: black;
-    border: 1px solid var(--lighter-grey);
+    border: ${(props) =>
+        props.active ? '2px solid yellow' : '1px solid var(--lighter-grey)'};
     padding: 10px 20px;
+    padding-left: ${(props) => (props.active ? '30px' : '10px')};
     line-height: 1;
     img {
         width: 50px;
@@ -82,5 +80,10 @@ export const DropdownItem = styled(FlexRow)`
             font-style: italic;
             margin-top: 5px;
         }
+    }
+    :hover {
+        background: var(--darker-grey);
+        border: 2px solid yellow;
+        padding-left: 30px;
     }
 `;

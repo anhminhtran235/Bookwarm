@@ -181,6 +181,17 @@ export const Button = styled.div`
     }
 `;
 
+export const ItemCount = styled.span`
+    position: absolute;
+    font-size: 12px;
+    top: -12px;
+    right: -6px;
+    background: red;
+    border-radius: 80%;
+    padding: 2px 4px;
+    color: white;
+`;
+
 export const BurgerWrapper = styled.div`
     transform: translateY(-3px);
     .open span:nth-child(1) {

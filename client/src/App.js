@@ -5,7 +5,7 @@ import { useQuery } from '@apollo/client';
 import './App.css';
 import Page from './components/Page';
 import PageRouter from './pageRouter/pageRouter';
-import CartModal from './component/CartModal/CartModal';
+import CartModal from './component/Cart/CartModal/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';
 import Loader from './component/Loader/Loader';
 

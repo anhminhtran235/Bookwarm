@@ -11,8 +11,12 @@ import {
 } from '../../styles/HeaderStyle';
 import BurgerButton from './BurgerButton/BurgerButton';
 import Search from '../Search/Search';
+import CartButton from './CartButton/CartButton';
+import { useUser } from '../../lib/util';
 
 const Navbar = ({ transparentInitially }) => {
+    const user = useUser();
+
     const [navState, setNavState] = useState({
         showNavBg: transparentInitially ? false : true,
         dropdownNav: false,
@@ -122,9 +126,12 @@ const Navbar = ({ transparentInitially }) => {
                             >
                                 Account
                             </NavLink>
-                            <NavLink showNavBg={navState.showNavBg}>
+                            <CartButton
+                                showNavBg={navState.showNavBg}
+                                user={user}
+                            >
                                 My Cart
-                            </NavLink>
+                            </CartButton>
                             <NavLink showNavBg={navState.showNavBg}>
                                 Logout
                             </NavLink>
