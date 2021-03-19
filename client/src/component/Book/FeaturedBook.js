@@ -1,9 +1,17 @@
+import { withRouter } from 'react-router';
 import {
     FeaturedBookStyle,
     GetBookButton,
 } from '../../styles/FeaturedBookStyle';
 
-const FeaturedBook = ({ image1, image2, title, author, description }) => {
+const FeaturedBook = ({
+    book: { id, image, title, author, description },
+    history,
+}) => {
+    const goToBook = () => {
+        history.push('/book/' + id);
+    };
+
     return (
         <FeaturedBookStyle>
             <div>
@@ -11,16 +19,13 @@ const FeaturedBook = ({ image1, image2, title, author, description }) => {
                 <h3>{title}</h3>
                 <p className='book-author'>{author}</p>
                 <p className='description'>{description}</p>
-                <GetBookButton>Get This Book</GetBookButton>
+                <GetBookButton onClick={goToBook}>Get This Book</GetBookButton>
             </div>
             <div>
-                <img src={image1} alt='' />
-            </div>
-            <div>
-                <img src={image2} alt='' />
+                <img src={image} alt='' />
             </div>
         </FeaturedBookStyle>
     );
 };
 
-export default FeaturedBook;
+export default withRouter(FeaturedBook);

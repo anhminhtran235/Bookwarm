@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 
 import {
     Container,
@@ -13,15 +14,20 @@ import BurgerButton from './BurgerButton/BurgerButton';
 import Search from '../Search/Search';
 import CartButton from './CartButton/CartButton';
 import { useUser } from '../../lib/util';
+import { LOGOUT_MUTATION } from '../../lib/graphql';
+import LogoutButton from './LogoutButton/LogoutButton';
 
 const Navbar = ({ transparentInitially }) => {
     const user = useUser();
+    const isLoggedIn = user != null;
 
     const [navState, setNavState] = useState({
         showNavBg: transparentInitially ? false : true,
         dropdownNav: false,
         outerStyle: {},
     });
+
+    const [removeCookie] = useMutation(LOGOUT_MUTATION);
 
     const [searchState, setSearchState] = useState({ on: false });
 
@@ -105,38 +111,57 @@ const Navbar = ({ transparentInitially }) => {
                             >
                                 Shop
                             </NavLink>
-                            <NavLink
-                                as={Link}
-                                to='/sell'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Sell
-                            </NavLink>
-                            <NavLink
-                                as={Link}
-                                to='/orders'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Orders
-                            </NavLink>
-                            <NavLink
-                                as={Link}
-                                to='/account'
-                                showNavBg={navState.showNavBg}
-                            >
-                                Account
-                            </NavLink>
+                            {isLoggedIn && (
+                                <NavLink
+                                    as={Link}
+                                    to='/sell'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Sell
+                                </NavLink>
+                            )}
+                            {isLoggedIn && (
+                                <NavLink
+                                    as={Link}
+                                    to='/orders'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Orders
+                                </NavLink>
+                            )}
+                            {isLoggedIn && (
+                                <NavLink
+                                    as={Link}
+                                    to='/account'
+                                    showNavBg={navState.showNavBg}
+                                >
+                                    Account
+                                </NavLink>
+                            )}
                             <CartButton
                                 showNavBg={navState.showNavBg}
                                 user={user}
                             >
                                 My Cart
                             </CartButton>
-                            <NavLink showNavBg={navState.showNavBg}>
-                                Logout
-                            </NavLink>
-                            {/* <NavLink>Login</NavLink>
-            <NavLink>Register</NavLink> */}
+                            {isLoggedIn && (
+                                <LogoutButton
+                                    showNavBg={navState.showNavBg}
+                                    onClick={removeCookie}
+                                >
+                                    Logout
+                                </LogoutButton>
+                            )}
+                            {!isLoggedIn && (
+                                <NavLink as={Link} to='/login'>
+                                    Login
+                                </NavLink>
+                            )}
+                            {!isLoggedIn && (
+                                <NavLink as={Link} to='/register'>
+                                    Register
+                                </NavLink>
+                            )}
                         </NavLinksContainer>
                         <BurgerButton
                             toggleDropdown={toggleDropdownNav}

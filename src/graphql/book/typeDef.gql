@@ -16,6 +16,7 @@ extend type Query {
     findBooks(criteria: FindBookCriteria!, skip: Int, limit: Int): [Book]!
     findBookById(id: ID!): Book!
     getBookPaginationMeta(criteria: FindBookCriteria!): PaginationMeta!
+    getRandomBooks(limit: Int): [Book]!
 }
 
 extend type Mutation {

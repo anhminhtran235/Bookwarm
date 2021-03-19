@@ -10,7 +10,7 @@ const SmallBooks = ({ books, history }) => {
             {books &&
                 books.length &&
                 books.map((book) => (
-                    <SmallBook>
+                    <SmallBook key={book.id}>
                         <img src={book.image} alt='' />
                         <BookDetails>
                             <p

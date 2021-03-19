@@ -7,7 +7,7 @@ import './NProgress.css';
 import { useUser } from '../../lib/util';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-    const me = useUser;
+    const me = useUser();
     const isLoggedIn = me != null;
 
     React.useState(nprogress.start());

@@ -7,11 +7,11 @@ export const FeaturedBookStyle = styled(FlexRow)`
     padding: 40px var(--container-padding);
     color: var(--darker-black);
     div {
-        width: 33.33%;
+        width: 50%;
         padding: 0px 20px;
     }
     img {
-        width: 100%;
+        width: 80%;
         display: block;
         margin: auto;
     }

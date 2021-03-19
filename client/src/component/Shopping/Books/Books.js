@@ -19,7 +19,9 @@ const Books = ({ match, perPage }) => {
     return (
         <BooksStyle>
             {loading && <Loader />}
-            {books && books.length && books.map((book) => <Book book={book} />)}
+            {books &&
+                books.length &&
+                books.map((book) => <Book key={book.id} book={book} />)}
         </BooksStyle>
     );
 };

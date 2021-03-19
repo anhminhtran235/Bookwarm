@@ -1,7 +1,6 @@
 import Header from '../../component/Header/Header';
 import Book from '../../component/Book/Book';
 import FeaturedBook from '../../component/Book/FeaturedBook';
-import { FlexRow } from '../../styles/common/UtilStyle';
 import {
     PopularBooks,
     OurLibrary,
@@ -10,15 +9,26 @@ import {
     BooksContainer,
 } from '../../styles/HomeStyle';
 import bookIcon from '../../assets/icons/icons8-open-book.png';
+import { useQuery } from '@apollo/client';
+import { GET_RANDOM_BOOK_QUERY } from '../../lib/graphql';
 
 const Home = () => {
-    const book = {
-        image:
-            'https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg',
-        title: 'Big Magic',
-        author: 'Elizabeth Gilbert',
-        price: '22.59',
-    };
+    const { data: popularBooksData, loading: popularBooksLoading } = useQuery(
+        GET_RANDOM_BOOK_QUERY,
+        {
+            variables: { limit: 4 },
+        }
+    );
+    const popularBooks = popularBooksData?.getRandomBooks;
+    const { data: featureBookData, loading: featureBookLoading } = useQuery(
+        GET_RANDOM_BOOK_QUERY,
+        {
+            variables: { limit: 1 },
+        }
+    );
+    const featureBook = featureBookData?.getRandomBooks
+        ? featureBookData.getRandomBooks[0]
+        : null;
     return (
         <>
             <Header />
@@ -46,24 +56,15 @@ const Home = () => {
             <PopularBooks>
                 <h3>Popular Books</h3>
                 <BooksContainer>
-                    <Book book={book} />
-                    <Book book={book} />
-                    <Book book={book} />
-                    <Book book={book} />
+                    {popularBooks &&
+                        popularBooks.length &&
+                        popularBooks.map((book) => (
+                            <Book key={book.id} book={book} />
+                        ))}
                 </BooksContainer>
             </PopularBooks>
 
-            <FeaturedBook
-                title='The Complete Idiots Guide to Graphic Design'
-                description='From advanced selectors to generated content to web
-                fonts, and from gradients, shadows, and rounded corners
-                to elegant animations, CSS3 hold a universe of creative
-                possibilities. No one can better guide you through these
-                galaxies than Dan Cederholm'
-                author='Anggi Krisna'
-                image1='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-                image2='https://images-na.ssl-images-amazon.com/images/I/91JxVjINNsL._AC_UL600_SR396,600_.jpg'
-            />
+            {featureBook && <FeaturedBook book={featureBook} />}
 
             <OurLibrary>
                 <h1>Browse Through Our Complete Library</h1>

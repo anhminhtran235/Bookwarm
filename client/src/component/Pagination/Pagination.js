@@ -14,8 +14,6 @@ const Pagination = ({ history, perPage, bookCount }) => {
         history.push('/shopping/' + page);
     };
 
-    console.log('currentPage: ' + currentPage + ', bookCount: ' + bookCount);
-
     return (
         <PaginationStyle>
             <PaginationArrow

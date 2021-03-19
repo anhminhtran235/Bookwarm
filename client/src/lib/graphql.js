@@ -2,7 +2,7 @@ const gql = require('graphql-tag');
 const _ = require('lodash');
 
 const GET_ME_QUERY = gql`
-    query {
+    query getMe {
         getMe {
             id
             username
@@ -66,7 +66,7 @@ const REGISTER_USER_MUTATION = gql`
 `;
 
 const GET_CART_QUERY = gql`
-    query {
+    query getCart {
         getMe {
             cart {
                 id
@@ -140,6 +140,20 @@ const GET_BOOK_PAGINATION_META_QUERY = gql`
     query getBookPaginationMeta($titleContains: String) {
         getBookPaginationMeta(criteria: { titleContains: $titleContains }) {
             count
+        }
+    }
+`;
+
+const GET_RANDOM_BOOK_QUERY = gql`
+    query getRandomBooks($limit: Int) {
+        getRandomBooks(limit: $limit) {
+            id
+            title
+            subtitle
+            description
+            image
+            price
+            author
         }
     }
 `;
@@ -262,7 +276,7 @@ const UPDATE_USER_MUTATION = gql`
 `;
 
 const GET_ORDERS_QUERY = gql`
-    query {
+    query getOrders {
         getMe {
             orders {
                 id
@@ -433,6 +447,7 @@ module.exports = {
     GET_CART_QUERY,
     FIND_BOOKS_QUERY,
     GET_BOOK_PAGINATION_META_QUERY,
+    GET_RANDOM_BOOK_QUERY,
     ADD_TO_CART_MUTATION,
     REMOVE_FROM_CART_MUTATION,
     ADD_BOOK_MUTATION,

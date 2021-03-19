@@ -1,5 +1,6 @@
 import { useParams } from 'react-router';
-import { useQuery } from '@apollo/client';
+import { useQuery, useMutation } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import Navbar from '../../component/Navbar/Navbar';
 import BookComponent from '../../component/Book/Book';
@@ -14,10 +15,38 @@ import {
     ShowcaseInfo,
     ShowcaseTop,
 } from '../../styles/BookPageStyle';
-import { SINGLE_BOOK_QUERY } from '../../lib/graphql';
+import {
+    ADD_TO_CART_MUTATION,
+    GET_RANDOM_BOOK_QUERY,
+    SINGLE_BOOK_QUERY,
+    cacheUpdateAddToCart,
+} from '../../lib/graphql';
 
 const Book = () => {
     const { id } = useParams();
+
+    const [addToCart, { addToCartLoading }] = useMutation(
+        ADD_TO_CART_MUTATION,
+        {
+            variables: {
+                bookId: id,
+            },
+            update(cache, payload) {
+                alertify.success('Added to cart');
+                cacheUpdateAddToCart(cache, payload);
+            },
+        }
+    );
+
+    const { data: relatedBooksData, loading: relatedBooksLoading } = useQuery(
+        GET_RANDOM_BOOK_QUERY,
+        {
+            fetchPolicy: 'network-only',
+            variables: { limit: 4 },
+        }
+    );
+    const relatedBooks = relatedBooksData?.getRandomBooks;
+
     const { data, loading, error } = useQuery(SINGLE_BOOK_QUERY, {
         variables: { id },
     });
@@ -43,8 +72,9 @@ const Book = () => {
                                         <h4>${book.price}</h4>
                                     </div>
                                     <div className='bottom'>
-                                        <input type='number' defaultValue='1' />
-                                        <button>Add to cart</button>
+                                        <button onClick={addToCart}>
+                                            Add to cart
+                                        </button>
                                     </div>
                                 </PriceBox>
                             </ShowcaseInfo>
@@ -58,10 +88,11 @@ const Book = () => {
                 <RelatedBooks>
                     <h3>Related Products</h3>
                     <BooksContainer>
-                        <BookComponent book={book} />
-                        <BookComponent book={book} />
-                        <BookComponent book={book} />
-                        <BookComponent book={book} />
+                        {relatedBooks &&
+                            relatedBooks.length &&
+                            relatedBooks.map((book) => (
+                                <BookComponent book={book} />
+                            ))}
                     </BooksContainer>
                 </RelatedBooks>
             </BookPageStyle>

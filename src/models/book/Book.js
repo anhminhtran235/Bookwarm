@@ -24,6 +24,20 @@ const findAll = async (condition) => {
     }
 };
 
+const getRandomBooks = async (limit) => {
+    try {
+        const count = await Book.countDocuments();
+        const randNumber = Math.floor(Math.random() * count);
+        let skip = 0;
+        if (count > randNumber + limit) {
+            skip = randNumber;
+        }
+        return await Book.find().skip(skip).limit(limit);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const findOneById = async (id) => {
     try {
         return await Book.findById(id);
@@ -68,6 +82,7 @@ module.exports = {
     findPaginate,
     countBooks,
     findAll,
+    getRandomBooks,
     findOneById,
     insert,
     insertMany,
