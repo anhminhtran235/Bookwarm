@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const LoaderStyle = styled.div`
     display: inline-block;
-    position: absolute;
+    position: fixed;
     z-index: 100;
     top: 50%;
     left: 50%;

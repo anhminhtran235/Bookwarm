@@ -8,6 +8,8 @@ export const BookStyle = styled(FlexColumn)`
     box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
     border-radius: 8px;
     text-align: center;
+    width: 100%;
+    word-wrap: break-word;
 
     img {
         width: 100%;
@@ -15,6 +17,7 @@ export const BookStyle = styled(FlexColumn)`
         padding: 5px;
         box-shadow: 2px 2px 7px rgb(0 0 0 / 30%);
         border-radius: 2px;
+        object-fit: fill;
     }
 `;
 

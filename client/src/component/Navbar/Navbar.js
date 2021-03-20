@@ -27,8 +27,6 @@ const Navbar = ({ transparentInitially }) => {
         outerStyle: {},
     });
 
-    const [removeCookie] = useMutation(LOGOUT_MUTATION);
-
     const [searchState, setSearchState] = useState({ on: false });
 
     const toggleDropdownNav = () => {
@@ -145,10 +143,7 @@ const Navbar = ({ transparentInitially }) => {
                                 My Cart
                             </CartButton>
                             {isLoggedIn && (
-                                <LogoutButton
-                                    showNavBg={navState.showNavBg}
-                                    onClick={removeCookie}
-                                >
+                                <LogoutButton showNavBg={navState.showNavBg}>
                                     Logout
                                 </LogoutButton>
                             )}

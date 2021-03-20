@@ -1,5 +1,5 @@
 import { BrowserRouter } from 'react-router-dom';
-import { createGlobalStyle } from 'styled-components';
+import styled, { createGlobalStyle } from 'styled-components';
 import Footer from '../component/Footer/Footer';
 
 const GlobalStyles = createGlobalStyle`
@@ -76,12 +76,16 @@ const GlobalStyles = createGlobalStyle`
     }
 `;
 
+const PageStyle = styled.div`
+    min-height: 100vh;
+`;
+
 const Page = ({ children }) => {
     return (
         <>
             <BrowserRouter>
                 <GlobalStyles />
-                {children}
+                <PageStyle>{children}</PageStyle>
                 <Footer />
             </BrowserRouter>
         </>

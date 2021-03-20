@@ -18,6 +18,18 @@ export const toDataURL = (file) => {
     });
 };
 
+export const transformImage = (imageUrl, ratioWidth, ratioHeight) => {
+    return (
+        imageUrl?.split('upload/')[0] +
+        'upload/ar_' +
+        ratioWidth +
+        ':' +
+        ratioHeight +
+        ',c_crop/' +
+        imageUrl?.split('upload/')[1]
+    );
+};
+
 export const useUser = () => {
     const { data } = useQuery(GET_ME_QUERY);
     return data?.getMe;
