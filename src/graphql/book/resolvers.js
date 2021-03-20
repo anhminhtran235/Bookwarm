@@ -106,6 +106,11 @@ module.exports = {
                     throw new ApolloError('Cannot find user profile');
                 }
                 if (user._doc.books.includes(id)) {
+                    if (args.image && args.image !== '') {
+                        args.image = (
+                            await cloudinary.uploader.upload(args.image)
+                        ).url;
+                    }
                     const newBook = await bookModule.updateById(id, args);
                     if (!newBook) {
                         throw new ApolloError('Book does not exists');

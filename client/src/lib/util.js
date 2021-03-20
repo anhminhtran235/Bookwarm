@@ -43,3 +43,16 @@ export const useDebouncedCallback = (callback, delay) => {
         []
     );
 };
+
+export const isImageValid = (imageFile) => {
+    if (!imageFile) {
+        return false;
+    }
+    var formData = new FormData();
+    formData.append('Filedata', imageFile);
+    var t = imageFile.type.split('/').pop().toLowerCase();
+    if (!['jpeg', 'jpg', 'png', 'bmp', 'gif'].includes(t)) {
+        return false;
+    }
+    return true;
+};

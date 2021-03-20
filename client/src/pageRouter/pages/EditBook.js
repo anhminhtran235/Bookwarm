@@ -1,19 +1,19 @@
 import { Redirect, useParams } from 'react-router-dom';
 import { useMutation, useQuery } from '@apollo/client';
 import alertify from 'alertifyjs';
+import { useState } from 'react';
 
 import image from '../../assets/images/sell_image.jpg';
 import Navbar from '../../component/Navbar/Navbar';
 
 import { Column, Form, Row, SellStyle } from '../../styles/SellStyle';
 import useForm from '../../lib/useForm';
-import { useUser } from '../../lib/util';
+import { useUser, isImageValid, toDataURL } from '../../lib/util';
 import {
     SINGLE_BOOK_QUERY,
     UPDATE_BOOK_MUTATION,
     cacheUpdateUpdateBook,
 } from '../../lib/graphql';
-import { useState } from 'react';
 
 const EditBookStyle = SellStyle;
 
@@ -29,7 +29,7 @@ const EditBook = () => {
         delete book.image;
     }
 
-    const { form, handleChange } = useForm(
+    const { form, handleChange, clearForm } = useForm(
         book || {
             title: '',
             subtitle: '',
@@ -47,6 +47,7 @@ const EditBook = () => {
             variables: { id, ...form },
             update(cache, result) {
                 alertify.success('Book updated successfully');
+                clearForm();
                 cacheUpdateUpdateBook(cache, result);
             },
         }
@@ -54,12 +55,33 @@ const EditBook = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
-        updateBook();
+        const formToSubmit = { ...form };
+
+        if (form.image && form.image !== '') {
+            try {
+                toDataURL(form.image).then((base64Image) => {
+                    formToSubmit.image = base64Image;
+                    updateBook({ variables: formToSubmit });
+                });
+            } catch (error) {
+                throw new Error(error);
+            }
+        } else {
+            delete formToSubmit.image;
+            updateBook({ variables: formToSubmit });
+        }
     };
 
     const onPickImage = (e) => {
-        setState({ imageName: e?.target?.files[0]?.name });
-        handleChange(e);
+        if (isImageValid(e?.target?.files[0])) {
+            setState({ imageName: e?.target?.files[0]?.name });
+            handleChange(e);
+        } else {
+            alertify.error(
+                'Please choose an image file. Accepted extensions are jpeg, jpg, png, bmp and gif'
+            );
+            setState({ imageName: 'Change Image' });
+        }
     };
 
     const hasEditPermission =

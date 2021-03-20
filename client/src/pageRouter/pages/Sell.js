@@ -6,7 +6,7 @@ import image from '../../assets/images/sell_image.jpg';
 import Navbar from '../../component/Navbar/Navbar';
 import { Column, Form, Row, SellStyle } from '../../styles/SellStyle';
 import useForm from '../../lib/useForm';
-import { toDataURL } from '../../lib/util';
+import { toDataURL, isImageValid } from '../../lib/util';
 import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../../lib/graphql';
 
 const Sell = () => {
@@ -48,8 +48,15 @@ const Sell = () => {
     };
 
     const onPickImage = (e) => {
-        setState({ imageName: e?.target?.files[0]?.name });
-        handleChange(e);
+        if (isImageValid(e?.target?.files[0])) {
+            setState({ imageName: e?.target?.files[0]?.name });
+            handleChange(e);
+        } else {
+            alertify.error(
+                'Please choose an image file. Accepted extensions are jpeg, jpg, png, bmp and gif'
+            );
+            setState({ imageName: 'Upload Image *' });
+        }
     };
 
     return (
