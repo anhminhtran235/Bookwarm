@@ -8,7 +8,7 @@ import backgroundImage from '../../assets/images/login_background.jpg';
 import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
 import useForm from '../../lib/useForm';
-import { GET_ME_QUERY, LOGIN_MUTATION } from '../../lib/graphql';
+import { cacheUpdateLogin, LOGIN_MUTATION } from '../../lib/graphql';
 import { useUser } from '../../lib/util';
 
 const LoginStyle = styled(FormPageStyle)`
@@ -22,11 +22,9 @@ const Login = ({ history }) => {
     });
 
     const [login, { loading, error }] = useMutation(LOGIN_MUTATION, {
-        refetchQueries: [{ query: GET_ME_QUERY }],
-        awaitRefetchQueries: true,
-        update(proxy, result) {
+        update(cache, result) {
+            cacheUpdateLogin(cache, result);
             alertify.success('Logged in sucessfully');
-            console.log(result);
             history.push('/shopping');
         },
     });

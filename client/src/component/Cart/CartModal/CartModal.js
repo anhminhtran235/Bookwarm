@@ -70,7 +70,7 @@ const CartModal = () => {
                     ))}
 
                 <TotalPrice>
-                    <p className='pr-3 pb-1'>Total: ${total}</p>
+                    <p className='pr-3 pb-1'>Total: ${total?.toFixed(2)}</p>
                 </TotalPrice>
 
                 {!state.formEnabled && (

@@ -9,7 +9,7 @@ import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
 import useForm from '../../lib/useForm';
 import { useUser } from '../../lib/util';
-import { REGISTER_USER_MUTATION, GET_ME_QUERY } from '../../lib/graphql';
+import { REGISTER_USER_MUTATION, cacheUpdateRegister } from '../../lib/graphql';
 
 const RegisterStyle = styled(FormPageStyle)`
     background: url(${backgroundImage}) no-repeat center/cover;
@@ -25,9 +25,8 @@ const Register = ({ history }) => {
     });
 
     const [register, { loading }] = useMutation(REGISTER_USER_MUTATION, {
-        refetchQueries: [{ query: GET_ME_QUERY }],
-        awaitRefetchQueries: true,
-        update(proxy, result) {
+        update(cache, result) {
+            cacheUpdateRegister(cache, result);
             alertify.success('Registered sucessfully');
             history.push('/shopping');
         },

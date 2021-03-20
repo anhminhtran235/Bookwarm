@@ -33,6 +33,20 @@ const LOGIN_MUTATION = gql`
             username
             email
             avatar
+            createdAt
+            orders {
+                id
+            }
+            cart {
+                id
+                book {
+                    id
+                }
+                quantity
+            }
+            books {
+                id
+            }
         }
     }
 `;
@@ -61,6 +75,20 @@ const REGISTER_USER_MUTATION = gql`
             username
             email
             avatar
+            createdAt
+            orders {
+                id
+            }
+            cart {
+                id
+                book {
+                    id
+                }
+                quantity
+            }
+            books {
+                id
+            }
         }
     }
 `;
@@ -439,6 +467,37 @@ const cacheUpdateUpdateUser = (cache, payload) => {
     });
 };
 
+const cacheUpdateLogout = (cache, payload) => {
+    cache.writeQuery({
+        query: GET_ME_QUERY,
+        data: {
+            getMe: null,
+        },
+    });
+};
+
+const cacheUpdateLogin = (cache, payload) => {
+    const user = payload?.data?.login;
+    if (!user) return;
+    cache.writeQuery({
+        query: GET_ME_QUERY,
+        data: {
+            getMe: user,
+        },
+    });
+};
+
+const cacheUpdateRegister = (cache, payload) => {
+    const user = payload?.data?.register;
+    if (!user) return;
+    cache.writeQuery({
+        query: GET_ME_QUERY,
+        data: {
+            getMe: user,
+        },
+    });
+};
+
 module.exports = {
     GET_ME_QUERY,
     LOGIN_MUTATION,
@@ -464,4 +523,7 @@ module.exports = {
     cacheUpdateDeleteBook,
     cacheUpdateCheckout,
     cacheUpdateUpdateUser,
+    cacheUpdateLogout,
+    cacheUpdateLogin,
+    cacheUpdateRegister,
 };

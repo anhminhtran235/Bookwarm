@@ -101,10 +101,7 @@ module.exports = {
                     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
                 });
 
-                return {
-                    ...newUser._doc,
-                    id: newUser._id,
-                };
+                return newUser;
             } catch (error) {
                 throw new Error(error);
             }
@@ -133,10 +130,7 @@ module.exports = {
                     maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
                 });
 
-                return {
-                    ...user._doc,
-                    id: user._id,
-                };
+                return user;
             } catch (error) {
                 throw new Error(error);
             }
