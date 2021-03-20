@@ -75,6 +75,7 @@ export const SmallBook = styled(FlexRow)`
     }
     img {
         height: 100%;
+        width: 70px;
     }
     height: 100px;
 `;

@@ -9,8 +9,11 @@ import {
     BookButton,
 } from '../../styles/BookStyle';
 import { cacheUpdateAddToCart, ADD_TO_CART_MUTATION } from '../../lib/graphql';
+import { useUser } from '../../lib/util';
 
 const Book = ({ book: { id, image, title, author, price }, history }) => {
+    const isLoggedIn = useUser() != null;
+
     const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
         variables: {
             bookId: id,
@@ -20,6 +23,15 @@ const Book = ({ book: { id, image, title, author, price }, history }) => {
             cacheUpdateAddToCart(cache, payload);
         },
     });
+
+    const onAddToCart = () => {
+        if (!isLoggedIn) {
+            alertify.error('Please log in first');
+            history.push('/login');
+        } else {
+            addToCart();
+        }
+    };
 
     const goToBook = () => {
         history.push('/book/' + id);
@@ -34,7 +46,7 @@ const Book = ({ book: { id, image, title, author, price }, history }) => {
                 <p className='book-price'>${price}</p>
                 <ButtonGroup>
                     <BookButton onClick={goToBook}>Detail</BookButton>
-                    <BookButton onClick={addToCart}>Add to cart</BookButton>
+                    <BookButton onClick={onAddToCart}>Add to cart</BookButton>
                 </ButtonGroup>
             </BookInfo>
         </BookStyle>

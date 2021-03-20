@@ -28,7 +28,7 @@ const PageRouter = () => {
                 render={() => <Redirect to='/shopping/1' />}
             ></CustomRoute>
 
-            <PrivateRoute path='/shopping' component={Shopping}></PrivateRoute>
+            <CustomRoute path='/shopping' component={Shopping}></CustomRoute>
             <PrivateRoute path='/sell' exact component={Sell}></PrivateRoute>
             <PrivateRoute
                 path='/account'

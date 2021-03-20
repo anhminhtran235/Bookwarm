@@ -15,7 +15,7 @@ const Sell = () => {
         subtitle: 'This is a book',
         author: 'Minh Tran',
         description: 'This is a nice book',
-        price: 28.44,
+        price: 28,
         image: '',
     });
 

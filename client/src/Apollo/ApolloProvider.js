@@ -56,15 +56,15 @@ const client = new ApolloClient({
                     findBooks: paginationField(),
                 },
             },
-            Book: {
-                fields: {
-                    image: {
-                        read(image) {
-                            return transformImage(image, 2, 3);
-                        },
-                    },
-                },
-            },
+            // Book: {
+            //     fields: {
+            //         image: {
+            //             read(image) {
+            //                 return transformImage(image, 2, 3);
+            //             },
+            //         },
+            //     },
+            // },
         },
     }),
     connectToDevTools: true,

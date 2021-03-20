@@ -1,4 +1,4 @@
-import { useParams } from 'react-router';
+import { useParams, withRouter } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import alertify from 'alertifyjs';
 
@@ -14,6 +14,7 @@ import {
     Showcase,
     ShowcaseInfo,
     ShowcaseTop,
+    ImageContainer,
 } from '../../styles/BookPageStyle';
 import {
     ADD_TO_CART_MUTATION,
@@ -21,9 +22,11 @@ import {
     SINGLE_BOOK_QUERY,
     cacheUpdateAddToCart,
 } from '../../lib/graphql';
+import { useUser } from '../../lib/util';
 
-const Book = () => {
+const Book = ({ history }) => {
     const { id } = useParams();
+    const isLoggedIn = useUser() != null;
 
     const [addToCart, { addToCartLoading }] = useMutation(
         ADD_TO_CART_MUTATION,
@@ -37,6 +40,15 @@ const Book = () => {
             },
         }
     );
+
+    const onAddToCart = () => {
+        if (!isLoggedIn) {
+            alertify.error('Please log in first');
+            history.push('/login');
+        } else {
+            addToCart();
+        }
+    };
 
     const { data: relatedBooksData, loading: relatedBooksLoading } = useQuery(
         GET_RANDOM_BOOK_QUERY,
@@ -62,7 +74,9 @@ const Book = () => {
                 <Container>
                     <Showcase>
                         <ShowcaseTop>
-                            <img src={book.image} alt='' />
+                            <ImageContainer>
+                                <img src={book.image} alt='' />
+                            </ImageContainer>
                             <ShowcaseInfo>
                                 <h1>{book.title}</h1>
                                 <p className='book-author'>By {book.author}</p>
@@ -72,7 +86,7 @@ const Book = () => {
                                         <h4>${book.price}</h4>
                                     </div>
                                     <div className='bottom'>
-                                        <button onClick={addToCart}>
+                                        <button onClick={onAddToCart}>
                                             Add to cart
                                         </button>
                                     </div>
@@ -100,4 +114,4 @@ const Book = () => {
     );
 };
 
-export default Book;
+export default withRouter(Book);

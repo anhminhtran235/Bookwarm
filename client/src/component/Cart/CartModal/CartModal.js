@@ -16,8 +16,12 @@ import {
     CHECKOUT_MUTATION,
     cacheUpdateCheckout,
 } from '../../../lib/graphql';
+import { useUser } from '../../../lib/util';
 
 const CartModal = () => {
+    const user = useUser();
+    const isLoggedIn = user != null;
+
     const { cartOpen, closeCart } = useCart();
     const [state, setState] = useState({
         password: '',
@@ -59,20 +63,21 @@ const CartModal = () => {
         e.preventDefault();
         checkout();
     };
-    return (
-        <>
-            <Backdrop show={cartOpen} onClick={closeCart} />
-            <Modal show={cartOpen}>
-                <h2>My Cart</h2>
-                {cartItems &&
-                    cartItems.map((item) => (
-                        <CartItem key={item.id} cartItem={item} />
-                    ))}
 
+    let cartDisplay = null;
+    if (!isLoggedIn) {
+        cartDisplay = <p>Please login first</p>;
+    } else if (cartItems && cartItems.length === 0) {
+        cartDisplay = <p>You have no item in your cart</p>;
+    } else if (cartItems && cartItems.length > 0) {
+        cartDisplay = (
+            <>
+                {cartItems.map((item) => (
+                    <CartItem key={item.id} cartItem={item} />
+                ))}
                 <TotalPrice>
-                    <p className='pr-3 pb-1'>Total: ${total?.toFixed(2)}</p>
+                    <p className='pr-3 pb-1'>Total: ${total}</p>
                 </TotalPrice>
-
                 {!state.formEnabled && (
                     <CheckoutButton onClick={enableForm}>
                         CHECKOUT
@@ -93,6 +98,16 @@ const CartModal = () => {
                         </CheckoutButton>
                     </Form>
                 )}
+            </>
+        );
+    }
+
+    return (
+        <>
+            <Backdrop show={cartOpen} onClick={closeCart} />
+            <Modal show={cartOpen}>
+                <h2>My Cart</h2>
+                {cartDisplay}
             </Modal>
         </>
     );

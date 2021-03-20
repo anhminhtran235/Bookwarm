@@ -23,15 +23,6 @@ export const ShowcaseTop = styled(FlexRow)`
     }
     @media (max-width: 1096px) {
         flex-direction: column-reverse;
-        img {
-            width: 80%;
-            margin-top: 20px;
-        }
-    }
-    @media (max-width: 720px) {
-        img {
-            width: 100%;
-        }
     }
 `;
 
@@ -50,6 +41,20 @@ export const ShowcaseInfo = styled(FlexColumn)`
     }
     @media (max-width: 1096px) {
         margin: 0;
+    }
+`;
+
+export const ImageContainer = styled.div`
+    width: 33.33%;
+    img {
+        width: 100%;
+    }
+    @media (max-width: 1096px) {
+        width: 80%;
+        margin-top: 20px;
+    }
+    @media (max-width: 720px) {
+        width: 100%;
     }
 `;
 
