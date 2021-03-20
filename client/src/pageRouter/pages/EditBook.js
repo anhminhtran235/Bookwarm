@@ -36,6 +36,7 @@ const EditBook = () => {
             author: '',
             description: '',
             price: '',
+            promotion: '',
         }
     );
 
@@ -55,6 +56,12 @@ const EditBook = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (form.price) {
+            form.price = parseFloat(form.price);
+        }
+        if (form.promotion) {
+            form.promotion = parseFloat(form.promotion);
+        }
         const formToSubmit = { ...form };
 
         if (form.image && form.image !== '') {
@@ -138,7 +145,14 @@ const EditBook = () => {
                                     onChange={handleChange}
                                     required
                                 />
-                                <input type='text' placeholder='Promotion' />
+                                <input
+                                    type='text'
+                                    placeholder='Promotion (%)'
+                                    name='promotion'
+                                    value={form.promotion}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </Column>
                         </Row>
                         <textarea

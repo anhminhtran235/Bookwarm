@@ -63,6 +63,14 @@ module.exports = {
                 throw new Error(error);
             }
         },
+        async getDiscountedBooks(parent, args, context, info) {
+            try {
+                const { limit } = args;
+                return await bookModule.getDiscountedBooks(limit);
+            } catch (error) {
+                throw new Error(error);
+            }
+        },
     },
     Mutation: {
         async addBook(parent, args, context, info) {

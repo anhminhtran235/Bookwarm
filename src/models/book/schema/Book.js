@@ -11,6 +11,10 @@ const bookSchema = new Schema({
     description: String,
     image: String,
     price: Number,
+    promotion: {
+        type: Number,
+        default: 0,
+    },
     createdAt: {
         type: Number,
         default: () => Date.now(),

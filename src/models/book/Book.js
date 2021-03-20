@@ -38,6 +38,16 @@ const getRandomBooks = async (limit) => {
     }
 };
 
+const getDiscountedBooks = async (limit) => {
+    try {
+        return await Book.find({ promotion: { $nin: [0, null, undefined] } })
+            .sort({ createdAt: -1 })
+            .limit(limit);
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const findOneById = async (id) => {
     try {
         return await Book.findById(id);
@@ -83,6 +93,7 @@ module.exports = {
     countBooks,
     findAll,
     getRandomBooks,
+    getDiscountedBooks,
     findOneById,
     insert,
     insertMany,

@@ -1,3 +1,4 @@
+import { epochToFormattedDate } from '../../lib/util';
 import { OrderStyle } from '../../styles/OrdersStyle';
 import OrderItem from './OrderItem/OrderItem';
 
@@ -12,11 +13,11 @@ const Order = ({ order: { orderItems, createdAt } }) => {
                 <div className='inner'>
                     <div className='info-group'>
                         <p>Purchase date</p>
-                        <p>{createdAt}</p>
+                        <p>{epochToFormattedDate(createdAt)}</p>
                     </div>
                     <div className='info-group'>
                         <p>Total</p>
-                        <p>${total}</p>
+                        <p>${total.toFixed(2)}</p>
                     </div>
                 </div>
             </div>

@@ -105,6 +105,7 @@ const GET_CART_QUERY = gql`
                     description
                     image
                     price
+                    promotion
                 }
                 quantity
             }
@@ -124,6 +125,7 @@ const ADD_TO_CART_MUTATION = gql`
                 description
                 image
                 price
+                promotion
             }
         }
     }
@@ -141,6 +143,7 @@ const REMOVE_FROM_CART_MUTATION = gql`
                 description
                 image
                 price
+                promotion
             }
         }
     }
@@ -160,6 +163,7 @@ const FIND_BOOKS_QUERY = gql`
             description
             image
             price
+            promotion
         }
     }
 `;
@@ -178,10 +182,26 @@ const GET_RANDOM_BOOK_QUERY = gql`
             id
             title
             subtitle
+            author
             description
             image
             price
+            promotion
+        }
+    }
+`;
+
+const GET_DISCOUNTED_BOOKS = gql`
+    query getDiscountedBooks($limit: Int) {
+        getDiscountedBooks(limit: $limit) {
+            id
+            title
+            subtitle
             author
+            description
+            image
+            price
+            promotion
         }
     }
 `;
@@ -194,6 +214,7 @@ const ADD_BOOK_MUTATION = gql`
         $description: String!
         $image: String!
         $price: Float!
+        $promotion: Float!
     ) {
         addBook(
             title: $title
@@ -202,6 +223,7 @@ const ADD_BOOK_MUTATION = gql`
             description: $description
             image: $image
             price: $price
+            promotion: $promotion
         ) {
             id
             title
@@ -209,6 +231,7 @@ const ADD_BOOK_MUTATION = gql`
             description
             image
             price
+            promotion
         }
     }
 `;
@@ -222,6 +245,7 @@ const UPDATE_BOOK_MUTATION = gql`
         $description: String
         $image: String
         $price: Float
+        $promotion: Float
     ) {
         updateBook(
             id: $id
@@ -231,6 +255,7 @@ const UPDATE_BOOK_MUTATION = gql`
             description: $description
             image: $image
             price: $price
+            promotion: $promotion
         ) {
             id
             title
@@ -239,6 +264,7 @@ const UPDATE_BOOK_MUTATION = gql`
             description
             image
             price
+            promotion
         }
     }
 `;
@@ -253,6 +279,7 @@ const DELETE_BOOK_MUTATION = gql`
             description
             image
             price
+            promotion
         }
     }
 `;
@@ -263,10 +290,11 @@ const SINGLE_BOOK_QUERY = gql`
             id
             title
             subtitle
+            author
             description
             image
             price
-            author
+            promotion
         }
     }
 `;
@@ -316,6 +344,7 @@ const GET_ORDERS_QUERY = gql`
                         description
                         image
                         price
+                        promotion
                         author
                     }
                     quantity
@@ -507,6 +536,7 @@ module.exports = {
     FIND_BOOKS_QUERY,
     GET_BOOK_PAGINATION_META_QUERY,
     GET_RANDOM_BOOK_QUERY,
+    GET_DISCOUNTED_BOOKS,
     ADD_TO_CART_MUTATION,
     REMOVE_FROM_CART_MUTATION,
     ADD_BOOK_MUTATION,

@@ -73,9 +73,28 @@ export const SmallBook = styled(FlexRow)`
     p {
         margin: 0;
     }
-    img {
+    .image-wrapper {
+        position: relative;
         height: 100%;
         width: 70px;
+        overflow: hidden;
+        .promotion-tag {
+            background: red;
+            font-size: 14px;
+            color: white;
+            position: absolute;
+            top: 0;
+            right: 0;
+            -webkit-transform: rotate(36deg) translate(174px, -87px);
+            -ms-transform: rotate(36deg) translate(174px, -87px);
+            transform: rotate(36deg) translate(189px, -114px);
+            text-align: center;
+            width: 500px;
+        }
+        img {
+            width: 100%;
+            height: 100%;
+        }
     }
     height: 100px;
 `;
@@ -98,8 +117,10 @@ export const BookDetails = styled(FlexColumn)`
     .book-price {
         font-size: 18px;
         font-weight: bold;
-        .cross-out {
+        .promotion {
+            margin-right: 5px;
             color: var(--darkest-grey);
+            font-size: 14px;
         }
     }
 `;

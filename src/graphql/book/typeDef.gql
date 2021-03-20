@@ -3,9 +3,10 @@ type Book {
     title: String!
     subtitle: String
     author: String!
-    description: String
+    description: String!
     image: String
     price: Float!
+    promotion: Float!
 }
 
 input FindBookCriteria {
@@ -17,6 +18,7 @@ extend type Query {
     findBookById(id: ID!): Book!
     getBookPaginationMeta(criteria: FindBookCriteria!): PaginationMeta!
     getRandomBooks(limit: Int): [Book]!
+    getDiscountedBooks(limit: Int): [Book]!
 }
 
 extend type Mutation {
@@ -27,6 +29,7 @@ extend type Mutation {
         description: String!
         image: String!
         price: Float!
+        promotion: Float
     ): Book!
     updateBook(
         id: ID!
@@ -36,6 +39,7 @@ extend type Mutation {
         description: String
         image: String
         price: Float
+        promotion: Float
     ): Book!
     deleteBook(id: ID!): Book!
 }

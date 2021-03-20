@@ -11,7 +11,10 @@ import {
 import { cacheUpdateAddToCart, ADD_TO_CART_MUTATION } from '../../lib/graphql';
 import { useUser } from '../../lib/util';
 
-const Book = ({ book: { id, image, title, author, price }, history }) => {
+const Book = ({
+    book: { id, image, title, author, price, promotion },
+    history,
+}) => {
     const isLoggedIn = useUser() != null;
 
     const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
@@ -37,13 +40,24 @@ const Book = ({ book: { id, image, title, author, price }, history }) => {
         history.push('/book/' + id);
     };
 
+    const realPrice = promotion ? (price * (100 - promotion)) / 100 : price;
     return (
         <BookStyle>
+            {promotion != 0 && (
+                <span className='promotion-tag'>SALE {promotion}%</span>
+            )}
             <img src={image} alt='' />
             <BookInfo>
                 <p className='book-title'>{title}</p>
                 <p className='book-author'>{author}</p>
-                <p className='book-price'>${price}</p>
+                <p className='book-price'>
+                    {promotion !== 0 && (
+                        <strike className='promotion'>
+                            ${price.toFixed(2)}
+                        </strike>
+                    )}
+                    ${realPrice.toFixed(2)}
+                </p>
                 <ButtonGroup>
                     <BookButton onClick={goToBook}>Detail</BookButton>
                     <BookButton onClick={onAddToCart}>Add to cart</BookButton>

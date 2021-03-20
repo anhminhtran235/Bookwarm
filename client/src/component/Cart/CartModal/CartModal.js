@@ -34,7 +34,10 @@ const CartModal = () => {
     let total = 0;
     if (cartItems) {
         cartItems.forEach((item) => {
-            total += item.quantity * item.book.price;
+            const realPrice = item.book.promotion
+                ? (item.book.price * (100 - item.book.promotion)) / 100
+                : item.book.price;
+            total += item.quantity * realPrice;
         });
     }
 
@@ -80,7 +83,7 @@ const CartModal = () => {
                     <CartItem key={item.id} cartItem={item} />
                 ))}
                 <TotalPrice>
-                    <p className='pr-3 pb-1'>Total: ${total}</p>
+                    <p className='pr-3 pb-1'>Total: ${total.toFixed(2)}</p>
                 </TotalPrice>
                 {!state.formEnabled && (
                     <CheckoutButton onClick={enableForm}>

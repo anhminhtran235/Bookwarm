@@ -19,7 +19,7 @@ type OrderItem {
     id: ID!
     book: Book!
     quantity: Int!
-    pricePerItem: Int!
+    pricePerItem: Float!
 }
 
 type Order {

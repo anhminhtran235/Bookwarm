@@ -15,7 +15,8 @@ const Sell = () => {
         subtitle: 'This is a book',
         author: 'Minh Tran',
         description: 'This is a nice book',
-        price: 28,
+        price: 19.99,
+        promotion: '',
         image: '',
     });
 
@@ -31,6 +32,12 @@ const Sell = () => {
 
     const onSubmit = async (e) => {
         e.preventDefault();
+        if (form.price) {
+            form.price = parseFloat(form.price);
+        }
+        if (form.promotion) {
+            form.promotion = parseFloat(form.promotion);
+        }
         const formToSubmit = { ...form };
 
         if (form.image && form.image !== '') {
@@ -98,14 +105,26 @@ const Sell = () => {
                             <Column className='right'>
                                 <input type='text' placeholder='Category' />
                                 <input
-                                    type='text'
+                                    type='number'
+                                    step='0.01'
+                                    min='0'
+                                    max='100'
                                     placeholder='Price'
                                     name='price'
                                     value={form.price}
                                     onChange={handleChange}
                                     required
                                 />
-                                <input type='text' placeholder='Promotion' />
+                                <input
+                                    type='number'
+                                    min='0'
+                                    max='100'
+                                    placeholder='Promotion (%)'
+                                    name='promotion'
+                                    value={form.promotion}
+                                    onChange={handleChange}
+                                    required
+                                />
                             </Column>
                         </Row>
                         <textarea

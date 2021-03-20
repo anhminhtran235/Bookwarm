@@ -91,6 +91,11 @@ export const InfoAndOptions = styled.div`
     .info {
         font-size: 16px;
         font-style: italic;
+        .promotion {
+            margin-right: 5px;
+            color: var(--darkest-grey);
+            font-size: 12px;
+        }
     }
     @media (max-width: 550px) {
         padding-left: 0px;

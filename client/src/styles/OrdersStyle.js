@@ -49,7 +49,7 @@ export const OrderItemStyle = styled(FlexRow)`
     justify-content: flex-start;
     margin-top: 10px;
     img {
-        width: 50px;
+        width: 150px;
     }
     p {
         margin: 0;
@@ -63,7 +63,7 @@ export const OrderItemStyle = styled(FlexRow)`
                 text-decoration: underline;
             }
         }
-        .book-author {
+        .book-info {
             font-style: italic;
             font-size: 16px;
         }

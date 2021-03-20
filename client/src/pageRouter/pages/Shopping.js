@@ -13,6 +13,7 @@ import Pagination from '../../component/Pagination/Pagination';
 import SmallBooks from '../../component/Shopping/SmallBooks/SmallBooks';
 import {
     GET_BOOK_PAGINATION_META_QUERY,
+    GET_DISCOUNTED_BOOKS,
     GET_RANDOM_BOOK_QUERY,
 } from '../../lib/graphql';
 import Loader from '../../component/Loader/Loader';
@@ -26,12 +27,12 @@ const Shopping = ({ match }) => {
     );
     const relatedBooks = relatedBooksData?.getRandomBooks;
     const { data: discountBooksData, loading: discountBooksLoading } = useQuery(
-        GET_RANDOM_BOOK_QUERY,
+        GET_DISCOUNTED_BOOKS,
         {
             variables: { limit: 3 },
         }
     );
-    const discountBooks = discountBooksData?.getRandomBooks;
+    const discountBooks = discountBooksData?.getDiscountedBooks;
 
     const perPage = 9;
 

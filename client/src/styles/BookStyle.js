@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FlexColumn } from './common/UtilStyle';
 
 export const BookStyle = styled(FlexColumn)`
+    position: relative;
     background: white;
     padding: 10px;
     box-shadow: 0 0 5px 0 rgb(0 0 0 / 10%);
@@ -10,7 +11,7 @@ export const BookStyle = styled(FlexColumn)`
     text-align: center;
     width: 100%;
     word-wrap: break-word;
-
+    overflow: hidden;
     img {
         width: 100%;
         height: 100%;
@@ -18,6 +19,18 @@ export const BookStyle = styled(FlexColumn)`
         box-shadow: 2px 2px 7px rgb(0 0 0 / 30%);
         border-radius: 2px;
         object-fit: fill;
+    }
+
+    .promotion-tag {
+        background: red;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 3px 70px;
+        transform: rotate(36deg) translate(174px, -87px);
+        text-align: center;
+        width: 500px;
     }
 `;
 
@@ -37,6 +50,11 @@ export const BookInfo = styled(FlexColumn)`
     .book-price {
         font-size: 25px;
         margin-top: 0px;
+        .promotion {
+            margin-right: 5px;
+            color: var(--darkest-grey);
+            font-size: 18px;
+        }
     }
 `;
 

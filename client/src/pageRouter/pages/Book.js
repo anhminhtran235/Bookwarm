@@ -64,6 +64,10 @@ const Book = ({ history }) => {
     });
 
     const book = data?.findBookById;
+    const realPrice =
+        book && book.promotion
+            ? (book.price * (100 - book.promotion)) / 100
+            : book?.price;
 
     return loading ? (
         'Loading...'
@@ -75,6 +79,11 @@ const Book = ({ history }) => {
                     <Showcase>
                         <ShowcaseTop>
                             <ImageContainer>
+                                {book.promotion != 0 && (
+                                    <span className='promotion-tag'>
+                                        SALE {book.promotion}%
+                                    </span>
+                                )}
                                 <img src={book.image} alt='' />
                             </ImageContainer>
                             <ShowcaseInfo>
@@ -83,7 +92,14 @@ const Book = ({ history }) => {
                                 <p>{book.shortDescription}</p>
                                 <PriceBox>
                                     <div className='top'>
-                                        <h4>${book.price}</h4>
+                                        <h4>
+                                            {book.promotion !== 0 && (
+                                                <strike className='promotion'>
+                                                    ${book.price.toFixed(2)}
+                                                </strike>
+                                            )}
+                                            ${realPrice.toFixed(2)}
+                                        </h4>
                                     </div>
                                     <div className='bottom'>
                                         <button onClick={onAddToCart}>

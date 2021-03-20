@@ -72,7 +72,7 @@ const Cart = () => {
                 <Header>My cart</Header>
                 <CartItems cartItems={cartItems} />
                 <TotalPrice>
-                    <p className='pr-3 pb-1'>Total: ${total}</p>
+                    <p className='pr-3 pb-1'>Total: ${total.toFixed(2)}</p>
                 </TotalPrice>
 
                 {!state.formEnabled && (

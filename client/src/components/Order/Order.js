@@ -34,7 +34,7 @@ const Order = ({ order: { createdAt, orderItems } }) => {
                     <OrderItem orderItem={item} key={item.id} />
                 ))}
             </Container>
-            <TotalPrice>Total: ${total}</TotalPrice>
+            <TotalPrice>Total: ${total.toFixed(2)}</TotalPrice>
         </div>
     );
 };

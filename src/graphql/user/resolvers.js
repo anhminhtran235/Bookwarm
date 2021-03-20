@@ -27,7 +27,7 @@ module.exports = {
                     $in: parent.orders,
                 },
             };
-            return await orderModule.findAll(condition);
+            return await orderModule.findAll(condition, { createdAt: -1 });
         },
     },
     CartItem: {

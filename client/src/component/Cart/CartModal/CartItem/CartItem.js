@@ -16,11 +16,13 @@ import {
 
 const CartItem = ({
     cartItem: {
-        book: { id, image, price, title },
+        book: { id, image, price, promotion, title },
         quantity,
     },
 }) => {
-    const subTotal = price * quantity;
+    const realPrice = promotion ? (price * (100 - promotion)) / 100 : price;
+    const subTotal = quantity * realPrice;
+
     const [addToCart] = useMutation(ADD_TO_CART_MUTATION, {
         variables: { bookId: id },
         update(cache, result) {
@@ -41,9 +43,17 @@ const CartItem = ({
             <InfoAndOptions>
                 <div>
                     <p className='book-title'>{title}</p>
-                    <p className='info'>Price: ${price}</p>
+                    <p className='info'>
+                        Price:{' '}
+                        {promotion !== 0 && (
+                            <strike className='promotion'>
+                                ${price.toFixed(2)}
+                            </strike>
+                        )}
+                        ${realPrice.toFixed(2)}
+                    </p>
                     <p className='info'>Quantity: {quantity}</p>
-                    <p className='info'>Subtotal: ${subTotal}</p>
+                    <p className='info'>Subtotal: ${subTotal.toFixed(2)}</p>
                 </div>
                 <ItemOptions>
                     <Button className='mr-2 minus' onClick={removeFromCart}>

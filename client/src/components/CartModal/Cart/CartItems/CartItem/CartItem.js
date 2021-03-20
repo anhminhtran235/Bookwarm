@@ -61,7 +61,9 @@ const CartItem = ({ cartItem: { book, quantity } }) => {
                     <InfoLine>{book.title}</InfoLine>
                     <InfoLine>Price: ${book.price}</InfoLine>
                     <InfoLine>Quantity: {quantity}</InfoLine>
-                    <InfoLine>Subtotal: ${book.price * quantity}</InfoLine>
+                    <InfoLine>
+                        Subtotal: ${(book.price * quantity).toFixed(2)}
+                    </InfoLine>
                 </div>
                 <ItemOptions>
                     <Button className='mr-2' onClick={addToCart}>

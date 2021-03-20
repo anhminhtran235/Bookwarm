@@ -9,21 +9,41 @@ const SmallBooks = ({ books, history }) => {
         <>
             {books &&
                 books.length &&
-                books.map((book) => (
-                    <SmallBook key={book.id}>
-                        <img src={book.image} alt='' />
-                        <BookDetails>
-                            <p
-                                className='book-title'
-                                onClick={() => goToBook(book.id)}
-                            >
-                                {book.title}
-                            </p>
-                            <p className='book-author'>{book.author}</p>
-                            <p className='book-price'>${book.price}</p>
-                        </BookDetails>
-                    </SmallBook>
-                ))}
+                books.map(({ id, image, title, author, price, promotion }) => {
+                    const realPrice = promotion
+                        ? (price * (100 - promotion)) / 100
+                        : price;
+
+                    return (
+                        <SmallBook key={id}>
+                            <div className='image-wrapper'>
+                                {promotion != 0 && (
+                                    <span className='promotion-tag'>
+                                        SALE {promotion}%
+                                    </span>
+                                )}
+                                <img src={image} alt='' />
+                            </div>
+                            <BookDetails>
+                                <p
+                                    className='book-title'
+                                    onClick={() => goToBook(id)}
+                                >
+                                    {title}
+                                </p>
+                                <p className='book-author'>{author}</p>
+                                <p className='book-price'>
+                                    {promotion !== 0 && (
+                                        <strike className='promotion'>
+                                            ${price.toFixed(2)}
+                                        </strike>
+                                    )}
+                                    ${realPrice.toFixed(2)}
+                                </p>
+                            </BookDetails>
+                        </SmallBook>
+                    );
+                })}
         </>
     );
 };

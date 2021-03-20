@@ -46,6 +46,19 @@ export const ShowcaseInfo = styled(FlexColumn)`
 
 export const ImageContainer = styled.div`
     width: 33.33%;
+    position: relative;
+    overflow: hidden;
+    .promotion-tag {
+        background: red;
+        color: white;
+        position: absolute;
+        top: 0;
+        right: 0;
+        padding: 3px 70px;
+        transform: rotate(36deg) translate(174px, -87px);
+        text-align: center;
+        width: 500px;
+    }
     img {
         width: 100%;
     }
@@ -67,8 +80,13 @@ export const PriceBox = styled(FlexColumn)`
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
     .top {
-        padding: 10px 100px;
+        padding: 10px 80px;
         background: var(--lighter-grey);
+        .promotion {
+            margin-right: 5px;
+            color: var(--darkest-grey);
+            font-size: 18px;
+        }
     }
     .bottom {
         padding: 10px 20px;

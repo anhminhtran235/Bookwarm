@@ -5,7 +5,7 @@ const OrderItem = ({
     orderItem: {
         quantity,
         pricePerItem,
-        book: { id, title, author, description, image },
+        book: { id, title, author, image },
     },
     history,
 }) => {
@@ -19,7 +19,12 @@ const OrderItem = ({
                 <p className='book-title' onClick={goToBook}>
                     {title}
                 </p>
-                <p className='book-author'>{author}</p>
+                <p className='book-info'>{author}</p>
+                <p className='book-info'>Price: ${pricePerItem.toFixed(2)}</p>
+                <p className='book-info'>Quantity: {quantity}</p>
+                <p className='book-info'>
+                    Subtotal: ${(quantity * pricePerItem).toFixed(2)}
+                </p>
             </div>
         </OrderItemStyle>
     );
