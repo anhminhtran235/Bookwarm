@@ -41,13 +41,16 @@ const EditBook = () => {
 
     const [state, setState] = useState({ imageName: '' });
 
-    const [updateBook] = useMutation(UPDATE_BOOK_MUTATION, {
-        variables: { id, ...form },
-        update(cache, result) {
-            alertify.success('Book updated successfully');
-            cacheUpdateUpdateBook(cache, result);
-        },
-    });
+    const [updateBook, { loading: updateBookLoading }] = useMutation(
+        UPDATE_BOOK_MUTATION,
+        {
+            variables: { id, ...form },
+            update(cache, result) {
+                alertify.success('Book updated successfully');
+                cacheUpdateUpdateBook(cache, result);
+            },
+        }
+    );
 
     const onSubmit = async (e) => {
         e.preventDefault();
@@ -71,72 +74,79 @@ const EditBook = () => {
                 <div className='side-img'>
                     <img src={image} alt='' />
                 </div>
-                <Form>
-                    <h2>Edit product info</h2>
-                    <Row>
-                        <Column className='left'>
-                            <input
-                                type='text'
-                                placeholder='Title'
-                                name='title'
-                                value={form.title}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input
-                                type='text'
-                                placeholder='Subtitle'
-                                name='subtitle'
-                                value={form.subtitle}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type='text'
-                                placeholder='Author'
-                                name='author'
-                                value={form.author}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Column>
-                        <Column className='right'>
-                            <input type='text' placeholder='Category' />
-                            <input
-                                type='text'
-                                placeholder='Price'
-                                name='price'
-                                value={form.price}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input type='text' placeholder='Promotion' />
-                        </Column>
-                    </Row>
-                    <textarea
-                        placeholder='Short description'
-                        rows='1'
-                        name='description'
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                    <textarea
-                        placeholder='Description'
-                        rows='2'
-                        name='description'
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                    <label className='custom-file-upload'>
-                        <input
-                            type='file'
-                            name='image'
-                            onChange={onPickImage}
+                <Form onSubmit={onSubmit}>
+                    <fieldset
+                        disabled={updateBookLoading}
+                        aria-busy={updateBookLoading}
+                    >
+                        <h2>Edit product info</h2>
+                        <Row>
+                            <Column className='left'>
+                                <input
+                                    type='text'
+                                    placeholder='Title'
+                                    name='title'
+                                    value={form.title}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input
+                                    type='text'
+                                    placeholder='Subtitle'
+                                    name='subtitle'
+                                    value={form.subtitle}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    type='text'
+                                    placeholder='Author'
+                                    name='author'
+                                    value={form.author}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </Column>
+                            <Column className='right'>
+                                <input type='text' placeholder='Category' />
+                                <input
+                                    type='text'
+                                    placeholder='Price'
+                                    name='price'
+                                    value={form.price}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input type='text' placeholder='Promotion' />
+                            </Column>
+                        </Row>
+                        <textarea
+                            placeholder='Short description'
+                            rows='1'
+                            name='description'
+                            value={form.description}
+                            onChange={handleChange}
                         />
-                        <i className='fa fa-cloud-upload'></i>{' '}
-                        {!state.imageName ? 'Change Image' : state.imageName}
-                    </label>
+                        <textarea
+                            placeholder='Description'
+                            rows='2'
+                            name='description'
+                            value={form.description}
+                            onChange={handleChange}
+                        />
+                        <label className='custom-file-upload'>
+                            <input
+                                type='file'
+                                name='image'
+                                onChange={onPickImage}
+                            />
+                            <i className='fa fa-cloud-upload'></i>{' '}
+                            {!state.imageName
+                                ? 'Change Image'
+                                : state.imageName}
+                        </label>
 
-                    <button onClick={onSubmit}>Edit product</button>
+                        <button onClick={onSubmit}>Edit product</button>
+                    </fieldset>
                 </Form>
             </EditBookStyle>
             ;

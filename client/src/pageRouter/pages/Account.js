@@ -52,44 +52,46 @@ const Account = () => {
     return (
         <>
             <AccountStyle>
-                <Form>
-                    <h2>Edit Your Info</h2>
-                    <input
-                        type='text'
-                        placeholder='Username'
-                        name='username'
-                        value={form.username}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type='text'
-                        placeholder='Email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                        disabled
-                    />
-                    <input
-                        type='text'
-                        placeholder='Re-enter password *'
-                        name='oldPassword'
-                        value={form.oldPassword}
-                        onChange={handleChange}
-                        required
-                    />
-                    <input
-                        type='text'
-                        placeholder='New password'
-                        name='newPassword'
-                        value={form.newPassword}
-                        onChange={handleChange}
-                    />
-                    <button onClick={onSubmit}>Update info</button>
-                    <p>
-                        Came here by mistake?{' '}
-                        <Link to='/shopping'>Go back to shopping</Link>
-                    </p>
+                <Form onSubmit={onSubmit}>
+                    <fieldset disabled={loading} aria-busy={loading}>
+                        <h2>Edit Your Info</h2>
+                        <input
+                            type='text'
+                            placeholder='Username'
+                            name='username'
+                            value={form.username}
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type='text'
+                            placeholder='Email'
+                            name='email'
+                            value={form.email}
+                            onChange={handleChange}
+                            disabled
+                        />
+                        <input
+                            type='password'
+                            placeholder='Re-enter password *'
+                            name='oldPassword'
+                            value={form.oldPassword}
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type='password'
+                            placeholder='New password'
+                            name='newPassword'
+                            value={form.newPassword}
+                            onChange={handleChange}
+                        />
+                        <button type='submit'>Update info</button>
+                        <p>
+                            Came here by mistake?{' '}
+                            <Link to='/shopping'>Go back to shopping</Link>
+                        </p>
+                    </fieldset>
                 </Form>
             </AccountStyle>
         </>

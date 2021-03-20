@@ -48,41 +48,43 @@ const Register = ({ history }) => {
     ) : (
         <>
             <RegisterStyle>
-                <Form>
-                    <h2>Create Account</h2>
-                    <input
-                        type='text'
-                        placeholder='Username'
-                        value={form.username}
-                        name='username'
-                        onChange={handleChange}
-                    />
-                    <input
-                        type='email'
-                        placeholder='Email'
-                        value={form.email}
-                        name='email'
-                        onChange={handleChange}
-                    />
-                    <input
-                        type='password'
-                        placeholder='Password'
-                        value={form.password}
-                        name='password'
-                        onChange={handleChange}
-                    />
-                    <input
-                        type='password'
-                        placeholder='Confirm password'
-                        value={form.confirmPassword}
-                        name='confirmPassword'
-                        onChange={handleChange}
-                    />
-                    <button onClick={onSubmit}>Sign up</button>
-                    <p>
-                        Already have an account?{' '}
-                        <Link to='/login'>Login here</Link>
-                    </p>
+                <Form onSubmit={onSubmit}>
+                    <fieldset disabled={loading} aria-busy={loading}>
+                        <h2>Create Account</h2>
+                        <input
+                            type='text'
+                            placeholder='Username'
+                            value={form.username}
+                            name='username'
+                            onChange={handleChange}
+                        />
+                        <input
+                            type='email'
+                            placeholder='Email'
+                            value={form.email}
+                            name='email'
+                            onChange={handleChange}
+                        />
+                        <input
+                            type='password'
+                            placeholder='Password'
+                            value={form.password}
+                            name='password'
+                            onChange={handleChange}
+                        />
+                        <input
+                            type='password'
+                            placeholder='Confirm password'
+                            value={form.confirmPassword}
+                            name='confirmPassword'
+                            onChange={handleChange}
+                        />
+                        <button type='submit'>Sign up</button>
+                        <p>
+                            Already have an account?{' '}
+                            <Link to='/login'>Login here</Link>
+                        </p>
+                    </fieldset>
                 </Form>
             </RegisterStyle>
         </>

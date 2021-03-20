@@ -17,6 +17,7 @@ import {
     cacheUpdateCheckout,
 } from '../../../lib/graphql';
 import { useUser } from '../../../lib/util';
+import Loader from '../../Loader/Loader';
 
 const CartModal = () => {
     const user = useUser();
@@ -37,13 +38,16 @@ const CartModal = () => {
         });
     }
 
-    const [checkout] = useMutation(CHECKOUT_MUTATION, {
-        variables: { password: state.password },
-        update(cache, result) {
-            alertify.success('Purchase successully');
-            cacheUpdateCheckout(cache, result);
-        },
-    });
+    const [checkout, { loading: checkoutLoading }] = useMutation(
+        CHECKOUT_MUTATION,
+        {
+            variables: { password: state.password },
+            update(cache, result) {
+                alertify.success('Purchase successully');
+                cacheUpdateCheckout(cache, result);
+            },
+        }
+    );
 
     const enableForm = () => {
         setState({
@@ -92,8 +96,12 @@ const CartModal = () => {
                             name='password'
                             value={state.password}
                             onChange={handleChange}
+                            disabled={checkoutLoading}
                         />
-                        <CheckoutButton onClick={onSubmit}>
+                        <CheckoutButton
+                            onClick={onSubmit}
+                            disabled={checkoutLoading}
+                        >
                             CHECKOUT
                         </CheckoutButton>
                     </Form>
@@ -107,6 +115,7 @@ const CartModal = () => {
             <Backdrop show={cartOpen} onClick={closeCart} />
             <Modal show={cartOpen}>
                 <h2>My Cart</h2>
+                {checkoutLoading ? <Loader /> : null}
                 {cartDisplay}
             </Modal>
         </>

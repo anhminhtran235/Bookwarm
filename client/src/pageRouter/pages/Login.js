@@ -5,7 +5,6 @@ import { Redirect, withRouter } from 'react-router';
 import alertify from 'alertifyjs';
 
 import backgroundImage from '../../assets/images/login_background.jpg';
-import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
 import useForm from '../../lib/useForm';
 import { cacheUpdateLogin, LOGIN_MUTATION } from '../../lib/graphql';
@@ -42,27 +41,31 @@ const Login = ({ history }) => {
     ) : (
         <>
             <LoginStyle>
-                <Form>
-                    <h2>Login</h2>
-                    <input
-                        type='text'
-                        placeholder='Email'
-                        name='email'
-                        value={form.email}
-                        onChange={handleChange}
-                    />
-                    <input
-                        type='password'
-                        placeholder='Password'
-                        name='password'
-                        value={form.password}
-                        onChange={handleChange}
-                    />
-                    <button onClick={onSubmit}>Login</button>
-                    <p>
-                        New to this website?{' '}
-                        <Link to='/register'>Register here</Link>
-                    </p>
+                <Form onSubmit={onSubmit}>
+                    <fieldset disabled={loading} aria-busy={loading}>
+                        <h2>Login</h2>
+                        <input
+                            type='text'
+                            placeholder='Email'
+                            name='email'
+                            value={form.email}
+                            onChange={handleChange}
+                            required
+                        />
+                        <input
+                            type='password'
+                            placeholder='Password'
+                            name='password'
+                            value={form.password}
+                            onChange={handleChange}
+                            required
+                        />
+                        <button type='submit'>Login</button>
+                        <p>
+                            New to this website?{' '}
+                            <Link to='/register'>Register here</Link>
+                        </p>
+                    </fieldset>
                 </Form>
             </LoginStyle>
         </>

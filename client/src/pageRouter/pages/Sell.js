@@ -59,73 +59,77 @@ const Sell = () => {
                 <div className='side-img'>
                     <img src={image} alt='' />
                 </div>
-                <Form>
-                    <h2>Add new product</h2>
-                    <Row>
-                        <Column className='left'>
-                            <input
-                                type='text'
-                                placeholder='Title'
-                                name='title'
-                                value={form.title}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input
-                                type='text'
-                                placeholder='Subtitle'
-                                name='subtitle'
-                                value={form.subtitle}
-                                onChange={handleChange}
-                            />
-                            <input
-                                type='text'
-                                placeholder='Author'
-                                name='author'
-                                value={form.author}
-                                onChange={handleChange}
-                                required
-                            />
-                        </Column>
-                        <Column className='right'>
-                            <input type='text' placeholder='Category' />
-                            <input
-                                type='text'
-                                placeholder='Price'
-                                name='price'
-                                value={form.price}
-                                onChange={handleChange}
-                                required
-                            />
-                            <input type='text' placeholder='Promotion' />
-                        </Column>
-                    </Row>
-                    <textarea
-                        placeholder='Short description'
-                        rows='1'
-                        name='description'
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                    <textarea
-                        placeholder='Description'
-                        rows='2'
-                        name='description'
-                        value={form.description}
-                        onChange={handleChange}
-                    />
-                    <label className='custom-file-upload'>
-                        <input
-                            type='file'
-                            name='image'
-                            onChange={onPickImage}
-                            required
+                <Form onSubmit={onSubmit}>
+                    <fieldset disabled={loading} aria-busy={loading}>
+                        <h2>Add new product</h2>
+                        <Row>
+                            <Column className='left'>
+                                <input
+                                    type='text'
+                                    placeholder='Title'
+                                    name='title'
+                                    value={form.title}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input
+                                    type='text'
+                                    placeholder='Subtitle'
+                                    name='subtitle'
+                                    value={form.subtitle}
+                                    onChange={handleChange}
+                                />
+                                <input
+                                    type='text'
+                                    placeholder='Author'
+                                    name='author'
+                                    value={form.author}
+                                    onChange={handleChange}
+                                    required
+                                />
+                            </Column>
+                            <Column className='right'>
+                                <input type='text' placeholder='Category' />
+                                <input
+                                    type='text'
+                                    placeholder='Price'
+                                    name='price'
+                                    value={form.price}
+                                    onChange={handleChange}
+                                    required
+                                />
+                                <input type='text' placeholder='Promotion' />
+                            </Column>
+                        </Row>
+                        <textarea
+                            placeholder='Short description'
+                            rows='1'
+                            name='description'
+                            value={form.description}
+                            onChange={handleChange}
                         />
-                        <i className='fa fa-cloud-upload'></i>{' '}
-                        {!state.imageName ? 'Upload Image *' : state.imageName}
-                    </label>
+                        <textarea
+                            placeholder='Description'
+                            rows='2'
+                            name='description'
+                            value={form.description}
+                            onChange={handleChange}
+                        />
+                        <label className='custom-file-upload'>
+                            <input
+                                type='file'
+                                name='image'
+                                onChange={onPickImage}
+                                required
+                            />
+                            <i className='fa fa-cloud-upload'></i>{' '}
+                            {!state.imageName
+                                ? 'Upload Image *'
+                                : state.imageName}
+                        </label>
 
-                    <button onClick={onSubmit}>+ Add product</button>
+                        <button type='submit'>+ Add product</button>
+                    </fieldset>
                 </Form>
             </SellStyle>
             ;
