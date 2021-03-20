@@ -41,7 +41,6 @@ const Login = ({ history }) => {
         <Redirect to='/shopping' />
     ) : (
         <>
-            <Navbar transparentInitially />
             <LoginStyle>
                 <Form>
                     <h2>Login</h2>

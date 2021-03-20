@@ -4,7 +4,6 @@ import { HeaderStyle, Button, Content } from '../../styles/HeaderStyle';
 const Header = () => {
     return (
         <>
-            <Navbar transparentInitially={true} />
             <HeaderStyle>
                 <Content>
                     <h1 className='special-text'>

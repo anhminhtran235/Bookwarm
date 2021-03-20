@@ -47,7 +47,6 @@ const Register = ({ history }) => {
         <Redirect to='/shopping' />
     ) : (
         <>
-            <Navbar transparentInitially />
             <RegisterStyle>
                 <Form>
                     <h2>Create Account</h2>

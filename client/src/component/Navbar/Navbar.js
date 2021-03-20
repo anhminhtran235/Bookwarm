@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { useMutation } from '@apollo/client';
 
 import {
     Container,
@@ -14,7 +13,6 @@ import BurgerButton from './BurgerButton/BurgerButton';
 import Search from '../Search/Search';
 import CartButton from './CartButton/CartButton';
 import { useUser } from '../../lib/util';
-import { LOGOUT_MUTATION } from '../../lib/graphql';
 import LogoutButton from './LogoutButton/LogoutButton';
 
 const Navbar = ({ transparentInitially }) => {
@@ -45,7 +43,7 @@ const Navbar = ({ transparentInitially }) => {
         let scrolled = false;
         if (transparentInitially) {
             window.addEventListener('scroll', (e) => {
-                if (window.pageYOffset > 80) {
+                if (window.pageYOffset > 40) {
                     if (scrolled) {
                         setNavState((prevState) => ({
                             ...prevState,

@@ -51,7 +51,6 @@ const Account = () => {
     };
     return (
         <>
-            <Navbar transparentInitially />
             <AccountStyle>
                 <Form>
                     <h2>Edit Your Info</h2>
