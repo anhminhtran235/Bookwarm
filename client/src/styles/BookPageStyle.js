@@ -160,4 +160,8 @@ export const BooksContainer = styled(FlexRow)`
             margin-bottom: 10px;
         }
     }
+    > div {
+        flex: 1;
+    }
+    align-items: stretch;
 `;

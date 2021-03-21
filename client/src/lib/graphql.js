@@ -221,7 +221,6 @@ const ADD_BOOK_MUTATION = gql`
         $shortDescription: String!
         $image: String!
         $price: Float!
-        $promotion: Float!
     ) {
         addBook(
             title: $title
@@ -231,7 +230,6 @@ const ADD_BOOK_MUTATION = gql`
             shortDescription: $shortDescription
             image: $image
             price: $price
-            promotion: $promotion
         ) {
             id
             title
@@ -263,6 +261,7 @@ const UPDATE_BOOK_MUTATION = gql`
             subtitle: $subtitle
             author: $author
             description: $description
+            shortDescription: $shortDescription
             image: $image
             price: $price
             promotion: $promotion

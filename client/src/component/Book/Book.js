@@ -15,7 +15,8 @@ const Book = ({
     book: { id, image, title, author, price, promotion },
     history,
 }) => {
-    const isLoggedIn = useUser() != null;
+    const user = useUser();
+    const isLoggedIn = user != null;
 
     const [addToCart, { loading }] = useMutation(ADD_TO_CART_MUTATION, {
         variables: {
@@ -40,7 +41,14 @@ const Book = ({
         history.push('/book/' + id);
     };
 
+    const goToEditBook = () => {
+        history.push('/edit/book/' + id);
+    };
+
     const realPrice = promotion ? (price * (100 - promotion)) / 100 : price;
+    const isMine =
+        user?.books && user.books.findIndex((book) => book.id === id) !== -1;
+
     return (
         <BookStyle>
             {promotion != 0 && (
@@ -60,7 +68,16 @@ const Book = ({
                 </p>
                 <ButtonGroup>
                     <BookButton onClick={goToBook}>Detail</BookButton>
-                    <BookButton onClick={onAddToCart}>Add to cart</BookButton>
+                    {!isMine && (
+                        <BookButton onClick={onAddToCart}>
+                            Add to cart
+                        </BookButton>
+                    )}
+                    {isMine && (
+                        <BookButton onClick={goToEditBook}>
+                            Edit Book
+                        </BookButton>
+                    )}
                 </ButtonGroup>
             </BookInfo>
         </BookStyle>

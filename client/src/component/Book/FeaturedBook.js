@@ -5,7 +5,7 @@ import {
 } from '../../styles/FeaturedBookStyle';
 
 const FeaturedBook = ({
-    book: { id, image, title, author, shortDescription },
+    book: { id, image, title, author, description },
     history,
 }) => {
     const goToBook = () => {
@@ -18,7 +18,7 @@ const FeaturedBook = ({
                 <h4>Featured Book</h4>
                 <h3>{title}</h3>
                 <p className='book-author'>{author}</p>
-                <p className='description'>{shortDescription}</p>
+                <p className='description'>{description}</p>
                 <GetBookButton onClick={goToBook}>Get This Book</GetBookButton>
             </div>
             <div>

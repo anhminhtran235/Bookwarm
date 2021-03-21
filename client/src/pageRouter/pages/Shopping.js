@@ -62,13 +62,13 @@ const Shopping = ({ match }) => {
                     <SideBars>
                         <Card>
                             <h4>RELATED PRODUCTS</h4>
-                            {relatedBooks && relatedBooks.length && (
+                            {relatedBooks && relatedBooks.length > 0 && (
                                 <SmallBooks books={relatedBooks} />
                             )}
                         </Card>
                         <Card>
                             <h4>PROMOTION</h4>
-                            {discountBooks && discountBooks.length && (
+                            {discountBooks && discountBooks.length > 0 && (
                                 <SmallBooks books={discountBooks} />
                             )}
                         </Card>

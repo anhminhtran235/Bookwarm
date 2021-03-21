@@ -26,7 +26,8 @@ import { useUser } from '../../lib/util';
 
 const Book = ({ history }) => {
     const { id } = useParams();
-    const isLoggedIn = useUser() != null;
+    const user = useUser();
+    const isLoggedIn = user != null;
 
     const [addToCart, { addToCartLoading }] = useMutation(
         ADD_TO_CART_MUTATION,
@@ -50,6 +51,10 @@ const Book = ({ history }) => {
         }
     };
 
+    const goToEditBook = () => {
+        history.push('/edit/book/' + id);
+    };
+
     const { data: relatedBooksData, loading: relatedBooksLoading } = useQuery(
         GET_RANDOM_BOOK_QUERY,
         {
@@ -68,6 +73,7 @@ const Book = ({ history }) => {
         book && book.promotion
             ? (book.price * (100 - book.promotion)) / 100
             : book?.price;
+    const isMine = user?.books.findIndex((user) => user.id === id) !== -1;
 
     return loading ? (
         'Loading...'
@@ -102,9 +108,16 @@ const Book = ({ history }) => {
                                         </h4>
                                     </div>
                                     <div className='bottom'>
-                                        <button onClick={onAddToCart}>
-                                            Add to cart
-                                        </button>
+                                        {isMine && (
+                                            <button onClick={goToEditBook}>
+                                                Edit Book
+                                            </button>
+                                        )}
+                                        {!isMine && (
+                                            <button onClick={onAddToCart}>
+                                                Add to cart
+                                            </button>
+                                        )}
                                     </div>
                                 </PriceBox>
                             </ShowcaseInfo>

@@ -26,6 +26,10 @@ export const BooksContainer = styled(FlexRow)`
     @media (max-width: 1015px) {
         flex-direction: column;
     }
+    align-items: stretch;
+    > div {
+        flex: 1;
+    }
 `;
 
 export const OurLibrary = styled(FlexColumn)`
