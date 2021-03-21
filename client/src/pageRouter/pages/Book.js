@@ -23,6 +23,7 @@ import {
     cacheUpdateAddToCart,
 } from '../../lib/graphql';
 import { useUser } from '../../lib/util';
+import Loader from '../../component/Loader/Loader';
 
 const Book = ({ history }) => {
     const { id } = useParams();
@@ -77,10 +78,9 @@ const Book = ({ history }) => {
         user?.books && user?.books.findIndex((user) => user.id === id) !== -1;
 
     return loading ? (
-        'Loading...'
+        <Loader />
     ) : (
         <>
-            <Navbar />
             <BookPageStyle>
                 <Container>
                     <Showcase>

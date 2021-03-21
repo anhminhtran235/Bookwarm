@@ -46,7 +46,6 @@ const Shopping = ({ match }) => {
         <Loader />
     ) : (
         <>
-            <Navbar />
             <ShoppingStyle>
                 <Pagination
                     perPage={perPage}

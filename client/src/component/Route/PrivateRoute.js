@@ -5,6 +5,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import './NProgress.css';
 import { useUser } from '../../lib/util';
+import Loader from '../Loader/Loader';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
     const me = useUser();
@@ -22,7 +23,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => {
             {...rest}
             render={(props) =>
                 isLoggedIn == null ? (
-                    'Loading'
+                    <Loader />
                 ) : isLoggedIn ? (
                     <Component {...props} />
                 ) : (

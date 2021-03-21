@@ -6,6 +6,7 @@ import { Wrapper, Container } from '../../styles/OrdersStyle';
 import { GET_ORDERS_QUERY } from '../../lib/graphql';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
+import Loader from '../../component/Loader/Loader';
 
 const NoOrderWrapper = styled.div`
     .link {
@@ -18,10 +19,9 @@ const Orders = () => {
     const orders = data?.getMe?.orders;
 
     return loading ? (
-        'Loading...'
+        <Loader />
     ) : (
         <>
-            <Navbar />
             <Wrapper>
                 <Container>
                     <h1>Your orders</h1>

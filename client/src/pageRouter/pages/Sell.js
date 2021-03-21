@@ -69,7 +69,6 @@ const Sell = () => {
 
     return (
         <>
-            <Navbar />
             <SellStyle>
                 <div className='side-img'>
                     <img src={image} alt='' />

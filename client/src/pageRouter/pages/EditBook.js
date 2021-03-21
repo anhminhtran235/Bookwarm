@@ -99,7 +99,6 @@ const EditBook = () => {
         <Redirect to='/shopping' />
     ) : (
         <>
-            <Navbar />
             <EditBookStyle>
                 <div className='side-img'>
                     <img src={image} alt='' />

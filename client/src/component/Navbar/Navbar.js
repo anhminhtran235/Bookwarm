@@ -25,6 +25,13 @@ const Navbar = ({ transparentInitially }) => {
         outerStyle: {},
     });
 
+    useEffect(() => {
+        setNavState({
+            ...navState,
+            showNavBg: transparentInitially ? false : true,
+        });
+    }, [transparentInitially]);
+
     const [searchState, setSearchState] = useState({ on: false });
 
     const toggleDropdownNav = () => {
@@ -41,45 +48,50 @@ const Navbar = ({ transparentInitially }) => {
 
     useEffect(() => {
         let scrolled = false;
-        if (transparentInitially) {
-            window.addEventListener('scroll', (e) => {
-                if (window.pageYOffset > 40) {
-                    if (scrolled) {
-                        setNavState((prevState) => ({
-                            ...prevState,
-                            outerStyle: { ...prevState.outerStyle },
-                            dropdownNav: false,
-                            showNavBg: true,
-                        }));
-                    } else {
-                        setNavState((prevState) => ({
-                            ...prevState,
-                            dropdownNav: false,
-                            showNavBg: true,
-                            outerStyle: { transform: 'translateY(-80px)' },
-                        }));
-                        setTimeout(() => {
-                            setNavState((prevState) => ({
-                                ...prevState,
-                                dropdownNav: false,
-                                showNavBg: true,
-                                outerStyle: { transform: 'translateY(0px)' },
-                            }));
-                            scrolled = true;
-                        }, 500);
-                    }
+        const eventHandler = (e) => {
+            if (window.pageYOffset > 40) {
+                if (scrolled) {
+                    setNavState((prevState) => ({
+                        ...prevState,
+                        outerStyle: { ...prevState.outerStyle },
+                        dropdownNav: false,
+                        showNavBg: true,
+                    }));
                 } else {
                     setNavState((prevState) => ({
                         ...prevState,
                         dropdownNav: false,
-                        showNavBg: false,
-                        outerStyle: {},
+                        showNavBg: true,
+                        outerStyle: { transform: 'translateY(-80px)' },
                     }));
-                    scrolled = false;
+                    setTimeout(() => {
+                        setNavState((prevState) => ({
+                            ...prevState,
+                            dropdownNav: false,
+                            showNavBg: true,
+                            outerStyle: { transform: 'translateY(0px)' },
+                        }));
+                        scrolled = true;
+                    }, 500);
                 }
-            });
+            } else {
+                setNavState((prevState) => ({
+                    ...prevState,
+                    dropdownNav: false,
+                    showNavBg: false,
+                    outerStyle: {},
+                }));
+                scrolled = false;
+            }
+        };
+
+        if (transparentInitially) {
+            window.addEventListener('scroll', eventHandler);
         }
-    }, []);
+
+        return () => window.removeEventListener('scroll', eventHandler);
+    }, [transparentInitially]);
+
     return (
         <Outer showNavBg={navState.showNavBg} style={navState.outerStyle}>
             <Container>
@@ -100,37 +112,21 @@ const Navbar = ({ transparentInitially }) => {
                                 navState.dropdownNav ? 'dropdown-nav' : ''
                             }
                         >
-                            <NavLink
-                                as={Link}
-                                to='/shopping'
-                                showNavBg={navState.showNavBg}
-                            >
+                            <NavLink as={Link} to='/shopping'>
                                 Shop
                             </NavLink>
                             {isLoggedIn && (
-                                <NavLink
-                                    as={Link}
-                                    to='/sell'
-                                    showNavBg={navState.showNavBg}
-                                >
+                                <NavLink as={Link} to='/sell'>
                                     Sell
                                 </NavLink>
                             )}
                             {isLoggedIn && (
-                                <NavLink
-                                    as={Link}
-                                    to='/orders'
-                                    showNavBg={navState.showNavBg}
-                                >
+                                <NavLink as={Link} to='/orders'>
                                     Orders
                                 </NavLink>
                             )}
                             {isLoggedIn && (
-                                <NavLink
-                                    as={Link}
-                                    to='/account'
-                                    showNavBg={navState.showNavBg}
-                                >
+                                <NavLink as={Link} to='/account'>
                                     Account
                                 </NavLink>
                             )}
