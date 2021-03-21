@@ -103,6 +103,7 @@ const GET_CART_QUERY = gql`
                     title
                     subtitle
                     description
+                    shortDescription
                     image
                     price
                     promotion
@@ -123,6 +124,7 @@ const ADD_TO_CART_MUTATION = gql`
                 subtitle
                 author
                 description
+                shortDescription
                 image
                 price
                 promotion
@@ -141,6 +143,7 @@ const REMOVE_FROM_CART_MUTATION = gql`
                 subtitle
                 author
                 description
+                shortDescription
                 image
                 price
                 promotion
@@ -161,6 +164,7 @@ const FIND_BOOKS_QUERY = gql`
             subtitle
             author
             description
+            shortDescription
             image
             price
             promotion
@@ -184,6 +188,7 @@ const GET_RANDOM_BOOK_QUERY = gql`
             subtitle
             author
             description
+            shortDescription
             image
             price
             promotion
@@ -199,6 +204,7 @@ const GET_DISCOUNTED_BOOKS = gql`
             subtitle
             author
             description
+            shortDescription
             image
             price
             promotion
@@ -212,6 +218,7 @@ const ADD_BOOK_MUTATION = gql`
         $subtitle: String
         $author: String!
         $description: String!
+        $shortDescription: String!
         $image: String!
         $price: Float!
         $promotion: Float!
@@ -221,6 +228,7 @@ const ADD_BOOK_MUTATION = gql`
             subtitle: $subtitle
             author: $author
             description: $description
+            shortDescription: $shortDescription
             image: $image
             price: $price
             promotion: $promotion
@@ -229,6 +237,7 @@ const ADD_BOOK_MUTATION = gql`
             title
             subtitle
             description
+            shortDescription
             image
             price
             promotion
@@ -243,6 +252,7 @@ const UPDATE_BOOK_MUTATION = gql`
         $subtitle: String
         $author: String
         $description: String
+        $shortDescription: String
         $image: String
         $price: Float
         $promotion: Float
@@ -262,6 +272,7 @@ const UPDATE_BOOK_MUTATION = gql`
             subtitle
             author
             description
+            shortDescription
             image
             price
             promotion
@@ -277,6 +288,7 @@ const DELETE_BOOK_MUTATION = gql`
             subtitle
             author
             description
+            shortDescription
             image
             price
             promotion
@@ -292,6 +304,7 @@ const SINGLE_BOOK_QUERY = gql`
             subtitle
             author
             description
+            shortDescription
             image
             price
             promotion
@@ -342,6 +355,7 @@ const GET_ORDERS_QUERY = gql`
                         title
                         subtitle
                         description
+                        shortDescription
                         image
                         price
                         promotion

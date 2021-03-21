@@ -4,6 +4,7 @@ type Book {
     subtitle: String
     author: String!
     description: String!
+    shortDescription: String!
     image: String
     price: Float!
     promotion: Float!
@@ -27,6 +28,7 @@ extend type Mutation {
         subtitle: String
         author: String!
         description: String!
+        shortDescription: String!
         image: String!
         price: Float!
         promotion: Float
@@ -37,6 +39,7 @@ extend type Mutation {
         subtitle: String
         author: String
         description: String
+        shortDescription: String
         image: String
         price: Float
         promotion: Float

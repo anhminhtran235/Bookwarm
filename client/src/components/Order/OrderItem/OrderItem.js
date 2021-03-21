@@ -28,7 +28,7 @@ const OrderItem = ({
     orderItem: {
         quantity,
         pricePerItem,
-        book: { title, author, description, image },
+        book: { title, author, image },
     },
 }) => {
     return (

@@ -35,6 +35,7 @@ const EditBook = () => {
             subtitle: '',
             author: '',
             description: '',
+            shortDescription: '',
             price: '',
             promotion: '',
         }
@@ -136,7 +137,6 @@ const EditBook = () => {
                                 />
                             </Column>
                             <Column className='right'>
-                                <input type='text' placeholder='Category' />
                                 <input
                                     type='text'
                                     placeholder='Price'
@@ -153,18 +153,19 @@ const EditBook = () => {
                                     onChange={handleChange}
                                     required
                                 />
+                                <textarea
+                                    placeholder='Short description'
+                                    rows='1'
+                                    name='shortDescription'
+                                    value={form.shortDescription}
+                                    onChange={handleChange}
+                                />
                             </Column>
                         </Row>
-                        <textarea
-                            placeholder='Short description'
-                            rows='1'
-                            name='description'
-                            value={form.description}
-                            onChange={handleChange}
-                        />
+
                         <textarea
                             placeholder='Description'
-                            rows='2'
+                            rows='3'
                             name='description'
                             value={form.description}
                             onChange={handleChange}
