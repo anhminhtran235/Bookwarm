@@ -73,7 +73,8 @@ const Book = ({ history }) => {
         book && book.promotion
             ? (book.price * (100 - book.promotion)) / 100
             : book?.price;
-    const isMine = user?.books.findIndex((user) => user.id === id) !== -1;
+    const isMine =
+        user?.books && user?.books.findIndex((user) => user.id === id) !== -1;
 
     return loading ? (
         'Loading...'

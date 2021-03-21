@@ -3,7 +3,7 @@ import 'alertifyjs/build/css/alertify.css';
 import { useQuery } from '@apollo/client';
 
 import './App.css';
-import Page from './components/Page';
+import Page from './component/Page';
 import PageRouter from './pageRouter/PageRouter';
 import CartModal from './component/Cart/CartModal/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';

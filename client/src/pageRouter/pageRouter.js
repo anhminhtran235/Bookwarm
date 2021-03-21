@@ -1,7 +1,7 @@
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
-import CustomRoute from '../components/Route/CustomRoute';
-import PrivateRoute from '../components/Route/PrivateRoute';
+import CustomRoute from '../component/Route/CustomRoute';
+import PrivateRoute from '../component/Route/PrivateRoute';
 import Home from './pages/Home';
 import Shopping from './pages/Shopping';
 import Sell from './pages/Sell';

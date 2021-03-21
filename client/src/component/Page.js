@@ -1,6 +1,6 @@
 import { BrowserRouter } from 'react-router-dom';
 import styled, { createGlobalStyle } from 'styled-components';
-import Footer from '../component/Footer/Footer';
+import Footer from './Footer/Footer';
 
 const GlobalStyles = createGlobalStyle`
     @import url('https://fonts.googleapis.com/css?family=Montserrat:400,900|Roboto');
