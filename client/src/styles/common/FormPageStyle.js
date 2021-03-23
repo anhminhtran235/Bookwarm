@@ -86,6 +86,11 @@ export const Form = styled.form`
             animation: ${loading} 0.5s linear infinite;
         }
 
+        .info {
+            margin: 0;
+            color: var(--lighter-orange);
+        }
+
         @media (max-width: 720px) {
             input {
                 width: 250px;

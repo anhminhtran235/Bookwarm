@@ -112,7 +112,7 @@ const EditBook = () => {
                             <Column className='left'>
                                 <input
                                     type='text'
-                                    placeholder='Title'
+                                    placeholder='Title *'
                                     name='title'
                                     value={form.title}
                                     onChange={handleChange}
@@ -127,7 +127,7 @@ const EditBook = () => {
                                 />
                                 <input
                                     type='text'
-                                    placeholder='Author'
+                                    placeholder='Author *'
                                     name='author'
                                     value={form.author}
                                     onChange={handleChange}
@@ -136,37 +136,44 @@ const EditBook = () => {
                             </Column>
                             <Column className='right'>
                                 <input
-                                    type='text'
-                                    placeholder='Price'
+                                    type='number'
+                                    step='0.01'
+                                    min='0'
+                                    max='100'
+                                    placeholder='Price *'
                                     name='price'
                                     value={form.price}
                                     onChange={handleChange}
                                     required
                                 />
                                 <input
-                                    type='text'
-                                    placeholder='Promotion (%)'
+                                    type='number'
+                                    min='0'
+                                    max='100'
+                                    placeholder='Promotion (%) *'
                                     name='promotion'
                                     value={form.promotion}
                                     onChange={handleChange}
                                     required
                                 />
                                 <textarea
-                                    placeholder='Short description'
+                                    placeholder='Short description *'
                                     rows='1'
                                     name='shortDescription'
                                     value={form.shortDescription}
                                     onChange={handleChange}
+                                    required
                                 />
                             </Column>
                         </Row>
 
                         <textarea
-                            placeholder='Description'
+                            placeholder='Description *'
                             rows='3'
                             name='description'
                             value={form.description}
                             onChange={handleChange}
+                            required
                         />
                         <label className='custom-file-upload'>
                             <input
@@ -180,7 +187,7 @@ const EditBook = () => {
                                 : state.imageName}
                         </label>
 
-                        <button onClick={onSubmit}>Edit product</button>
+                        <button type='submit'>Edit product</button>
                     </fieldset>
                 </Form>
             </EditBookStyle>

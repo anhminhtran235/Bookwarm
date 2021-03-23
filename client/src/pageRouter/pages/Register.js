@@ -16,10 +16,10 @@ const RegisterStyle = styled(FormPageStyle)`
 
 const Register = ({ history }) => {
     const { form, handleChange } = useForm({
-        username: 'Test user',
-        email: 'minh@gmail.com',
-        password: '123456',
-        confirmPassword: '123456',
+        username: '',
+        email: '',
+        password: '',
+        confirmPassword: '',
         avatar: '',
     });
 
@@ -56,6 +56,7 @@ const Register = ({ history }) => {
                             value={form.username}
                             name='username'
                             onChange={handleChange}
+                            required
                         />
                         <input
                             type='email'
@@ -63,6 +64,7 @@ const Register = ({ history }) => {
                             value={form.email}
                             name='email'
                             onChange={handleChange}
+                            required
                         />
                         <input
                             type='password'
@@ -70,6 +72,7 @@ const Register = ({ history }) => {
                             value={form.password}
                             name='password'
                             onChange={handleChange}
+                            required
                         />
                         <input
                             type='password'
@@ -77,6 +80,7 @@ const Register = ({ history }) => {
                             value={form.confirmPassword}
                             name='confirmPassword'
                             onChange={handleChange}
+                            required
                         />
                         <button type='submit'>Sign up</button>
                         <p>

@@ -1,3 +1,15 @@
+/* Override Alertifyjs colors */
+.alertify-notifier .ajs-message.ajs-success {
+    background: rgba(80, 233, 116, 0.95);
+}
+.alertify-notifier .ajs-message.ajs-error {
+    background: rgba(224, 82, 82, 0.95);
+}
+.alertify-notifier .ajs-message.ajs-warning {
+    background: rgba(252, 248, 215, 0.95);
+}
+
+/* Color playground */
 .test-color {
-    color: #ff3019;
+    color: red;
 }

@@ -95,11 +95,12 @@ const CartModal = () => {
                     <Form>
                         <input
                             type='password'
-                            placeholder='Re-enter your password'
+                            placeholder='Re-enter your password *'
                             name='password'
                             value={state.password}
                             onChange={handleChange}
                             disabled={checkoutLoading}
+                            required
                         />
                         <CheckoutButton
                             onClick={onSubmit}

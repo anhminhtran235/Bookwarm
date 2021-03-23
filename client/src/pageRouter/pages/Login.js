@@ -44,6 +44,9 @@ const Login = ({ history }) => {
                 <Form onSubmit={onSubmit}>
                     <fieldset disabled={loading} aria-busy={loading}>
                         <h2>Login</h2>
+                        <p class='info'>
+                            You can use this testing account or create your own
+                        </p>
                         <input
                             type='text'
                             placeholder='Email'

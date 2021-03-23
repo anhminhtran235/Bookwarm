@@ -153,17 +153,15 @@ module.exports = {
                     throw new ApolloError('Cannot find user profile');
                 }
                 const { username, oldPassword, newPassword } = args;
-                if (newPassword) {
-                    if (!oldPassword) {
-                        throw new UserInputError('Empty old password');
-                    }
-                    const isPasswordMatch = await bcrypt.compare(
-                        oldPassword,
-                        user.password
-                    );
-                    if (!isPasswordMatch) {
-                        throw new UserInputError('Invalid old password');
-                    }
+                if (!oldPassword) {
+                    throw new UserInputError('Please re-enter your password');
+                }
+                const isPasswordMatch = await bcrypt.compare(
+                    oldPassword,
+                    user.password
+                );
+                if (!isPasswordMatch) {
+                    throw new UserInputError('Wrong password');
                 }
 
                 const updateInfo = {};

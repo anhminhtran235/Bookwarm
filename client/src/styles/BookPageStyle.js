@@ -4,6 +4,7 @@ import { FlexColumn, FlexRow } from './common/UtilStyle';
 
 export const BookPageStyle = styled.div`
     padding-top: 80px;
+    white-space: pre-wrap;
 `;
 
 export const Container = styled.div`

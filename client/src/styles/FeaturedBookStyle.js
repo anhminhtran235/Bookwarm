@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import { FlexRow } from './common/UtilStyle';
 
 export const FeaturedBookStyle = styled(FlexRow)`
+    white-space: pre-wrap;
     justify-content: space-between;
     padding: 40px var(--container-padding);
     color: var(--darker-black);

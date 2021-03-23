@@ -10,12 +10,12 @@ import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../../lib/graphql';
 
 const Sell = () => {
     const { form, handleChange, clearForm } = useForm({
-        title: 'A Book',
-        subtitle: 'This is a book',
-        author: 'Minh Tran',
-        description: 'This is a nice book',
-        shortDescription: 'Short description',
-        price: 19.99,
+        title: '',
+        subtitle: '',
+        author: '',
+        description: '',
+        shortDescription: '',
+        price: '',
         promotion: '',
         image: '',
     });
@@ -79,7 +79,7 @@ const Sell = () => {
                             <Column className='left'>
                                 <input
                                     type='text'
-                                    placeholder='Title'
+                                    placeholder='Title *'
                                     name='title'
                                     value={form.title}
                                     onChange={handleChange}
@@ -94,7 +94,7 @@ const Sell = () => {
                                 />
                                 <input
                                     type='text'
-                                    placeholder='Author'
+                                    placeholder='Author *'
                                     name='author'
                                     value={form.author}
                                     onChange={handleChange}
@@ -107,7 +107,7 @@ const Sell = () => {
                                     step='0.01'
                                     min='0'
                                     max='100'
-                                    placeholder='Price'
+                                    placeholder='Price *'
                                     name='price'
                                     value={form.price}
                                     onChange={handleChange}
@@ -117,28 +117,30 @@ const Sell = () => {
                                     type='number'
                                     min='0'
                                     max='100'
-                                    placeholder='Promotion (%)'
+                                    placeholder='Promotion (%) *'
                                     name='promotion'
                                     value={form.promotion}
                                     onChange={handleChange}
                                     required
                                 />
                                 <textarea
-                                    placeholder='Short description'
+                                    placeholder='Short description *'
                                     rows='1'
                                     name='shortDescription'
                                     value={form.shortDescription}
                                     onChange={handleChange}
+                                    required
                                 />
                             </Column>
                         </Row>
 
                         <textarea
-                            placeholder='Description'
+                            placeholder='Description *'
                             rows='3'
                             name='description'
                             value={form.description}
                             onChange={handleChange}
+                            required
                         />
                         <label className='custom-file-upload'>
                             <input
