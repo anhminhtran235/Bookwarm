@@ -33,7 +33,7 @@ const Orders = () => {
                         <NoOrderWrapper>
                             <p>
                                 You don't have any order.{' '}
-                                <Link class='link' to={'/shopping'}>
+                                <Link className='link' to={'/shopping'}>
                                     Shop now
                                 </Link>
                             </p>

@@ -26,8 +26,12 @@ function GlobalLoadingIndicator() {
     }
 }
 
+const apiUrl =
+    process.env.NODE_ENV === 'production'
+        ? '/graphql'
+        : 'http://localhost:5000';
 const httpLink = createHttpLink({
-    uri: 'http://localhost:5000',
+    uri: apiUrl,
     credentials: 'include',
 });
 

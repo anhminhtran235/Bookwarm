@@ -37,15 +37,15 @@ const Home = ({ history }) => {
             <Header />
             <Section>
                 <InnerSection>
-                    <i class='fas fa-book-open'></i>{' '}
+                    <i className='fas fa-book-open'></i>{' '}
                     <p>We stock over 2 million books for immediate delivery</p>
                 </InnerSection>
                 <InnerSection>
-                    <i class='fas fa-truck'></i>
+                    <i className='fas fa-truck'></i>
                     <p>2 days delivery guaranteed in more than 60 countries</p>
                 </InnerSection>
                 <InnerSection>
-                    <i class='fas fa-undo-alt'></i>{' '}
+                    <i className='fas fa-undo-alt'></i>{' '}
                     <p>
                         30 days return policy free of charge. No question asks!
                     </p>
@@ -72,7 +72,7 @@ const Home = ({ history }) => {
 
             <Section>
                 <InnerSection>
-                    <i class='fas fa-book-reader'></i>
+                    <i className='fas fa-book-reader'></i>
                     <h3>Thousands of readers</h3>
                     <p>
                         More than 5000 readers has considered Bookworm their go
@@ -80,7 +80,7 @@ const Home = ({ history }) => {
                     </p>
                 </InnerSection>
                 <InnerSection>
-                    <i class='fas fa-pen-fancy'></i>{' '}
+                    <i className='fas fa-pen-fancy'></i>{' '}
                     <h3>Hundreds of Authors</h3>
                     <p>
                         We have books written by more than 200 best selling
@@ -88,7 +88,7 @@ const Home = ({ history }) => {
                     </p>
                 </InnerSection>
                 <InnerSection>
-                    <i class='fas fa-globe'></i>
+                    <i className='fas fa-globe'></i>
                     <h3>Worldwide operation</h3>
                     <p>
                         With offices all over the globe, we ensure the best
