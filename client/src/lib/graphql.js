@@ -1,7 +1,7 @@
 const gql = require('graphql-tag');
 const _ = require('lodash');
 
-const GET_ME_QUERY = gql`
+export const GET_ME_QUERY = gql`
     query getMe {
         getMe {
             id
@@ -26,7 +26,7 @@ const GET_ME_QUERY = gql`
     }
 `;
 
-const LOGIN_MUTATION = gql`
+export const LOGIN_MUTATION = gql`
     mutation login($email: String!, $password: String!) {
         login(loginInput: { email: $email, password: $password }) {
             id
@@ -50,13 +50,13 @@ const LOGIN_MUTATION = gql`
         }
     }
 `;
-const LOGOUT_MUTATION = gql`
+export const LOGOUT_MUTATION = gql`
     mutation {
         logout
     }
 `;
 
-const REGISTER_USER_MUTATION = gql`
+export const REGISTER_USER_MUTATION = gql`
     mutation register(
         $username: String!
         $email: String!
@@ -93,7 +93,7 @@ const REGISTER_USER_MUTATION = gql`
     }
 `;
 
-const GET_CART_QUERY = gql`
+export const GET_CART_QUERY = gql`
     query getCart {
         getMe {
             cart {
@@ -114,7 +114,7 @@ const GET_CART_QUERY = gql`
     }
 `;
 
-const ADD_TO_CART_MUTATION = gql`
+export const ADD_TO_CART_MUTATION = gql`
     mutation addToCart($bookId: ID!) {
         addToCart(bookId: $bookId) {
             quantity
@@ -133,7 +133,7 @@ const ADD_TO_CART_MUTATION = gql`
     }
 `;
 
-const REMOVE_FROM_CART_MUTATION = gql`
+export const REMOVE_FROM_CART_MUTATION = gql`
     mutation addToCart($bookId: ID!) {
         removeFromCart(bookId: $bookId) {
             quantity
@@ -152,7 +152,7 @@ const REMOVE_FROM_CART_MUTATION = gql`
     }
 `;
 
-const FIND_BOOKS_QUERY = gql`
+export const FIND_BOOKS_QUERY = gql`
     query findBooks($titleContains: String, $skip: Int, $limit: Int) {
         findBooks(
             criteria: { titleContains: $titleContains }
@@ -172,7 +172,7 @@ const FIND_BOOKS_QUERY = gql`
     }
 `;
 
-const GET_BOOK_PAGINATION_META_QUERY = gql`
+export const GET_BOOK_PAGINATION_META_QUERY = gql`
     query getBookPaginationMeta($titleContains: String) {
         getBookPaginationMeta(criteria: { titleContains: $titleContains }) {
             count
@@ -180,7 +180,7 @@ const GET_BOOK_PAGINATION_META_QUERY = gql`
     }
 `;
 
-const GET_RANDOM_BOOK_QUERY = gql`
+export const GET_RANDOM_BOOK_QUERY = gql`
     query getRandomBooks($limit: Int) {
         getRandomBooks(limit: $limit) {
             id
@@ -196,7 +196,7 @@ const GET_RANDOM_BOOK_QUERY = gql`
     }
 `;
 
-const GET_DISCOUNTED_BOOKS = gql`
+export const GET_DISCOUNTED_BOOKS = gql`
     query getDiscountedBooks($limit: Int) {
         getDiscountedBooks(limit: $limit) {
             id
@@ -212,7 +212,7 @@ const GET_DISCOUNTED_BOOKS = gql`
     }
 `;
 
-const ADD_BOOK_MUTATION = gql`
+export const ADD_BOOK_MUTATION = gql`
     mutation addBook(
         $title: String!
         $subtitle: String
@@ -243,7 +243,7 @@ const ADD_BOOK_MUTATION = gql`
     }
 `;
 
-const UPDATE_BOOK_MUTATION = gql`
+export const UPDATE_BOOK_MUTATION = gql`
     mutation updateBook(
         $id: ID!
         $title: String
@@ -279,7 +279,7 @@ const UPDATE_BOOK_MUTATION = gql`
     }
 `;
 
-const DELETE_BOOK_MUTATION = gql`
+export const DELETE_BOOK_MUTATION = gql`
     mutation deleteBook($id: ID!) {
         deleteBook(id: $id) {
             id
@@ -295,7 +295,7 @@ const DELETE_BOOK_MUTATION = gql`
     }
 `;
 
-const SINGLE_BOOK_QUERY = gql`
+export const SINGLE_BOOK_QUERY = gql`
     query findBookById($id: ID!) {
         findBookById(id: $id) {
             id
@@ -311,7 +311,7 @@ const SINGLE_BOOK_QUERY = gql`
     }
 `;
 
-const CHECKOUT_MUTATION = gql`
+export const CHECKOUT_MUTATION = gql`
     mutation checkout($password: String!) {
         checkout(password: $password) {
             orderItems {
@@ -327,7 +327,7 @@ const CHECKOUT_MUTATION = gql`
     }
 `;
 
-const UPDATE_USER_MUTATION = gql`
+export const UPDATE_USER_MUTATION = gql`
     mutation updateUser(
         $username: String!
         $oldPassword: String!
@@ -343,7 +343,7 @@ const UPDATE_USER_MUTATION = gql`
     }
 `;
 
-const GET_ORDERS_QUERY = gql`
+export const GET_ORDERS_QUERY = gql`
     query getOrders {
         getMe {
             orders {
@@ -369,7 +369,7 @@ const GET_ORDERS_QUERY = gql`
     }
 `;
 
-const cacheUpdateAddToCart = (cache, payload) => {
+export const cacheUpdateAddToCart = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
     if (!data) return;
     const cartItemAdded = payload.data.addToCart;
@@ -387,7 +387,7 @@ const cacheUpdateAddToCart = (cache, payload) => {
     });
 };
 
-const cacheUpdateRemoveFromCart = (cache, payload) => {
+export const cacheUpdateRemoveFromCart = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
     if (!data) return;
     const cartItemRemoved = payload.data.removeFromCart;
@@ -406,7 +406,7 @@ const cacheUpdateRemoveFromCart = (cache, payload) => {
     }
 };
 
-const cacheUpdateAddBook = (cache, payload) => {
+export const cacheUpdateAddBook = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: FIND_BOOKS_QUERY }));
     if (!data) return;
     const bookAdded = payload.data.addBook;
@@ -445,7 +445,7 @@ const cacheUpdateAddBook = (cache, payload) => {
     });
 };
 
-const cacheUpdateUpdateBook = (cache, payload) => {
+export const cacheUpdateUpdateBook = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: FIND_BOOKS_QUERY }));
     if (!data) return;
     const bookUpdated = payload.data.updateBook;
@@ -460,7 +460,7 @@ const cacheUpdateUpdateBook = (cache, payload) => {
     });
 };
 
-const cacheUpdateDeleteBook = (cache, payload) => {
+export const cacheUpdateDeleteBook = (cache, payload) => {
     cache.evict(cache.identify(payload.data.deleteBook));
 
     const meta = _.cloneDeep(
@@ -481,7 +481,7 @@ const cacheUpdateDeleteBook = (cache, payload) => {
     });
 };
 
-const cacheUpdateCheckout = (cache, payload) => {
+export const cacheUpdateCheckout = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_CART_QUERY }));
     if (!data) return;
     cache.writeQuery({
@@ -495,7 +495,7 @@ const cacheUpdateCheckout = (cache, payload) => {
     });
 };
 
-const cacheUpdateUpdateUser = (cache, payload) => {
+export const cacheUpdateUpdateUser = (cache, payload) => {
     const data = _.cloneDeep(cache.readQuery({ query: GET_ME_QUERY }));
     if (!data) return;
     cache.writeQuery({
@@ -509,7 +509,7 @@ const cacheUpdateUpdateUser = (cache, payload) => {
     });
 };
 
-const cacheUpdateLogout = (cache, payload) => {
+export const cacheUpdateLogout = (cache, payload) => {
     cache.writeQuery({
         query: GET_ME_QUERY,
         data: {
@@ -518,7 +518,7 @@ const cacheUpdateLogout = (cache, payload) => {
     });
 };
 
-const cacheUpdateLogin = (cache, payload) => {
+export const cacheUpdateLogin = (cache, payload) => {
     const user = payload?.data?.login;
     if (!user) return;
     cache.writeQuery({
@@ -529,7 +529,7 @@ const cacheUpdateLogin = (cache, payload) => {
     });
 };
 
-const cacheUpdateRegister = (cache, payload) => {
+export const cacheUpdateRegister = (cache, payload) => {
     const user = payload?.data?.register;
     if (!user) return;
     cache.writeQuery({
@@ -538,35 +538,4 @@ const cacheUpdateRegister = (cache, payload) => {
             getMe: user,
         },
     });
-};
-
-module.exports = {
-    GET_ME_QUERY,
-    LOGIN_MUTATION,
-    LOGOUT_MUTATION,
-    REGISTER_USER_MUTATION,
-    GET_CART_QUERY,
-    FIND_BOOKS_QUERY,
-    GET_BOOK_PAGINATION_META_QUERY,
-    GET_RANDOM_BOOK_QUERY,
-    GET_DISCOUNTED_BOOKS,
-    ADD_TO_CART_MUTATION,
-    REMOVE_FROM_CART_MUTATION,
-    ADD_BOOK_MUTATION,
-    UPDATE_BOOK_MUTATION,
-    DELETE_BOOK_MUTATION,
-    SINGLE_BOOK_QUERY,
-    CHECKOUT_MUTATION,
-    UPDATE_USER_MUTATION,
-    GET_ORDERS_QUERY,
-    cacheUpdateAddToCart,
-    cacheUpdateRemoveFromCart,
-    cacheUpdateAddBook,
-    cacheUpdateUpdateBook,
-    cacheUpdateDeleteBook,
-    cacheUpdateCheckout,
-    cacheUpdateUpdateUser,
-    cacheUpdateLogout,
-    cacheUpdateLogin,
-    cacheUpdateRegister,
 };

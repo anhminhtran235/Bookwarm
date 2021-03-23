@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "env-cmd -f ./config/dev.env nodemon --ignore client --ext js,gql src/index.js",
-    "run": "node src/index.js",
+    "start": "node src/index.js",
     "server": "env-cmd -f ./config/dev.env node src/index.js",
     "test": "env-cmd -f ./config/test.env jest",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"

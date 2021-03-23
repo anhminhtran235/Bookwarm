@@ -6,7 +6,7 @@ import image from '../../assets/images/sell_image.jpg';
 import { Column, Form, Row, SellStyle } from '../../styles/SellStyle';
 import useForm from '../../lib/useForm';
 import { toDataURL, isImageValid } from '../../lib/util';
-import { ADD_BOOK_MUTATION, cacheUpdateAddBook } from '../../lib/graphql';
+import { cacheUpdateAddBook, ADD_BOOK_MUTATION } from '../../lib/graphql';
 
 const Sell = () => {
     const { form, handleChange, clearForm } = useForm({

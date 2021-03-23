@@ -2,6 +2,7 @@ const express = require('express');
 const cookieParser = require('cookie-parser');
 const { ApolloServer } = require('apollo-server-express');
 const jwt = require('jsonwebtoken');
+const path = require('path');
 
 const { resolvers, typeDefs } = require('./graphql/index');
 
@@ -34,18 +35,9 @@ const setupApolloServer = async () => {
         next();
     });
 
-    if (process.env.NODE_ENV === 'production') {
-        app.use(express.static('../client/build'));
-        app.get('*', (req, res) => {
-            res.sendFile(
-                path.resolve(__dirname, 'client', 'build', 'index.html')
-            );
-        });
-    }
-
     server.applyMiddleware({
         app,
-        path: '/',
+        path: '/graphql',
         cors: {
             credentials: true,
             origin: process.env.FRONT_END_URL,
@@ -54,6 +46,23 @@ const setupApolloServer = async () => {
             limit: '5mb',
         },
     });
+
+    if (process.env.NODE_ENV === 'production' || true) {
+        console.log('PRODUCTION');
+        app.use(
+            express.static(path.resolve(__dirname, '..', 'client', 'build'))
+        );
+        app.get('*', (req, res) => {
+            const filePath = path.resolve(
+                __dirname,
+                '..',
+                'client',
+                'build',
+                'index.html'
+            );
+            res.sendFile(filePath);
+        });
+    }
 
     app.listen({ port: process.env.PORT }, () => {
         console.log(`Sever is running at http://localhost:${process.env.PORT}`);

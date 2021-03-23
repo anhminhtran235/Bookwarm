@@ -29,7 +29,7 @@ function GlobalLoadingIndicator() {
 const apiUrl =
     process.env.NODE_ENV === 'production'
         ? '/graphql'
-        : 'http://localhost:5000';
+        : 'http://localhost:5000/graphql';
 const httpLink = createHttpLink({
     uri: apiUrl,
     credentials: 'include',
