@@ -61,15 +61,26 @@ export const Section = styled(FlexRow)`
 
 export const InnerSection = styled(FlexColumn)`
     text-align: center;
-    img {
-        color: white;
+    flex: 1;
+    i {
+        font-size: 45px;
         padding: 20px;
         border-radius: 50%;
+        color: white;
+        background: var(--lighter-orange);
+        :nth-child(2) {
+            background: var(--lighter-blue);
+        }
+        margin-bottom: 10px;
     }
+
     @media (max-width: 927px) {
         border-bottom: 1px solid var(--darker-grey);
+        margin-bottom: 20px;
+
         :last-child {
             border-bottom: none;
+            margin-bottom: 0px;
         }
     }
 `;

@@ -74,6 +74,7 @@ export const SmallBook = styled(FlexRow)`
         margin: 0;
     }
     .image-wrapper {
+        flex: 1;
         position: relative;
         height: 100%;
         width: 70px;
@@ -100,6 +101,7 @@ export const SmallBook = styled(FlexRow)`
 `;
 
 export const BookDetails = styled(FlexColumn)`
+    flex: 2.5;
     align-items: flex-start;
     padding-left: 30px;
     .book-title {

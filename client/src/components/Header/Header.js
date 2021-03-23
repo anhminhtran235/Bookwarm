@@ -1,22 +1,27 @@
+import { withRouter } from 'react-router';
 import { HeaderStyle, Button, Content } from '../../styles/HeaderStyle';
 
-const Header = () => {
+const Header = ({ history }) => {
+    const goToShopping = () => {
+        history.push('/shopping');
+    };
     return (
         <>
             <HeaderStyle>
                 <Content>
                     <h1 className='special-text'>
-                        Creative and Tech Training Library
+                        Meet your next favourite book
                     </h1>
                     <p>
-                        Learn to create stunning movies, games, projects and
-                        more with professional video tutorials
+                        Discover millions of books from a vast number of
+                        categories including novel, biography, finance and
+                        education
                     </p>
-                    <Button>Start Reading Now</Button>
+                    <Button onClick={goToShopping}>Start Reading Now</Button>
                 </Content>
             </HeaderStyle>
         </>
     );
 };
 
-export default Header;
+export default withRouter(Header);
