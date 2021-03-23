@@ -108,6 +108,10 @@ export const ItemOptions = styled.div`
     .minus {
         padding-left: 13px;
         padding-right: 13px;
+        margin-right: 10px;
+    }
+    .plus {
+        margin-left: 10px;
     }
 `;
 

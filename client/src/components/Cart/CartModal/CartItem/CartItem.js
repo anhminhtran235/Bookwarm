@@ -56,11 +56,11 @@ const CartItem = ({
                     <p className='info'>Subtotal: ${subTotal.toFixed(2)}</p>
                 </div>
                 <ItemOptions>
-                    <Button className='mr-2 minus' onClick={removeFromCart}>
+                    <Button className='minus' onClick={removeFromCart}>
                         -
                     </Button>
                     {quantity}
-                    <Button className='ml-2 plus' onClick={addToCart}>
+                    <Button className='plus' onClick={addToCart}>
                         +
                     </Button>
                 </ItemOptions>
