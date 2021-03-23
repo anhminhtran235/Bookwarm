@@ -5,7 +5,6 @@ import { Redirect, withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 
 import backgroundImage from '../../assets/images/register_background.jpg';
-import Navbar from '../../component/Navbar/Navbar';
 import { Form, FormPageStyle } from '../../styles/common/FormPageStyle';
 import useForm from '../../lib/useForm';
 import { useUser } from '../../lib/util';

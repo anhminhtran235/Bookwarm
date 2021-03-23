@@ -4,7 +4,6 @@ import alertify from 'alertifyjs';
 import { useState } from 'react';
 
 import image from '../../assets/images/sell_image.jpg';
-import Navbar from '../../component/Navbar/Navbar';
 
 import { Column, Form, Row, SellStyle } from '../../styles/SellStyle';
 import useForm from '../../lib/useForm';

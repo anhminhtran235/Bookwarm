@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/client';
 import alertify from 'alertifyjs';
 
 import backgroundImage from '../../assets/images/account_background.jpg';
-import Navbar from '../../component/Navbar/Navbar';
 import { FormPageStyle, Form } from '../../styles/common/FormPageStyle';
 import useForm from '../../lib/useForm';
 import { UPDATE_USER_MUTATION, cacheUpdateUpdateUser } from '../../lib/graphql';

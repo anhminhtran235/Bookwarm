@@ -1,4 +1,3 @@
-import Navbar from '../Navbar/Navbar';
 import { HeaderStyle, Button, Content } from '../../styles/HeaderStyle';
 
 const Header = () => {

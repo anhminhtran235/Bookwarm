@@ -1,6 +1,6 @@
-import Header from '../../component/Header/Header';
-import Book from '../../component/Book/Book';
-import FeaturedBook from '../../component/Book/FeaturedBook';
+import Header from '../../components/Header/Header';
+import Book from '../../components/Book/Book';
+import FeaturedBook from '../../components/Book/FeaturedBook';
 import {
     PopularBooks,
     OurLibrary,

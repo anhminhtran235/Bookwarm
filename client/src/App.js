@@ -3,11 +3,11 @@ import 'alertifyjs/build/css/alertify.css';
 import { useQuery } from '@apollo/client';
 
 import './App.css';
-import Page from './component/Page';
+import Page from './components/Page';
 import PageRouter from './pageRouter/PageRouter';
-import CartModal from './component/Cart/CartModal/CartModal';
+import CartModal from './components/Cart/CartModal/CartModal';
 import { GET_ME_QUERY } from './lib/graphql';
-import Loader from './component/Loader/Loader';
+import Loader from './components/Loader/Loader';
 
 function App() {
     const { loading, error } = useQuery(GET_ME_QUERY);

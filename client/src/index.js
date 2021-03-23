@@ -4,7 +4,7 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 import ApolloProvider from './Apollo/ApolloProvider';
-import { CartStateProvider } from './component/CartStateProvider';
+import { CartStateProvider } from './components/CartStateProvider';
 
 ReactDOM.render(
     <React.StrictMode>

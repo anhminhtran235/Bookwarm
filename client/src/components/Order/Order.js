@@ -24,7 +24,9 @@ const Order = ({ order: { orderItems, createdAt } }) => {
             <div className='bottom'>
                 {orderItems &&
                     orderItems.length &&
-                    orderItems.map((item) => <OrderItem orderItem={item} />)}
+                    orderItems.map((item) => (
+                        <OrderItem key={item.book.id} orderItem={item} />
+                    ))}
             </div>
         </OrderStyle>
     );

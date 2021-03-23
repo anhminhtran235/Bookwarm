@@ -1,12 +1,11 @@
 import { useQuery } from '@apollo/client';
 
-import Navbar from '../../component/Navbar/Navbar';
-import Order from '../../component/Order/Order';
+import Order from '../../components/Order/Order';
 import { Wrapper, Container } from '../../styles/OrdersStyle';
 import { GET_ORDERS_QUERY } from '../../lib/graphql';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
-import Loader from '../../component/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 const NoOrderWrapper = styled.div`
     .link {
@@ -27,7 +26,9 @@ const Orders = () => {
                     <h1>Your orders</h1>
                     {orders &&
                         orders.length > 0 &&
-                        orders.map((order) => <Order order={order} />)}
+                        orders.map((order) => (
+                            <Order key={order.id} order={order} />
+                        ))}
                     {orders && orders.length === 0 && (
                         <NoOrderWrapper>
                             <p>

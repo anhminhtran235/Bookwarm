@@ -1,7 +1,7 @@
 import { Redirect, Switch, useLocation } from 'react-router-dom';
 
-import CustomRoute from '../component/Route/CustomRoute';
-import PrivateRoute from '../component/Route/PrivateRoute';
+import CustomRoute from '../components/Route/CustomRoute';
+import PrivateRoute from '../components/Route/PrivateRoute';
 import Home from './pages/Home';
 import Shopping from './pages/Shopping';
 import Sell from './pages/Sell';
@@ -11,7 +11,7 @@ import Register from './pages/Register';
 import Orders from './pages/Orders';
 import Book from './pages/Book';
 import EditBook from './pages/EditBook';
-import Navbar from '../component/Navbar/Navbar';
+import Navbar from '../components/Navbar/Navbar';
 
 const PageRouter = () => {
     const location = useLocation();

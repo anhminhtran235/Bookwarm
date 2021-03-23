@@ -2,8 +2,7 @@ import { useParams, withRouter } from 'react-router';
 import { useQuery, useMutation } from '@apollo/client';
 import alertify from 'alertifyjs';
 
-import Navbar from '../../component/Navbar/Navbar';
-import BookComponent from '../../component/Book/Book';
+import BookComponent from '../../components/Book/Book';
 import {
     BookPageStyle,
     BooksContainer,
@@ -23,7 +22,7 @@ import {
     cacheUpdateAddToCart,
 } from '../../lib/graphql';
 import { useUser } from '../../lib/util';
-import Loader from '../../component/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 const Book = ({ history }) => {
     const { id } = useParams();
@@ -135,7 +134,7 @@ const Book = ({ history }) => {
                         {relatedBooks &&
                             relatedBooks.length &&
                             relatedBooks.map((book) => (
-                                <BookComponent book={book} />
+                                <BookComponent key={book.id} book={book} />
                             ))}
                     </BooksContainer>
                 </RelatedBooks>

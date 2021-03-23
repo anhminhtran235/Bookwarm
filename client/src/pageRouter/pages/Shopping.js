@@ -1,22 +1,21 @@
 import { Route } from 'react-router';
 import { useQuery } from '@apollo/client';
 
-import Navbar from '../../component/Navbar/Navbar';
-import Books from '../../component/Shopping/Books/Books';
+import Books from '../../components/Shopping/Books/Books';
 import {
     ShoppingStyle,
     Card,
     MainArea,
     SideBars,
 } from '../../styles/ShoppingStyle';
-import Pagination from '../../component/Pagination/Pagination';
-import SmallBooks from '../../component/Shopping/SmallBooks/SmallBooks';
+import Pagination from '../../components/Pagination/Pagination';
+import SmallBooks from '../../components/Shopping/SmallBooks/SmallBooks';
 import {
     GET_BOOK_PAGINATION_META_QUERY,
     GET_DISCOUNTED_BOOKS,
     GET_RANDOM_BOOK_QUERY,
 } from '../../lib/graphql';
-import Loader from '../../component/Loader/Loader';
+import Loader from '../../components/Loader/Loader';
 
 const Shopping = ({ match }) => {
     const { data: relatedBooksData, loading: relatedBooksLoading } = useQuery(
