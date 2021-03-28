@@ -48,7 +48,7 @@ const Search = ({ searchToggled, history }) => {
         onInputValueChange({ inputValue }) {
             setInput({ value: inputValue });
             findItemsDebounced({
-                variables: { titleContains: inputValue, limit: 10 },
+                variables: { titleContains: inputValue, limit: 5 },
             });
         },
         onSelectedItemChange({ selectedItem }) {

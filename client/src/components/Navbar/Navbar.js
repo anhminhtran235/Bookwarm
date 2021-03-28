@@ -109,7 +109,8 @@ const Navbar = ({ transparentInitially }) => {
                     <Menu>
                         <NavLinksContainer
                             className={
-                                navState.dropdownNav ? 'dropdown-nav' : ''
+                                (navState.dropdownNav ? 'dropdown-nav' : '') +
+                                (navState.showNavBg ? ' show-nav-bg' : '')
                             }
                         >
                             <NavLink as={Link} to='/shopping'>

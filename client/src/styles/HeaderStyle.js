@@ -115,6 +115,15 @@ export const Menu = styled(FlexRow)`
             }
         }
     }
+    .show-nav-bg {
+        > a {
+            :hover {
+                ::after {
+                    background: white;
+                }
+            }
+        }
+    }
 `;
 
 export const NavLinksContainer = styled.ul`
