@@ -11,7 +11,6 @@ const constructConditionFromCriteria = (criteria) => {
     if (titleContains) {
         const regex = new RegExp(`.*${titleContains}.*`, 'i');
         criteria.push({ title: regex });
-        criteria.push({ subtitle: regex });
     }
 
     let condition = {};

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { resetIdCounter, useCombobox } from 'downshift';
 import { useLazyQuery } from '@apollo/client';
 import { withRouter } from 'react-router-dom';
@@ -30,6 +30,22 @@ const Search = ({ searchToggled, history }) => {
 
     const goToBook = (id) => {
         history.push('/book/' + id);
+    };
+
+    const boldIfMatch = (text, strToMatch) => {
+        const startIndex = text.toLowerCase().indexOf(strToMatch.toLowerCase());
+        const endIndex = startIndex + strToMatch.length;
+        if (startIndex === -1) {
+            return text;
+        }
+        const boldText = <b>{text.substring(startIndex, endIndex)}</b>;
+        return (
+            <>
+                {text.substring(0, startIndex)}
+                {boldText}
+                {text.substring(endIndex)}
+            </>
+        );
     };
 
     const books = data?.findBooks || [];
@@ -80,7 +96,9 @@ const Search = ({ searchToggled, history }) => {
                         >
                             <img src={book.image} alt='' width='50px' />
                             <div className='book-info'>
-                                <p className='book-title'>{book.title}</p>
+                                <p className='book-title'>
+                                    {boldIfMatch(book.title, input.value)}
+                                </p>
                                 <p className='book-author'>{book.author}</p>
                             </div>
                         </DropdownItem>
