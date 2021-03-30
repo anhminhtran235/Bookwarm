@@ -14,6 +14,7 @@ import Search from '../Search/Search';
 import CartButton from './CartButton/CartButton';
 import { useUser } from '../../lib/util';
 import LogoutButton from './LogoutButton/LogoutButton';
+import OutsideClickDetector from '../../lib/OutsideClickDetector';
 
 const Navbar = ({ transparentInitially }) => {
     const user = useUser();
@@ -24,6 +25,7 @@ const Navbar = ({ transparentInitially }) => {
         dropdownNav: false,
         outerStyle: {},
     });
+    console.log('Rerender', navState);
 
     useEffect(() => {
         setNavState({
@@ -39,6 +41,14 @@ const Navbar = ({ transparentInitially }) => {
             ...prevState,
             outerStyle: { ...prevState.outerStyle },
             dropdownNav: !prevState.dropdownNav,
+        }));
+    };
+
+    const setDropdownNavOpen = (isOpen) => {
+        setNavState((prevState) => ({
+            ...prevState,
+            outerStyle: { ...prevState.outerStyle },
+            dropdownNav: false,
         }));
     };
 
@@ -93,75 +103,84 @@ const Navbar = ({ transparentInitially }) => {
     }, [transparentInitially]);
 
     return (
-        <Outer showNavBg={navState.showNavBg} style={navState.outerStyle}>
-            <Container>
-                <Nav showNavBg={navState.showNavBg} searchOn={searchState.on}>
-                    <a
-                        href='/'
-                        className={
-                            searchState.on
-                                ? 'special-text logo disable'
-                                : 'special-text logo'
-                        }
+        <OutsideClickDetector onClickOutside={() => setDropdownNavOpen(false)}>
+            <Outer showNavBg={navState.showNavBg} style={navState.outerStyle}>
+                <Container>
+                    <Nav
+                        showNavBg={navState.showNavBg}
+                        searchOn={searchState.on}
                     >
-                        Bookworm
-                    </a>
-                    <Menu>
-                        <NavLinksContainer
+                        <a
+                            href='/'
                             className={
-                                (navState.dropdownNav ? 'dropdown-nav' : '') +
-                                (navState.showNavBg ? ' show-nav-bg' : '')
+                                searchState.on
+                                    ? 'special-text logo disable'
+                                    : 'special-text logo'
                             }
                         >
-                            <NavLink as={Link} to='/shopping'>
-                                Shop
-                            </NavLink>
-                            {isLoggedIn && (
-                                <NavLink as={Link} to='/sell'>
-                                    Sell
-                                </NavLink>
-                            )}
-                            {isLoggedIn && (
-                                <NavLink as={Link} to='/orders'>
-                                    Orders
-                                </NavLink>
-                            )}
-                            {isLoggedIn && (
-                                <NavLink as={Link} to='/account'>
-                                    Account
-                                </NavLink>
-                            )}
-                            <CartButton
-                                showNavBg={navState.showNavBg}
-                                user={user}
+                            Bookworm
+                        </a>
+                        <Menu>
+                            <NavLinksContainer
+                                className={
+                                    (navState.dropdownNav
+                                        ? 'dropdown-nav'
+                                        : '') +
+                                    (navState.showNavBg ? ' show-nav-bg' : '')
+                                }
                             >
-                                My Cart
-                            </CartButton>
-                            {isLoggedIn && (
-                                <LogoutButton showNavBg={navState.showNavBg}>
-                                    Logout
-                                </LogoutButton>
-                            )}
-                            {!isLoggedIn && (
-                                <NavLink as={Link} to='/login'>
-                                    Login
+                                <NavLink as={Link} to='/shopping'>
+                                    Shop
                                 </NavLink>
-                            )}
-                            {!isLoggedIn && (
-                                <NavLink as={Link} to='/register'>
-                                    Register
-                                </NavLink>
-                            )}
-                        </NavLinksContainer>
-                        <BurgerButton
-                            toggleDropdown={toggleDropdownNav}
-                            open={navState.dropdownNav}
-                        />
-                        <Search searchToggled={searchToggled} />
-                    </Menu>
-                </Nav>
-            </Container>
-        </Outer>
+                                {isLoggedIn && (
+                                    <NavLink as={Link} to='/sell'>
+                                        Sell
+                                    </NavLink>
+                                )}
+                                {isLoggedIn && (
+                                    <NavLink as={Link} to='/orders'>
+                                        Orders
+                                    </NavLink>
+                                )}
+                                {isLoggedIn && (
+                                    <NavLink as={Link} to='/account'>
+                                        Account
+                                    </NavLink>
+                                )}
+                                <CartButton
+                                    showNavBg={navState.showNavBg}
+                                    user={user}
+                                >
+                                    My Cart
+                                </CartButton>
+                                {isLoggedIn && (
+                                    <LogoutButton
+                                        showNavBg={navState.showNavBg}
+                                    >
+                                        Logout
+                                    </LogoutButton>
+                                )}
+                                {!isLoggedIn && (
+                                    <NavLink as={Link} to='/login'>
+                                        Login
+                                    </NavLink>
+                                )}
+                                {!isLoggedIn && (
+                                    <NavLink as={Link} to='/register'>
+                                        Register
+                                    </NavLink>
+                                )}
+                            </NavLinksContainer>
+                            <BurgerButton
+                                toggleDropdown={toggleDropdownNav}
+                                open={navState.dropdownNav}
+                            />
+                            <Search searchToggled={searchToggled} />
+                        </Menu>
+                    </Nav>
+                </Container>
+            </Outer>
+        </OutsideClickDetector>
     );
 };
 

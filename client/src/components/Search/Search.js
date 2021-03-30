@@ -6,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 import { Dropdown, DropdownItem, SearchBar } from '../../styles/SearchStyle';
 import { FIND_BOOKS_QUERY } from '../../lib/graphql';
 import { useDebouncedCallback } from '../../lib/util';
+import OutsideClickDetector from '../../lib/OutsideClickDetector';
 
 const Search = ({ searchToggled, history }) => {
     const [navState, setNavState] = useState({
@@ -17,6 +18,15 @@ const Search = ({ searchToggled, history }) => {
         setNavState({
             showSearch: !navState.showSearch,
         });
+    };
+
+    const closeSearch = () => {
+        if (navState.showSearch) {
+            searchToggled(false);
+            setNavState({
+                showSearch: false,
+            });
+        }
     };
 
     const [input, setInput] = useState({ value: '' });
@@ -74,40 +84,50 @@ const Search = ({ searchToggled, history }) => {
     });
 
     return (
-        <SearchBar showSearch={navState.showSearch}>
-            <div {...getComboboxProps()} className='input-wrapper'>
-                <input
-                    {...getInputProps({
-                        placeholder: 'Search for an item',
-                        id: 'search',
-                    })}
-                />
-                <i className='fas fa-times' onClick={toggleSearch}></i>
-            </div>
-            <i className='fas fa-search search-icon' onClick={toggleSearch}></i>
-            <Dropdown className='dropdown' {...getMenuProps()}>
-                {isOpen &&
-                    books.map((book, index) => (
-                        <DropdownItem
-                            key={book.id}
-                            {...getItemProps({ item: book })}
-                            active={index === highlightedIndex}
-                            onClick={() => goToBook(book.id)}
-                        >
-                            <img src={book.image} alt='' width='50px' />
-                            <div className='book-info'>
-                                <p className='book-title'>
-                                    {boldIfMatch(book.title, input.value)}
-                                </p>
-                                <p className='book-author'>{book.author}</p>
-                            </div>
+        <OutsideClickDetector onClickOutside={closeSearch}>
+            <SearchBar showSearch={navState.showSearch}>
+                <div {...getComboboxProps()} className='input-wrapper'>
+                    <input
+                        {...getInputProps({
+                            placeholder: 'Search for an item',
+                            id: 'search',
+                        })}
+                    />
+                    <i className='fas fa-times' onClick={toggleSearch}></i>
+                </div>
+                <i
+                    className='fas fa-search search-icon'
+                    onClick={toggleSearch}
+                ></i>
+                <Dropdown className='dropdown' {...getMenuProps()}>
+                    {isOpen &&
+                        books.map((book, index) => (
+                            <DropdownItem
+                                key={book.id}
+                                {...getItemProps({ item: book })}
+                                active={index === highlightedIndex}
+                                onClick={() => {
+                                    goToBook(book.id);
+                                    toggleSearch();
+                                }}
+                            >
+                                <img src={book.image} alt='' width='50px' />
+                                <div className='book-info'>
+                                    <p className='book-title'>
+                                        {boldIfMatch(book.title, input.value)}
+                                    </p>
+                                    <p className='book-author'>{book.author}</p>
+                                </div>
+                            </DropdownItem>
+                        ))}
+                    {isOpen && !books.length && !loading && (
+                        <DropdownItem>
+                            No item found for {input.value}
                         </DropdownItem>
-                    ))}
-                {isOpen && !books.length && !loading && (
-                    <DropdownItem>No item found for {input.value}</DropdownItem>
-                )}
-            </Dropdown>
-        </SearchBar>
+                    )}
+                </Dropdown>
+            </SearchBar>
+        </OutsideClickDetector>
     );
 };
 

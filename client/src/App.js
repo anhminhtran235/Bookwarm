@@ -1,6 +1,7 @@
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'alertifyjs/build/css/alertify.css';
 import { useQuery } from '@apollo/client';
+import alertify from 'alertifyjs';
 
 import './App.css';
 import Page from './components/Page';
@@ -12,7 +13,8 @@ import Loader from './components/Loader/Loader';
 function App() {
     const { loading, error } = useQuery(GET_ME_QUERY);
     if (error) {
-        return <h1>Something went wrong. Please try again later</h1>;
+        alertify.error('Something went wrong. Please try again later');
+        return null;
     }
 
     return loading ? (

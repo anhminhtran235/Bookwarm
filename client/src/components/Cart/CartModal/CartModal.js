@@ -24,10 +24,20 @@ const CartModal = () => {
     const isLoggedIn = user != null;
 
     const { cartOpen, closeCart } = useCart();
+
     const [state, setState] = useState({
         password: '',
         formEnabled: false,
     });
+
+    const onCloseCart = () => {
+        setState({
+            ...state,
+            password: '',
+            formEnabled: false,
+        });
+        closeCart();
+    };
 
     const { data, loading } = useQuery(GET_CART_QUERY);
     const cartItems = data?.getMe?.cart;
@@ -116,7 +126,7 @@ const CartModal = () => {
 
     return (
         <>
-            <Backdrop show={cartOpen} onClick={closeCart} />
+            <Backdrop show={cartOpen} onClick={onCloseCart} />
             <Modal show={cartOpen}>
                 <h2>My Cart</h2>
                 {checkoutLoading ? <Loader /> : null}
