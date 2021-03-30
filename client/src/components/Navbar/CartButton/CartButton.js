@@ -1,5 +1,9 @@
 import { useCart } from '../../CartStateProvider';
-import { NavLink, ItemCount } from '../../../styles/HeaderStyle';
+import {
+    NavLink,
+    ItemCount,
+    CartItemCountContainer,
+} from '../../../styles/HeaderStyle';
 
 const CartButton = ({ user }) => {
     const { openCart } = useCart();
@@ -9,10 +13,12 @@ const CartButton = ({ user }) => {
     );
     return (
         <NavLink onClick={openCart} className='position-relative'>
-            Cart
-            {cartItemCount != null && cartItemCount != 0 && (
-                <ItemCount>{cartItemCount}</ItemCount>
-            )}
+            <CartItemCountContainer>
+                Cart
+                {cartItemCount != null && cartItemCount != 0 && (
+                    <ItemCount>{cartItemCount}</ItemCount>
+                )}
+            </CartItemCountContainer>
         </NavLink>
     );
 };

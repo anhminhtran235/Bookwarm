@@ -190,11 +190,16 @@ export const Button = styled.div`
     }
 `;
 
+export const CartItemCountContainer = styled.div`
+    display: inline-block;
+    position: relative;
+`;
+
 export const ItemCount = styled.span`
     position: absolute;
     font-size: 12px;
-    top: -12px;
-    right: -6px;
+    top: -9px;
+    right: -11px;
     background: red;
     border-radius: 80%;
     padding: 2px 4px;
