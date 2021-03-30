@@ -12,6 +12,7 @@ import Orders from './pages/Orders';
 import Book from './pages/Book';
 import EditBook from './pages/EditBook';
 import Navbar from '../components/Navbar/Navbar';
+import ScrollToTop from '../lib/ScrollToTop';
 
 const PageRouter = () => {
     const location = useLocation();
@@ -25,6 +26,7 @@ const PageRouter = () => {
     return (
         <>
             <Navbar transparentInitially={isTransparentNavPage} />
+            <ScrollToTop />
             <Switch>
                 <CustomRoute path='/' exact component={Home}></CustomRoute>
                 <CustomRoute
