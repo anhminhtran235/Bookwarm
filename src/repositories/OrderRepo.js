@@ -1,4 +1,4 @@
-const Order = require('./schema/Order');
+const Order = require('../models/Order');
 
 const findAll = async (condition, sort) => {
     try {

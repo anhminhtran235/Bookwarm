@@ -1,4 +1,4 @@
-const Book = require('./schema/Book');
+const Book = require('../models/Book');
 
 const findPaginate = async (condition, sort, skip, limit) => {
     try {

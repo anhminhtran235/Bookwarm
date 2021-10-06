@@ -1,7 +1,7 @@
 const { ApolloError, AuthenticationError } = require('apollo-server');
 
-const bookModule = require('../../models/book/Book');
-const userModule = require('../../models/user/User');
+const bookRepo = require('../../repositories/BookRepo');
+const userRepo = require('../../repositories/UserRepo');
 const cloudinary = require('../../util/cloudinary');
 
 const constructConditionFromCriteria = (criteria) => {
@@ -26,7 +26,7 @@ module.exports = {
             try {
                 const condition = constructConditionFromCriteria(args.criteria);
                 const { skip, limit } = args;
-                const books = await bookModule.findPaginate(
+                const books = await bookRepo.findPaginate(
                     condition,
                     { createdAt: -1 },
                     skip,
@@ -40,7 +40,7 @@ module.exports = {
         async findBookById(parent, args, context, info) {
             try {
                 const { id } = args;
-                return await bookModule.findOneById(id);
+                return await bookRepo.findOneById(id);
             } catch (error) {
                 throw new Error(error);
             }
@@ -48,7 +48,7 @@ module.exports = {
         async getBookPaginationMeta(parent, args, context, info) {
             try {
                 const condition = constructConditionFromCriteria(args.criteria);
-                const count = await bookModule.countBooks(condition);
+                const count = await bookRepo.countBooks(condition);
                 return { count };
             } catch (error) {
                 throw new Error(error);
@@ -57,7 +57,7 @@ module.exports = {
         async getRandomBooks(parent, args, context, info) {
             try {
                 const { limit } = args;
-                return await bookModule.getRandomBooks(limit);
+                return await bookRepo.getRandomBooks(limit);
             } catch (error) {
                 throw new Error(error);
             }
@@ -65,7 +65,7 @@ module.exports = {
         async getDiscountedBooks(parent, args, context, info) {
             try {
                 const { limit } = args;
-                return await bookModule.getDiscountedBooks(limit);
+                return await bookRepo.getDiscountedBooks(limit);
             } catch (error) {
                 throw new Error(error);
             }
@@ -78,7 +78,7 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
@@ -89,11 +89,11 @@ module.exports = {
                     ).url;
                 }
 
-                const newBook = await bookModule.insert({
+                const newBook = await bookRepo.insert({
                     ...args,
                     seller: user._id,
                 });
-                await userModule.addNewBook(user._id, newBook._id);
+                await userRepo.addNewBook(user._id, newBook._id);
                 return newBook;
             } catch (error) {
                 throw new Error(error);
@@ -108,7 +108,7 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
@@ -118,7 +118,7 @@ module.exports = {
                             await cloudinary.uploader.upload(args.image)
                         ).url;
                     }
-                    const newBook = await bookModule.updateById(id, args);
+                    const newBook = await bookRepo.updateById(id, args);
                     if (!newBook) {
                         throw new ApolloError('Book does not exists');
                     }
@@ -140,12 +140,12 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
                 if (user._doc.books.includes(id)) {
-                    return await bookModule.deleteById(id);
+                    return await bookRepo.deleteById(id);
                 } else {
                     throw new AuthenticationError(
                         'You are not allowed to update this book'

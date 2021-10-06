@@ -6,9 +6,9 @@ const {
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
-const userModule = require('../../models/user/User');
-const bookModule = require('../../models/book/Book');
-const orderModule = require('../../models/order/Order');
+const userRepo = require('../../repositories/UserRepo');
+const bookRepo = require('../../repositories/BookRepo');
+const orderRepo = require('../../repositories/OrderRepo');
 const cloudinary = require('../../util/cloudinary');
 
 module.exports = {
@@ -19,7 +19,7 @@ module.exports = {
                     $in: parent.books,
                 },
             };
-            return await bookModule.findAll(condition);
+            return await bookRepo.findAll(condition);
         },
         async orders(parent) {
             const condition = {
@@ -27,31 +27,31 @@ module.exports = {
                     $in: parent.orders,
                 },
             };
-            return await orderModule.findAll(condition, { createdAt: -1 });
+            return await orderRepo.findAll(condition, { createdAt: -1 });
         },
     },
     CartItem: {
         async book(parent) {
-            return await bookModule.findOneById(parent.book);
+            return await bookRepo.findOneById(parent.book);
         },
     },
     OrderItem: {
         async book(parent) {
-            return await bookModule.findOneById(parent.book);
+            return await bookRepo.findOneById(parent.book);
         },
     },
     Query: {
         async findUserById(parent, args, context, info) {
             try {
                 const { id } = args;
-                return await userModule.findById(id);
+                return await userRepo.findById(id);
             } catch (error) {
                 throw new Error(error);
             }
         },
         async findAllUsers(parent, args, context, info) {
             try {
-                return await userModule.findAll();
+                return await userRepo.findAll();
             } catch (error) {
                 throw new Error(error);
             }
@@ -63,7 +63,7 @@ module.exports = {
                     return null;
                 }
                 const { id } = parsedToken;
-                return userModule.findById(id);
+                return userRepo.findById(id);
             } catch (error) {
                 throw new Error(error);
             }
@@ -74,7 +74,7 @@ module.exports = {
             try {
                 let { username, email, password, avatar } = args.registerInput;
 
-                const isEmailExisted = !!(await userModule.findOne({
+                const isEmailExisted = !!(await userRepo.findOne({
                     email,
                 }));
                 if (isEmailExisted) {
@@ -88,7 +88,7 @@ module.exports = {
                     avatarUrl = (await cloudinary.uploader.upload(avatar)).url;
                 }
 
-                const newUser = await userModule.insert(
+                const newUser = await userRepo.insert(
                     username,
                     email,
                     password,
@@ -110,7 +110,7 @@ module.exports = {
             try {
                 const { email, password } = args.loginInput;
 
-                const user = await userModule.findOne({ email });
+                const user = await userRepo.findOne({ email });
 
                 if (!user) {
                     throw new AuthenticationError('Invalid credentials');
@@ -148,7 +148,7 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
@@ -172,7 +172,7 @@ module.exports = {
                     updateInfo.password = await bcrypt.hash(newPassword, 12);
                 }
 
-                const updatedUser = await userModule.updateById(
+                const updatedUser = await userRepo.updateById(
                     user.id,
                     updateInfo
                 );
@@ -191,13 +191,13 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
 
                 const { bookId } = args;
-                const isBookExists = !!(await bookModule.findOneById(bookId));
+                const isBookExists = !!(await bookRepo.findOneById(bookId));
                 if (!isBookExists) {
                     throw new ApolloError('Book does not exist');
                 }
@@ -227,13 +227,13 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
                 }
 
                 const { bookId } = args;
-                const isBookExists = !!(await bookModule.findOneById(bookId));
+                const isBookExists = !!(await bookRepo.findOneById(bookId));
                 if (!isBookExists) {
                     throw new ApolloError('Book does not exist');
                 }
@@ -265,7 +265,7 @@ module.exports = {
                 if (!parsedToken) {
                     throw new ApolloError('Please login first');
                 }
-                const user = await userModule.findById(parsedToken.id);
+                const user = await userRepo.findById(parsedToken.id);
                 await user.populate('cart.book').execPopulate();
                 if (!user) {
                     throw new ApolloError('Cannot find user profile');
@@ -280,7 +280,7 @@ module.exports = {
                     throw new ApolloError('Invalid credential');
                 }
 
-                const newOrder = await orderModule.makeOrderFromCart(user.cart);
+                const newOrder = await orderRepo.makeOrderFromCart(user.cart);
                 user.orders.push(newOrder._id);
                 user.cart = [];
                 await user.save();

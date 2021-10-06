@@ -1,4 +1,4 @@
-const User = require('./schema/User');
+const User = require('../models/User');
 
 const insert = async (username, email, password, avatar) => {
     try {
