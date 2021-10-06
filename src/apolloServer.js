@@ -10,6 +10,7 @@ const store = require('./repositories');
 const BookService = require('./services/BookService');
 const OrderService = require('./services/OrderService');
 const UserService = require('./services/UserService');
+const BookLoader = require('./graphql/loaders/BookLoader');
 
 const dataSources = () => ({
     bookService: new BookService({ store }),
@@ -22,7 +23,11 @@ const setupApolloServer = async () => {
         typeDefs,
         resolvers,
         dataSources,
-        context: ({ req, res }) => ({ req, res }),
+        context: ({ req, res }) => ({
+            req,
+            res,
+            bookLoader: BookLoader(dataSources().bookService),
+        }),
         debug: true,
     });
 

@@ -1,16 +1,12 @@
 module.exports = {
     CartItem: {
-        async book(parent, _, { dataSources }) {
-            return await dataSources.bookService.findBookById({
-                id: parent.book,
-            });
+        async book(parent, _, { dataSources, bookLoader }) {
+            return await bookLoader.load(parent.book, dataSources.bookService);
         },
     },
     OrderItem: {
-        async book(parent, _, { dataSources }) {
-            return await dataSources.bookService.findBookById({
-                id: parent.book,
-            });
+        async book(parent, _, { dataSources, bookLoader }) {
+            return await bookLoader.load(parent.book, dataSources.bookService);
         },
     },
     Mutation: {
