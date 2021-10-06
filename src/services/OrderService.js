@@ -114,9 +114,7 @@ class OrderService extends DataSource {
                 throw new ApolloError('Invalid credential');
             }
 
-            const newOrder = await this.store.orderRepo.makeOrderFromCart(
-                user.cart
-            );
+            const newOrder = await this.makeOrderFromCart(user.cart);
             user.orders.push(newOrder._id);
             user.cart = [];
             await user.save();
@@ -133,6 +131,28 @@ class OrderService extends DataSource {
             },
         };
         return await this.store.orderRepo.findAll(condition, { createdAt: -1 });
+    }
+
+    async makeOrderFromCart(cart) {
+        try {
+            const orderItems = [];
+            cart.forEach((item) => {
+                const promotion = item?._doc?.book?._doc?.promotion;
+                const price = item?._doc?.book?._doc?.price;
+                const realPrice = promotion
+                    ? (price * (100 - promotion)) / 100
+                    : price;
+                const orderItem = {
+                    book: item?._doc?.book?._doc?._id,
+                    quantity: item?._doc?.quantity,
+                    pricePerItem: realPrice,
+                };
+                orderItems.push(orderItem);
+            });
+            return await this.store.orderRepo.insert(orderItems);
+        } catch (error) {
+            throw new Error(error);
+        }
     }
 }
 

@@ -55,7 +55,19 @@ class BookService extends DataSource {
     async getRandomBooks(args) {
         try {
             const { limit } = args;
-            return await this.store.bookRepo.getRandomBooks(limit);
+            const count = await this.store.bookRepo.countBooks();
+            const randNumber = Math.floor(Math.random() * count);
+            let skip = 0;
+            if (count > randNumber + limit) {
+                skip = randNumber;
+            }
+
+            return await this.store.bookRepo.findPaginate(
+                {},
+                null,
+                skip,
+                limit
+            );
         } catch (error) {
             throw new Error(error);
         }
@@ -64,7 +76,12 @@ class BookService extends DataSource {
     async getDiscountedBooks(args) {
         try {
             const { limit } = args;
-            return await this.store.bookRepo.getDiscountedBooks(limit);
+            return await this.store.bookRepo.findPaginate(
+                { promotion: { $nin: [0, null, undefined] } },
+                { createdAt: -1 },
+                0,
+                limit
+            );
         } catch (error) {
             throw new Error(error);
         }
