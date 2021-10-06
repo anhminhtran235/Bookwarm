@@ -9,25 +9,6 @@ type User {
     books: [Book]!
 }
 
-type CartItem {
-    id: ID!
-    book: Book!
-    quantity: Int!
-}
-
-type OrderItem {
-    id: ID!
-    book: Book!
-    quantity: Int!
-    pricePerItem: Float!
-}
-
-type Order {
-    id: ID!
-    orderItems: [OrderItem]!
-    createdAt: Date!
-}
-
 input RegisterInput {
     username: String!
     email: String!
@@ -55,7 +36,4 @@ extend type Mutation {
         newPassword: String!
     ): User!
     logout: String
-    addToCart(bookId: ID!): CartItem!
-    removeFromCart(bookId: ID!): CartItem!
-    checkout(password: String!): Order!
 }

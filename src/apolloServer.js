@@ -5,11 +5,23 @@ const jwt = require('jsonwebtoken');
 const path = require('path');
 
 const { resolvers, typeDefs } = require('./graphql/index');
+const store = require('./repositories');
+
+const BookService = require('./services/BookService');
+const OrderService = require('./services/OrderService');
+const UserService = require('./services/UserService');
+
+const dataSources = () => ({
+    bookService: new BookService({ store }),
+    orderService: new OrderService({ store }),
+    userService: new UserService({ store }),
+});
 
 const setupApolloServer = async () => {
     const server = new ApolloServer({
         typeDefs,
         resolvers,
+        dataSources,
         context: ({ req, res }) => ({ req, res }),
         debug: true,
     });

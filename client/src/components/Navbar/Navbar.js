@@ -25,7 +25,6 @@ const Navbar = ({ transparentInitially }) => {
         dropdownNav: false,
         outerStyle: {},
     });
-    console.log('Rerender', navState);
 
     useEffect(() => {
         setNavState({
