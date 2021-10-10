@@ -11,7 +11,6 @@ import { createNetworkStatusNotifier } from 'react-apollo-network-status';
 import paginationField from '../lib/paginationField';
 import nprogress from 'nprogress';
 import 'nprogress/nprogress.css';
-import { transformImage } from '../lib/util';
 
 const { link, useApolloNetworkStatus } = createNetworkStatusNotifier();
 
@@ -60,15 +59,6 @@ const client = new ApolloClient({
                     findBooks: paginationField(),
                 },
             },
-            // Book: {
-            //     fields: {
-            //         image: {
-            //             read(image) {
-            //                 return transformImage(image, 2, 3);
-            //             },
-            //         },
-            //     },
-            // },
         },
     }),
     connectToDevTools: true,
