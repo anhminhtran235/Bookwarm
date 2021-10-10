@@ -1,7 +1,8 @@
 const { DataSource } = require('apollo-datasource');
 const { ApolloError, AuthenticationError } = require('apollo-server');
 
-const cloudinary = require('../util/cloudinary');
+const cloudinaryService = require('./CloudinaryService');
+const { authCheck } = require('../util/authCheck');
 
 class BookService extends DataSource {
     constructor({ store }) {
@@ -89,17 +90,12 @@ class BookService extends DataSource {
 
     async addBook(args) {
         try {
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+            const user = await authCheck(this.context.req, this.store.userRepo);
 
             if (args.image && args.image !== '') {
-                args.image = (await cloudinary.uploader.upload(args.image)).url;
+                args.image = (
+                    await cloudinaryService.uploadImage(args.image)
+                ).url;
             }
 
             const newBook = await this.store.bookRepo.insert({
@@ -118,18 +114,12 @@ class BookService extends DataSource {
             const { id } = args;
             delete args.id;
 
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+            const user = await authCheck(this.context.req, this.store.userRepo);
+
             if (user._doc.books.includes(id)) {
                 if (args.image && args.image !== '') {
                     args.image = (
-                        await cloudinary.uploader.upload(args.image)
+                        await cloudinaryService.uploadImage(args.image)
                     ).url;
                 }
                 const newBook = await this.store.bookRepo.updateById(id, args);
@@ -151,19 +141,13 @@ class BookService extends DataSource {
         try {
             const { id } = args;
 
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+            const user = await authCheck(this.context.req, this.store.userRepo);
+
             if (user._doc.books.includes(id)) {
                 return await this.store.bookRepo.deleteById(id);
             } else {
                 throw new AuthenticationError(
-                    'You are not allowed to update this book'
+                    'You are not allowed to delete this book'
                 );
             }
         } catch (error) {

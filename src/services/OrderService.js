@@ -1,7 +1,8 @@
 const { DataSource } = require('apollo-datasource');
 const { ApolloError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
-const cloudinary = require('../util/cloudinary');
+
+const { authCheck } = require('../util/authCheck');
 
 class OrderService extends DataSource {
     constructor({ store }) {
@@ -15,14 +16,7 @@ class OrderService extends DataSource {
 
     async addToCart(args) {
         try {
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+            const user = await authCheck(this.context.req, this.store.userRepo);
 
             const { bookId } = args;
             const isBookExists = !!(await this.store.bookRepo.findOneById(
@@ -44,7 +38,7 @@ class OrderService extends DataSource {
                 newCartItem = user.cart[index];
             }
 
-            await user.save();
+            this.store.userRepo.save(user);
 
             return newCartItem;
         } catch (error) {
@@ -54,14 +48,7 @@ class OrderService extends DataSource {
 
     async removeFromCart(args) {
         try {
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+            const user = await authCheck(this.context.req, this.store.userRepo);
 
             const { bookId } = args;
             const isBookExists = !!(await this.store.bookRepo.findOneById(
@@ -83,7 +70,7 @@ class OrderService extends DataSource {
                 if (user.cart[index].quantity === 0) {
                     user.cart.splice(index, 1);
                 }
-                await user.save();
+                this.store.userRepo.save(user);
             }
 
             return updatedItem;
@@ -95,15 +82,9 @@ class OrderService extends DataSource {
     async checkout(args) {
         try {
             const { password } = args;
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            await user.populate('cart.book').execPopulate();
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+
+            const user = await authCheck(this.context.req, this.store.userRepo);
+            await this.store.userRepo.populate(user, 'cart.book');
 
             const isPasswordMatch = await bcrypt.compare(
                 password,
@@ -117,7 +98,7 @@ class OrderService extends DataSource {
             const newOrder = await this.makeOrderFromCart(user.cart);
             user.orders.push(newOrder._id);
             user.cart = [];
-            await user.save();
+            this.store.userRepo.save(user);
             return newOrder._doc;
         } catch (error) {
             throw new Error(error);

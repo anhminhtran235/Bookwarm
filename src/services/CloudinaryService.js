@@ -6,4 +6,10 @@ cloudinary.config({
     api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-module.exports = cloudinary;
+const uploadImage = (base64Image) => {
+    return cloudinary.uploader.upload(base64Image);
+};
+
+module.exports = {
+    uploadImage,
+};

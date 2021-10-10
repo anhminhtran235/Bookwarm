@@ -1,20 +1,17 @@
 const { AuthenticationError } = require('apollo-server');
 
-const jwt = require('jsonwebtoken');
-
-module.exports = (context) => {
-    const authHeader = context?.req?.headers?.authorization;
-    if (authHeader) {
-        const token = authHeader.split('Bearer ')[1];
-        if (token) {
-            try {
-                const user = jwt.verify(token, process.env.JSON_SECRET);
-                return user;
-            } catch (error) {
-                throw new AuthenticationError('Invalid/Expired token');
-            }
-        }
-        throw new Error("Authentication token must be 'Bearer [token]'");
+const authCheck = async (req, userRepo) => {
+    const parsedToken = req.parsedToken;
+    if (!parsedToken) {
+        throw new AuthenticationError('Please login first');
     }
-    throw new Error('Authentication header must be provided');
+    const user = await userRepo.findById(parsedToken.id);
+    if (!user) {
+        throw new AuthenticationError('Cannot find user profile');
+    }
+    return user;
+};
+
+module.exports = {
+    authCheck,
 };

@@ -23,6 +23,14 @@ const insertMany = async (arr) => {
     }
 };
 
+const save = async (user) => {
+    try {
+        return await user.save();
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 const findById = async (id) => {
     try {
         return await User.findById(id);
@@ -65,12 +73,22 @@ const addNewBook = async (id, bookId) => {
     }
 };
 
+const populate = async (user, query) => {
+    try {
+        return await user.populate(query).execPopulate();
+    } catch (error) {
+        throw new Error(error);
+    }
+};
+
 module.exports = {
     insert,
     insertMany,
+    save,
     findById,
     findOne,
     findAll,
     updateById,
     addNewBook,
+    populate,
 };

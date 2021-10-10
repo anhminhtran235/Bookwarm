@@ -1,12 +1,9 @@
 const { DataSource } = require('apollo-datasource');
-const {
-    UserInputError,
-    AuthenticationError,
-    ApolloError,
-} = require('apollo-server');
+const { UserInputError, AuthenticationError } = require('apollo-server');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
-const cloudinary = require('../util/cloudinary');
+
+const { authCheck } = require('../util/authCheck');
 
 class UserService extends DataSource {
     constructor({ store }) {
@@ -50,7 +47,7 @@ class UserService extends DataSource {
 
     async register(args) {
         try {
-            let { username, email, password, avatar } = args.registerInput;
+            let { username, email, password } = args.registerInput;
 
             const isEmailExisted = !!(await this.store.userRepo.findOne({
                 email,
@@ -61,22 +58,16 @@ class UserService extends DataSource {
 
             password = await bcrypt.hash(password, 12);
 
-            let avatarUrl = '';
-            if (avatar && avatar !== '') {
-                avatarUrl = (await cloudinary.uploader.upload(avatar)).url;
-            }
-
             const newUser = await this.store.userRepo.insert(
                 username,
                 email,
-                password,
-                avatarUrl
+                password
             );
 
             const token = this.generateToken(newUser);
             this.context.res.cookie('token', token, {
                 httpOnly: true,
-                maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
+                maxAge: 1000 * 60 * 60 * 3, // 3 hours cookies
             });
 
             return newUser;
@@ -90,7 +81,6 @@ class UserService extends DataSource {
             const { email, password } = args.loginInput;
 
             const user = await this.store.userRepo.findOne({ email });
-
             if (!user) {
                 throw new AuthenticationError('Invalid credentials');
             }
@@ -106,7 +96,7 @@ class UserService extends DataSource {
             const token = this.generateToken(user);
             this.context.res.cookie('token', token, {
                 httpOnly: true,
-                maxAge: 1000 * 60 * 60 * 24 * 7, // 7 days cookies
+                maxAge: 1000 * 60 * 60 * 3, // 3 hours cookies
             });
 
             return user;
@@ -125,14 +115,8 @@ class UserService extends DataSource {
 
     async updateUser(args) {
         try {
-            const parsedToken = this.context.req.parsedToken;
-            if (!parsedToken) {
-                throw new ApolloError('Please login first');
-            }
-            const user = await this.store.userRepo.findById(parsedToken.id);
-            if (!user) {
-                throw new ApolloError('Cannot find user profile');
-            }
+            const user = await authCheck(this.context.req, this.store.userRepo);
+
             const { username, oldPassword, newPassword } = args;
             if (!oldPassword) {
                 throw new UserInputError('Please re-enter your password');

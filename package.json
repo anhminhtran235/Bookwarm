@@ -1,36 +1,37 @@
 {
-  "name": "Bookworm",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "dev": "env-cmd -f ./config/dev.env nodemon --ignore client --ext js,gql src/index.js",
-    "start": "node src/index.js",
-    "server": "env-cmd -f ./config/dev.env node src/index.js",
-    "test": "env-cmd -f ./config/test.env jest",
-    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "apollo-datasource": "^3.1.0",
-    "apollo-server": "^2.21.0",
-    "apollo-server-express": "^2.21.0",
-    "bcryptjs": "^2.4.3",
-    "cloudinary": "^1.25.0",
-    "cookie-parser": "^1.4.5",
-    "cors": "^2.8.5",
-    "dataloader": "^2.0.0",
-    "graphql": "^15.5.0",
-    "graphql-tag": "^2.11.0",
-    "jest": "^27.2.4",
-    "jsonwebtoken": "^8.5.1",
-    "lodash": "^4.17.21",
-    "mongoose": "^5.11.17"
-  },
-  "devDependencies": {
-    "env-cmd": "^10.1.0",
-    "nodemon": "^2.0.7"
-  }
+    "name": "Bookworm",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "env-cmd -f ./config/dev.env nodemon --ignore client --ext js,gql src/index.js",
+        "start": "node src/index.js",
+        "server": "env-cmd -f ./config/dev.env node src/index.js",
+        "test": "env-cmd -f ./config/test.env jest --watch",
+        "test:coverage": "env-cmd -f ./config/test.env jest --coverage",
+        "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "apollo-datasource": "^3.1.0",
+        "apollo-server": "^2.21.0",
+        "apollo-server-express": "^2.21.0",
+        "bcryptjs": "^2.4.3",
+        "cloudinary": "^1.25.0",
+        "cookie-parser": "^1.4.5",
+        "cors": "^2.8.5",
+        "dataloader": "^2.0.0",
+        "graphql": "^15.5.0",
+        "graphql-tag": "^2.11.0",
+        "jsonwebtoken": "^8.5.1",
+        "lodash": "^4.17.21",
+        "mongoose": "^5.11.17"
+    },
+    "devDependencies": {
+        "env-cmd": "^10.1.0",
+        "jest": "^27.2.4",
+        "nodemon": "^2.0.7"
+    }
 }
