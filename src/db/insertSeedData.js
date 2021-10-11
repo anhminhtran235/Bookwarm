@@ -1,11 +1,11 @@
 const mongoose = require('mongoose');
 
-const Book = require('../models/book/Book');
-const User = require('../models/user/User');
+const Book = require('../models/Book');
+const User = require('../models/User');
 const bookData = require('./seedData/bookData');
 const userData = require('./seedData/userData');
 
-const MONGO_CONNECTION_STRING = 'YOUR CONNECTION STRING';
+const MONGO_CONNECTION_STRING = 'INSERT YOUR CONNECTION STRING HERE';
 
 mongoose
     .connect(MONGO_CONNECTION_STRING, {

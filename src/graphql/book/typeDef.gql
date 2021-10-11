@@ -16,7 +16,7 @@ input FindBookCriteria {
 
 extend type Query {
     findBooks(criteria: FindBookCriteria!, skip: Int, limit: Int): [Book]!
-    findBookById(id: ID!): Book!
+    findBookById(id: ID!): Book
     getBookPaginationMeta(criteria: FindBookCriteria!): PaginationMeta!
     getRandomBooks(limit: Int): [Book]!
     getDiscountedBooks(limit: Int): [Book]!

@@ -80,10 +80,9 @@ const setupApolloServer = async () => {
         });
     }
 
-    app.listen({ port: process.env.PORT }, () => {
+    return app.listen({ port: process.env.PORT }, () => {
         console.log(`Sever is running at http://localhost:${process.env.PORT}`);
     });
-    return server;
 };
 
 module.exports = setupApolloServer;
