@@ -8,6 +8,8 @@
         "start": "node src/index.js",
         "server": "env-cmd -f ./config/dev.env node src/index.js",
         "test": "env-cmd -f ./config/test.env jest --watch --runInBand --verbose",
+        "test:unit": "env-cmd -f ./config/test.env jest unit --watch --verbose",
+        "test:integration": "env-cmd -f ./config/test.env jest int --watch --runInBand --verbose",
         "test:coverage": "env-cmd -f ./config/test.env jest --coverage",
         "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
     },
