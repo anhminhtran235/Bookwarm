@@ -155,28 +155,3 @@ describe('Find book by id', () => {
         expect(resultBook).toBe(null);
     });
 });
-
-// describe('Add book', () => {
-//     it('Add book successfully', async () => {
-
-//         const myBook = {
-//             title: 'my book',
-//             subtitle: 'my subtitle',
-//             description: 'my description',
-//             author: 'my author',
-//             shortDescription: 'my shortDescription',
-//             image: 'my image',
-//             price: 10,
-//             promotion: 20,
-//         };
-//         await client.mutate({
-//             mutation: ADD_BOOK_MUTATION,
-//             variables: {
-//                 ...myBook,
-//             },
-//         });
-
-//         const book = await Book.findOne({ title: 'my book' });
-//         expect(areBookEquals(myBook, book)).toBe(true);
-//     });
-// });
