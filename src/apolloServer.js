@@ -64,24 +64,19 @@ const setupApolloServer = async () => {
         },
     });
 
-    if (process.env.NODE_ENV === 'production') {
-        const oneHour = 3600000;
-        app.use(
-            express.static(path.resolve(__dirname, '..', 'client', 'build'), {
-                maxAge: oneHour,
-            })
+    app.use(
+        express.static(path.resolve(__dirname, '..', 'client', 'build'))
+    );
+    app.get('*', (req, res) => {
+        const filePath = path.resolve(
+            __dirname,
+            '..',
+            'client',
+            'build',
+            'index.html'
         );
-        app.get('*', (req, res) => {
-            const filePath = path.resolve(
-                __dirname,
-                '..',
-                'client',
-                'build',
-                'index.html'
-            );
-            res.sendFile(filePath);
-        });
-    }
+        res.sendFile(filePath);
+    });
 
     return app.listen({ port: process.env.PORT }, () => {
         console.log(`Sever is running at http://localhost:${process.env.PORT}`);
